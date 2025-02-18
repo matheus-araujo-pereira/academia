@@ -1,0 +1,35 @@
+<div class="menu-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Menu Principal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- Todos podem acessar Dados Pessoais -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="personal-details">Dados Pessoais</a>
+          </li>
+          <!-- Acesso a atividades para Cliente e Administrador -->
+          <li class="nav-item" *ngIf="userService.getUserRole() === 'Cliente' || userService.getUserRole() === 'Administrador'">
+            <a class="nav-link" routerLink="activities">Atividades</a>
+          </li>
+          <!-- Acesso a treinos para Cliente, Administrador e Professor -->
+          <li class="nav-item" *ngIf="userService.getUserRole() === 'Cliente' || userService.getUserRole() === 'Administrador' || userService.getUserRole() === 'Professor'">
+            <a class="nav-link" routerLink="trainings">Treinos</a>
+          </li>
+          <!-- Administrador e Atendente podem cadastrar cliente -->
+          <li class="nav-item" *ngIf="userService.getUserRole() === 'Administrador' || userService.getUserRole() === 'Atendente'">
+            <a class="nav-link" routerLink="register-client">Cadastrar Cliente</a>
+          </li>
+          <!-- Apenas Administrador pode cadastrar funcionário -->
+          <li class="nav-item" *ngIf="userService.getUserRole() === 'Administrador'">
+            <a class="nav-link" routerLink="register-employee">Cadastrar Funcionário</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
