@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <h2>Consultar Atendente</h2>
+  <form (ngSubmit)="consultarAtendente(cpf.value)">
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cpf"
+        #cpf
+        placeholder="Digite o CPF"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+  </form>
+
+  <div *ngIf="atendente" class="mt-4">
+    <h3>Dados do Atendente</h3>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Nome:</strong> {{ atendente.nome }}
+      </li>
+      <li class="list-group-item">
+        <strong>Endereço:</strong> {{ atendente.endereco }}
+      </li>
+      <li class="list-group-item">
+        <strong>Telefone:</strong> {{ atendente.telefone }}
+      </li>
+      <li class="list-group-item"><strong>CPF:</strong> {{ atendente.cpf }}</li>
+      <li class="list-group-item"><strong>RG:</strong> {{ atendente.rg }}</li>
+      <li class="list-group-item">
+        <strong>Data de Nascimento:</strong> {{ atendente.dataNascimento }}
+      </li>
+      <li class="list-group-item">
+        <strong>Email:</strong> {{ atendente.email }}
+      </li>
+      <li class="list-group-item"><strong>CEP:</strong> {{ atendente.cep }}</li>
+    </ul>
+    <button class="btn btn-warning mt-3" (click)="atualizarAtendente()">
+      Atualizar Atendente
+    </button>
+    <button class="btn btn-danger mt-3" (click)="excluirAtendente()">
+      Excluir Atendente
+    </button>
+  </div>
+</div>

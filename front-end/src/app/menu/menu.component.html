@@ -1,0 +1,69 @@
+<div
+  class="d-flex flex-column vh-100 bg-primary text-white"
+  style="width: 250px"
+>
+  <div class="p-3">
+    <h4 class="text-white">Academia</h4>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/dados-pessoais"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-user"></i> Dados Pessoais
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/treinos"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-dumbbell"></i> Treinos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/atividades"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-running"></i> Atividades
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/clientes"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-users"></i> Clientes
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/professor"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-chalkboard-teacher"></i> Professor
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link text-white"
+          routerLink="/atendente"
+          routerLinkActive="active"
+        >
+          <i class="fa fa-user-tie"></i> Atendente
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="mt-auto p-3">
+    <button class="btn btn-danger w-100" (click)="logout()">
+      <i class="fa fa-sign-out-alt"></i> Sair
+    </button>
+  </div>
+</div>

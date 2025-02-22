@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h2>Cadastrar Atividade</h2>
+  <form (ngSubmit)="cadastrarAtividade()">
+    <div class="mb-3">
+      <label for="dataHora" class="form-label">Data e Hora</label>
+      <input type="datetime-local" class="form-control" id="dataHora" />
+    </div>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        placeholder="Digite o nome da atividade"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
+      <textarea
+        class="form-control"
+        id="descricao"
+        rows="3"
+        placeholder="Descreva a atividade"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="professor" class="form-label">Professor</label>
+      <input
+        type="text"
+        class="form-control"
+        id="professor"
+        placeholder="Digite o nome do professor"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar Cadastro</button>
+  </form>
+</div>

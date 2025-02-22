@@ -1,0 +1,22 @@
+body {
+  background-color: #f8f9fa; /* Light gray background */
+}
+
+.card {
+  background-color: #ffffff; /* White card background */
+  border: 1px solid #ced4da; /* Light gray border */
+}
+
+.card-title {
+  color: #007bff; /* Blue title */
+}
+
+.btn-primary {
+  background-color: #28a745; /* Green button */
+  border-color: #28a745; /* Green button border */
+}
+
+.btn-primary:hover {
+  background-color: #218838; /* Darker green on hover */
+  border-color: #1e7e34; /* Darker green border on hover */
+}

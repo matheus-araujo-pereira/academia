@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h2>Consultar Cliente</h2>
+  <form (ngSubmit)="consultarCliente(cpf.value)">
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cpf"
+        #cpf
+        placeholder="Digite o CPF"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+  </form>
+
+  <div *ngIf="cliente" class="mt-4">
+    <h3>Dados do Cliente</h3>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Nome:</strong> {{ cliente.nome }}</li>
+      <li class="list-group-item">
+        <strong>Endereço:</strong> {{ cliente.endereco }}
+      </li>
+      <li class="list-group-item">
+        <strong>Telefone:</strong> {{ cliente.telefone }}
+      </li>
+      <li class="list-group-item"><strong>CPF:</strong> {{ cliente.cpf }}</li>
+      <li class="list-group-item"><strong>RG:</strong> {{ cliente.rg }}</li>
+      <li class="list-group-item">
+        <strong>Data de Nascimento:</strong> {{ cliente.dataNascimento }}
+      </li>
+      <li class="list-group-item">
+        <strong>Email:</strong> {{ cliente.email }}
+      </li>
+      <li class="list-group-item"><strong>CEP:</strong> {{ cliente.cep }}</li>
+    </ul>
+    <button class="btn btn-warning mt-3" (click)="atualizarCliente()">
+      Atualizar Cliente
+    </button>
+    <button class="btn btn-danger mt-3" (click)="excluirCliente()">
+      Excluir Cliente
+    </button>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+h3 {
+  color: #007bff; /* Blue title */
+}
+
+.row {
+  margin-bottom: 10px;
+}

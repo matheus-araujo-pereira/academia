@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <h2>Consultar Treino</h2>
+  <form (ngSubmit)="consultarTreino(nomeTreino.value)">
+    <div class="mb-3">
+      <label for="nomeTreino" class="form-label">Nome do Treino</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nomeTreino"
+        #nomeTreino
+        placeholder="Digite o nome do treino"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+  </form>
+
+  <div *ngIf="treino" class="mt-4">
+    <h3>Dados do Treino</h3>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Nome do Professor:</strong> {{ treino.nomeProfessor }}
+      </li>
+      <li class="list-group-item">
+        <strong>Nome do Treino:</strong> {{ treino.nomeTreino }}
+      </li>
+      <li class="list-group-item">
+        <strong>Data de Criação:</strong> {{ treino.dataCriacao }}
+      </li>
+      <li class="list-group-item">
+        <strong>Exercícios:</strong>
+        <ul>
+          <li *ngFor="let exercicio of treino.exercicios">
+            <strong>Nome:</strong> {{ exercicio.nome }}<br />
+            <strong>Descrição:</strong> {{ exercicio.descricao }}<br />
+            <strong>Carga:</strong> {{ exercicio.carga }}<br />
+            <strong>Repetições:</strong> {{ exercicio.repeticoes }}<br />
+            <strong>Séries:</strong> {{ exercicio.series }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <button class="btn btn-warning mt-3" (click)="atualizarTreino()">
+      Atualizar Treino
+    </button>
+    <button class="btn btn-danger mt-3" (click)="excluirTreino()">
+      Excluir Treino
+    </button>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2>Consultar Atividade</h2>
+  <form (ngSubmit)="consultarAtividade(nome.value)">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome da Atividade</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        #nome
+        placeholder="Digite o nome da atividade"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+  </form>
+
+  <div *ngIf="atividade" class="mt-4">
+    <h3>Dados da Atividade</h3>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Data e Hora:</strong> {{ atividade.dataHora }}
+      </li>
+      <li class="list-group-item">
+        <strong>Nome:</strong> {{ atividade.nome }}
+      </li>
+      <li class="list-group-item">
+        <strong>Descrição:</strong> {{ atividade.descricao }}
+      </li>
+      <li class="list-group-item">
+        <strong>Professor:</strong> {{ atividade.professor }}
+      </li>
+    </ul>
+    <button class="btn btn-warning mt-3" (click)="atualizarAtividade()">
+      Atualizar Atividade
+    </button>
+    <button class="btn btn-danger mt-3" (click)="excluirAtividade()">
+      Excluir Atividade
+    </button>
+  </div>
+</div>

@@ -1,3 +1,52 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { MenuComponent } from './menu/menu.component';
+import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { CadastrarClienteComponent } from './cliente/cadastrar-cliente/cadastrar-cliente.component';
+import { ConsultarClienteComponent } from './cliente/consultar-cliente/consultar-cliente.component';
+import { AtualizarClienteComponent } from './cliente/atualizar-cliente/atualizar-cliente.component';
+import { AtendenteComponent } from './atendente/atendente.component';
+import { CadastrarAtendenteComponent } from './atendente/cadastrar-atendente/cadastrar-atendente.component';
+import { ConsultarAtendenteComponent } from './atendente/consultar-atendente/consultar-atendente.component';
+import { AtualizarAtendenteComponent } from './atendente/atualizar-atendente/atualizar-atendente.component';
+import { ProfessorComponent } from './professor/professor.component';
+import { CadastrarProfessorComponent } from './professor/cadastrar-professor/cadastrar-professor.component';
+import { ConsultarProfessorComponent } from './professor/consultar-professor/consultar-professor.component';
+import { AtualizarProfessorComponent } from './professor/atualizar-professor/atualizar-professor.component';
+import { TreinosComponent } from './treinos/treinos.component';
+import { CadastrarTreinosComponent } from './treinos/cadastrar-treinos/cadastrar-treinos.component';
+import { ConsultarTreinosComponent } from './treinos/consultar-treinos/consultar-treinos.component';
+import { AtualizarTreinosComponent } from './treinos/atualizar-treinos/atualizar-treinos.component';
+import { AtividadesComponent } from './atividades/atividades.component';
+import { CadastrarAtividadeComponent } from './atividades/cadastrar-atividade/cadastrar-atividade.component';
+import { ConsultarAtividadeComponent } from './atividades/consultar-atividade/consultar-atividade.component';
+import { AtualizarAtividadeComponent } from './atividades/atualizar-atividade/atualizar-atividade.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'menu', component: MenuComponent },
+  { path: 'dados-pessoais', component: DadosPessoaisComponent },
+  { path: 'clientes', component: ClienteComponent },
+  { path: 'cadastrar-cliente', component: CadastrarClienteComponent },
+  { path: 'consultar-cliente', component: ConsultarClienteComponent },
+  { path: 'atualizar-cliente', component: AtualizarClienteComponent },
+  { path: 'atendentes', component: AtendenteComponent },
+  { path: 'cadastrar-atendente', component: CadastrarAtendenteComponent },
+  { path: 'consultar-atendente', component: ConsultarAtendenteComponent },
+  { path: 'atualizar-atendente', component: AtualizarAtendenteComponent },
+  { path: 'professores', component: ProfessorComponent },
+  { path: 'cadastrar-professor', component: CadastrarProfessorComponent },
+  { path: 'consultar-professor', component: ConsultarProfessorComponent },
+  { path: 'atualizar-professor', component: AtualizarProfessorComponent },
+  { path: 'treinos', component: TreinosComponent },
+  { path: 'cadastrar-treinos', component: CadastrarTreinosComponent },
+  { path: 'consultar-treinos', component: ConsultarTreinosComponent },
+  { path: 'atualizar-treinos', component: AtualizarTreinosComponent },
+  { path: 'atividades', component: AtividadesComponent },
+  { path: 'cadastrar-atividade', component: CadastrarAtividadeComponent },
+  { path: 'consultar-atividade', component: ConsultarAtividadeComponent },
+  { path: 'atualizar-atividade', component: AtualizarAtividadeComponent },
+  // Outras rotas podem ser adicionadas aqui
+  { path: '**', redirectTo: 'login' }, // Redireciona para login se a rota não for encontrada
+];

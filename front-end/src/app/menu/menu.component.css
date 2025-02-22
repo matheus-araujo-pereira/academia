@@ -1,0 +1,21 @@
+.nav-link {
+  color: #ffffff; /* White links */
+}
+
+.nav-link:hover {
+  color: #dcdcdc; /* Lighter gray on hover */
+}
+
+.nav-link.active {
+  background-color: #0056b3; /* Darker blue for active link */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Red button */
+  border-color: #dc3545; /* Red button border */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Darker red on hover */
+  border-color: #bd2130; /* Darker red border on hover */
+}
