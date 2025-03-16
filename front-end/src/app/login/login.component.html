@@ -1,0 +1,23 @@
+<div class="login-container">
+  <h2>Login</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label for="login">Login:</label>
+    <input id="login" [(ngModel)]="login" name="login" required />
+
+    <label for="senha">Senha:</label>
+    <input
+      id="senha"
+      type="password"
+      [(ngModel)]="senha"
+      name="senha"
+      required
+    />
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div *ngIf="mensagem">
+    <p>{{ mensagem }}</p>
+    <p *ngIf="tipoUsuario">Tipo de usuário: {{ tipoUsuario }}</p>
+  </div>
+</div>
