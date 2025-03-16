@@ -14,41 +14,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.gestao.academia.treino.modelo.Treino;
-import br.com.gestao.academia.treino.repositorio.TreinoRepositorio;
+import br.com.gestao.academia.treino.modelo.Exercicio;
+import br.com.gestao.academia.treino.repositorio.ExercicioRepositorio;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/treinos")
-public class TreinoControlador {
+@RequestMapping("/api/exercicios")
+public class ExercicioControlador {
 
-    private final TreinoRepositorio repo;
+    private final ExercicioRepositorio repo;
 
-    public TreinoControlador(TreinoRepositorio repo) {
+    public ExercicioControlador(ExercicioRepositorio repo) {
         this.repo = repo;
     }
 
     @GetMapping
-    public List<Treino> findAll() {
+    public List<Exercicio> findAll() {
         return repo.findAll();
     }
 
     @PostMapping
-    public Treino save(@Valid @RequestBody Treino treino) {
-        // Aqui, você pode (na lógica de serviço ou controller) limitar o número de
-        // treinos para um cliente a 7.
-        return repo.save(treino);
+    public Exercicio save(@Valid @RequestBody Exercicio exercicio) {
+        return repo.save(exercicio);
     }
 
     @PutMapping("/{id}")
-    public Treino update(@PathVariable Long id, @Valid @RequestBody Treino treino) {
-        Treino existing = repo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Treino não encontrado"));
-        existing.setDescricao(treino.getDescricao());
-        existing.setDataCriacao(treino.getDataCriacao());
-        existing.setCliente(treino.getCliente());
-        existing.setProfessor(treino.getProfessor());
-        existing.setExercicios(treino.getExercicios());
+    public Exercicio update(@PathVariable Long id, @Valid @RequestBody Exercicio exercicio) {
+        Exercicio existing = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercício não encontrado"));
+        existing.setNome(exercicio.getNome());
+        existing.setDescricao(exercicio.getDescricao());
+        existing.setCarga(exercicio.getCarga());
+        existing.setRepeticao(exercicio.getRepeticao());
+        existing.setSeries(exercicio.getSeries());
+        // Se necessário, pode atualizar a associação com o treino
         return repo.save(existing);
     }
 
