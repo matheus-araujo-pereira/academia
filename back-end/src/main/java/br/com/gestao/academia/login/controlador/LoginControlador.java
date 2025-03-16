@@ -3,6 +3,7 @@ package br.com.gestao.academia.login.controlador;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import br.com.gestao.academia.professor.modelo.Professor;
 import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "*") // Permite requisições de qualquer origem
 @RestController
 @RequestMapping("/api")
 public class LoginControlador {

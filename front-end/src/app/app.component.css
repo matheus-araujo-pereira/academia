@@ -1,0 +1,32 @@
+/* Font global */
+:root {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Header fixo */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #007bff; /* Azul legal */
+  color: #fff;
+  padding: 5px; /* Reduzido */
+  text-align: center;
+  z-index: 1000;
+  font-size: 12px;
+}
+
+/* Footer fixo */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #007bff; /* Azul legal */
+  color: #fff;
+  padding: 5px; /* Reduzido */
+  text-align: center;
+  z-index: 1000;
+  font-size: 15px;
+}

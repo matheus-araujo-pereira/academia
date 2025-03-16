@@ -4,8 +4,8 @@ import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'menu', component: LoginComponent }, // rota de teste. Crie um componente Menu futuramente.
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // Outras rotas
 ];
 
 @NgModule({
