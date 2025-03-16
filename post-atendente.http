@@ -1,0 +1,21 @@
+POST http://localhost:8080/api/atendentes
+Content-Type: application/json
+
+{
+  "nome": "Tahiane Araujo Barreto",
+  "login": "tahiane",
+  "senha": "tahiane2104",
+  "cpf": "12345678901",
+  "rg": "1234567",
+  "dataNascimento": "1982-04-21",
+  "email": "tahiane@example.com",
+  "telefone": "+5511912345678",
+  "endereco": {
+    "estado": "SE",
+    "cidade": "Aracaju",
+    "bairro": "São Conrado",
+    "logradouro": "Rua Francisco Rollemberg Ramos",
+    "numero": "54",
+    "cep": "49042-590"
+  }
+}

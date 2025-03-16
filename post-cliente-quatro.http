@@ -1,0 +1,24 @@
+POST http://localhost:8080/api/clientes
+Content-Type: application/json
+
+{
+  "nome": "Daniela Lima",
+  "login": "danielal",
+  "senha": "senhaDaniela2025",
+  "cpf": "44455566677",
+  "rg": "456789012",
+  "dataNascimento": "1988-08-08",
+  "email": "daniela.lima@example.com",
+  "telefone": "+5511976543210",
+  "endereco": {
+    "estado": "RS",
+    "cidade": "Porto Alegre",
+    "bairro": "Moinhos de Vento",
+    "logradouro": "Rua D",
+    "numero": "40",
+    "cep": "90010-001"
+  },
+  "plano": {
+    "id": 2
+  }
+}

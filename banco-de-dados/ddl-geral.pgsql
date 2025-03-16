@@ -1,174 +1,122 @@
 CREATE SCHEMA IF NOT EXISTS academia;
 
-DROP TABLE IF EXISTS academia."TB_CLIENTE_ATIVIDADE";
-
-DROP TABLE IF EXISTS academia."TB_TREINO_EXERCICIO";
-
-DROP TABLE IF EXISTS academia."TB_ATIVIDADE";
-
-DROP TABLE IF EXISTS academia."TB_EXERCICIO";
-
-DROP TABLE IF EXISTS academia."TB_USUARIO";
-
-DROP TABLE IF EXISTS academia."TB_LOGIN";
-
-DROP TABLE IF EXISTS academia."TB_CLIENTE";
-
-DROP TABLE IF EXISTS academia."TB_TREINO";
-
-DROP TABLE IF EXISTS academia."TB_FUNCIONARIO";
-
-DROP TABLE IF EXISTS academia."TB_CARGO";
-
-DROP TABLE IF EXISTS academia."TB_TELEFONE";
-
-DROP TABLE IF EXISTS academia."TB_ENDERECO";
-
-DROP TABLE IF EXISTS academia."TB_PLANO";
-
-CREATE TABLE IF NOT EXISTS academia."TB_PLANO"(
-    "ID_PLANO" integer NOT NULL,
-    "NM_PLANO" varchar(50),
-    "VL_PLANO" numeric,
-    "DS_PLANO" varchar(500),
-    PRIMARY KEY ("ID_PLANO")
+CREATE TABLE IF NOT EXISTS academia.administrador(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    login VARCHAR(50) NOT NULL,
+    senha varchar(100) NOT NULL,
+    cpf varchar(11),
+    rg varchar(15),
+    data_nascimento date,
+    email varchar(100),
+    telefone varchar(20)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_ENDERECO"(
-    "ID_ENDERECO" integer NOT NULL,
-    "DS_ESTADO" varchar(120),
-    "DS_CIDADE" varchar(120),
-    "DS_BAIRRO" varchar(120),
-    "DS_LOGRADOURO" varchar(250),
-    "NUMERO" varchar(10),
-    "CEP" varchar(16),
-    PRIMARY KEY ("ID_ENDERECO")
+CREATE TABLE IF NOT EXISTS academia.endereco(
+    id bigserial PRIMARY KEY,
+    estado varchar(100) NOT NULL,
+    cidade varchar(100) NOT NULL,
+    bairro varchar(100) NOT NULL,
+    logradouro varchar(200) NOT NULL,
+    numero varchar(10) NOT NULL,
+    cep varchar(10) NOT NULL,
+    administrador_id bigint,
+    CONSTRAINT fk_administrador FOREIGN KEY (administrador_id) REFERENCES academia.administrador(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_TELEFONE"(
-    "ID_TELEFONE" integer NOT NULL,
-    "NR_CELULAR" varchar(20),
-    "NR_TELEFONE_FIXO" varchar(20),
-    PRIMARY KEY ("ID_TELEFONE")
+CREATE TABLE IF NOT EXISTS academia.atendente(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    login varchar(50) NOT NULL,
+    senha varchar(100) NOT NULL,
+    cpf varchar(11),
+    rg varchar(15),
+    data_nascimento date,
+    email varchar(100),
+    telefone varchar(20),
+    endereco_id bigint,
+    CONSTRAINT fk_endereco FOREIGN KEY (endereco_id) REFERENCES academia.endereco(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_CARGO"(
-    "ID_CARGO" integer NOT NULL,
-    "CD_CARGO" integer,
-    "NM_CARGO" varchar(50),
-    "DS_CARGO" varchar(450),
-    PRIMARY KEY ("ID_CARGO"),
-    CONSTRAINT "CD_CARGO_UNIQUE" UNIQUE ("CD_CARGO"),
-    CONSTRAINT "NM_CARGO_UNIQUE" UNIQUE ("NM_CARGO")
+CREATE TABLE IF NOT EXISTS academia.professor(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    login varchar(50) NOT NULL,
+    senha varchar(100) NOT NULL,
+    cpf varchar(11),
+    rg varchar(15),
+    data_nascimento date,
+    email varchar(100),
+    telefone varchar(20),
+    endereco_id bigint,
+    CONSTRAINT fk_professor_endereco FOREIGN KEY (endereco_id) REFERENCES academia.endereco(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_FUNCIONARIO"(
-    "ID_FUNCIONARIO" integer NOT NULL,
-    "ID_CARGO" integer,
-    "ID_TELEFONE" integer,
-    "ID_ENDERECO" integer,
-    "NM_FUNCIONARIO" varchar(50),
-    "NR_CPF" varchar(14),
-    "NR_RG" varchar(20),
-    "DT_NASCIMENTO" date,
-    "EMAIL" varchar(50),
-    PRIMARY KEY ("ID_FUNCIONARIO"),
-    CONSTRAINT "FK_FUN_ID_TELEFONE" FOREIGN KEY ("ID_TELEFONE") REFERENCES academia."TB_TELEFONE"("ID_TELEFONE"),
-    CONSTRAINT "FK_FUN_ID_CARGO" FOREIGN KEY ("ID_CARGO") REFERENCES academia."TB_CARGO"("ID_CARGO"),
-    CONSTRAINT "FK_FUN_ID_ENDERECO" FOREIGN KEY ("ID_ENDERECO") REFERENCES academia."TB_ENDERECO"("ID_ENDERECO")
+CREATE TABLE IF NOT EXISTS academia.plano(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    valor numeric(10, 2) NOT NULL,
+    descricao text,
+    administrador_id bigint,
+    CONSTRAINT fk_plano_administrador FOREIGN KEY (administrador_id) REFERENCES academia.administrador(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_TREINO"(
-    "ID_TREINO" integer NOT NULL,
-    "ID_PROFESSOR" integer,
-    "DS_TREINO" varchar(45),
-    "DT_CRIACAO" timestamp,
-    PRIMARY KEY ("ID_TREINO"),
-    CONSTRAINT "FK_TRE_ID_PROFESSOR" FOREIGN KEY ("ID_PROFESSOR") REFERENCES academia."TB_FUNCIONARIO"("ID_FUNCIONARIO")
+CREATE TABLE IF NOT EXISTS academia.cliente(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    login varchar(50) NOT NULL,
+    senha varchar(100) NOT NULL,
+    cpf varchar(11),
+    rg varchar(15),
+    data_nascimento date,
+    email varchar(100),
+    telefone varchar(20),
+    endereco_id bigint,
+    plano_id bigint,
+    CONSTRAINT fk_cliente_endereco FOREIGN KEY (endereco_id) REFERENCES academia.endereco(id),
+    CONSTRAINT fk_cliente_plano FOREIGN KEY (plano_id) REFERENCES academia.plano(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_CLIENTE"(
-    "ID_CLIENTE" integer NOT NULL,
-    "ID_PLANO" integer,
-    "ID_ENDERECO" integer, -- Identificador de Endereço
-    "ID_TREINO" integer,
-    "ID_TELEFONE" integer,
-    "NM_CLIENTE" varchar(50) NOT NULL,
-    "NR_CPF" varchar(14) NOT NULL,
-    "NR_RG" varchar(30),
-    "DT_NASCIMENTO" date,
-    "EMAIL" varchar(50),
-    PRIMARY KEY ("ID_CLIENTE"),
-    CONSTRAINT "FK_CLI_ID_PLANO" FOREIGN KEY ("ID_PLANO") REFERENCES academia."TB_PLANO"("ID_PLANO"),
-    CONSTRAINT "FK_CLI_ID_ENDERECO" FOREIGN KEY ("ID_ENDERECO") REFERENCES academia."TB_ENDERECO"("ID_ENDERECO"),
-    CONSTRAINT "FK_CLI_ID_TREINO" FOREIGN KEY ("ID_TREINO") REFERENCES academia."TB_TREINO"("ID_TREINO"),
-    CONSTRAINT "FK_CLI_ID_TELEFONE" FOREIGN KEY ("ID_TELEFONE") REFERENCES academia."TB_TELEFONE"("ID_TELEFONE")
+CREATE TABLE IF NOT EXISTS academia.treino(
+    id bigserial PRIMARY KEY,
+    descricao text NOT NULL,
+    data_criacao date NOT NULL,
+    cliente_id bigint,
+    professor_id bigint,
+    CONSTRAINT fk_treino_cliente FOREIGN KEY (cliente_id) REFERENCES academia.cliente(id),
+    CONSTRAINT fk_treino_professor FOREIGN KEY (professor_id) REFERENCES academia.professor(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_LOGIN"(
-    "ID_LOGIN" integer NOT NULL,
-    "TOKEN" varchar(10000),
-    "EMAIL" varchar(50),
-    PRIMARY KEY ("ID_LOGIN")
+-- Tabela EXERCICIO: vários exercicios compõem um treino
+CREATE TABLE IF NOT EXISTS academia.exercicio(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    descricao text,
+    carga numeric(10, 2),
+    repeticao integer,
+    series integer,
+    treino_id bigint,
+    CONSTRAINT fk_exercicio_treino FOREIGN KEY (treino_id) REFERENCES academia.treino(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_USUARIO"(
-    "ID_USUARIO" integer NOT NULL,
-    "ID_LOGIN" integer,
-    "ID_FUNCIONARIO" integer,
-    "ID_CLIENTE" integer,
-    PRIMARY KEY ("ID_USUARIO"),
-    CONSTRAINT "FK_USU_ID_LOGIN" FOREIGN KEY ("ID_LOGIN") REFERENCES academia."TB_LOGIN"("ID_LOGIN"),
-    CONSTRAINT "FK_USU_ID_FUNCIONARIO" FOREIGN KEY ("ID_FUNCIONARIO") REFERENCES academia."TB_FUNCIONARIO"("ID_FUNCIONARIO"),
-    CONSTRAINT "FK_USU_ID_CLIENTE" FOREIGN KEY ("ID_CLIENTE") REFERENCES academia."TB_CLIENTE"("ID_CLIENTE")
+-- Tabela ATIVIDADE: as atividades gerenciadas por um professor
+CREATE TABLE IF NOT EXISTS academia.atividade(
+    id bigserial PRIMARY KEY,
+    nome varchar(100) NOT NULL,
+    descricao text,
+    hora_inicio time NOT NULL,
+    hora_fim time NOT NULL,
+    dias_semana varchar(100),
+    professor_id bigint,
+    CONSTRAINT fk_atividade_professor FOREIGN KEY (professor_id) REFERENCES academia.professor(id)
 );
 
-CREATE TABLE IF NOT EXISTS academia."TB_EXERCICIO"(
-    "ID_EXERCICIO" integer NOT NULL,
-    "ID_PROFESSOR" integer,
-    "NM_EXERCICIO" varchar(100),
-    "DS_EXERCICIO" varchar(500),
-    "CARGA" real,
-    "REPETICOES" integer,
-    "SERIES" integer,
-    PRIMARY KEY ("ID_EXERCICIO"),
-    CONSTRAINT "FK_EXE_ID_PROFESSOR" FOREIGN KEY ("ID_PROFESSOR") REFERENCES academia."TB_FUNCIONARIO"("ID_FUNCIONARIO")
+-- Tabela de relacionamento entre ATIVIDADE e CLIENTE (muitos-para-muitos)
+CREATE TABLE IF NOT EXISTS academia.atividade_cliente(
+    atividade_id bigint,
+    cliente_id bigint,
+    PRIMARY KEY (atividade_id, cliente_id),
+    CONSTRAINT fk_ativ_cliente_atividade FOREIGN KEY (atividade_id) REFERENCES academia.atividade(id),
+    CONSTRAINT fk_ativ_cliente_cliente FOREIGN KEY (cliente_id) REFERENCES academia.cliente(id)
 );
-
-CREATE INDEX IF NOT EXISTS "FK_ID_PROFESSOR_idx" ON academia."TB_EXERCICIO"("ID_PROFESSOR");
-
-CREATE TABLE IF NOT EXISTS academia."TB_ATIVIDADE"(
-    "ID_ATIVIDADE" integer NOT NULL,
-    "NM_ATIVIDADE" varchar(100),
-    "DS_ATIVIDADE" varchar(500),
-    "DT_INICIO" timestamp DEFAULT CURRENT_TIMESTAMP,
-    "DT_FIM" timestamp DEFAULT NULL,
-    PRIMARY KEY ("ID_ATIVIDADE")
-);
-
-CREATE TABLE IF NOT EXISTS academia."TB_TREINO_EXERCICIO"(
-    "ID_TREINO_EXERCICIO" integer NOT NULL,
-    "ID_TREINO" integer,
-    "ID_EXERCICIO" integer,
-    PRIMARY KEY ("ID_TREINO_EXERCICIO"),
-    CONSTRAINT "FK_TE_ID_TREINO" FOREIGN KEY ("ID_TREINO") REFERENCES academia."TB_TREINO"("ID_TREINO"),
-    CONSTRAINT "FK_TE_ID_EXERCICIO" FOREIGN KEY ("ID_EXERCICIO") REFERENCES academia."TB_EXERCICIO"("ID_EXERCICIO")
-);
-
-CREATE INDEX IF NOT EXISTS "FK_ID_TREINO_idx" ON academia."TB_TREINO_EXERCICIO"("ID_TREINO");
-
-CREATE INDEX IF NOT EXISTS "FK_ID_EXERCICIO_idx" ON academia."TB_TREINO_EXERCICIO"("ID_EXERCICIO");
-
-CREATE TABLE IF NOT EXISTS academia."TB_CLIENTE_ATIVIDADE"(
-    "ID_CLIENTE_ATIVIDADE" integer NOT NULL,
-    "ID_CLIENTE" integer,
-    "ID_ATIVIDADE" integer,
-    PRIMARY KEY ("ID_CLIENTE_ATIVIDADE"),
-    CONSTRAINT "FK_CA_ID_CLIENTE" FOREIGN KEY ("ID_CLIENTE") REFERENCES academia."TB_CLIENTE"("ID_CLIENTE"),
-    CONSTRAINT "FK_CA_ID_ATIVIDADE" FOREIGN KEY ("ID_ATIVIDADE") REFERENCES academia."TB_ATIVIDADE"("ID_ATIVIDADE")
-);
-
-CREATE INDEX IF NOT EXISTS "FK_ID_CLIENTE_idx" ON academia."TB_CLIENTE_ATIVIDADE"("ID_CLIENTE", "ID_ATIVIDADE");
-
-CREATE INDEX IF NOT EXISTS "FK_CA_ID_ATIVIDADE_idx" ON academia."TB_CLIENTE_ATIVIDADE"("ID_ATIVIDADE");
 

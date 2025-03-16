@@ -1,0 +1,24 @@
+POST http://localhost:8080/api/clientes
+Content-Type: application/json
+
+{
+  "nome": "Eduardo Ferreira",
+  "login": "eduardof",
+  "senha": "senhaEduardo2025",
+  "cpf": "55566677788",
+  "rg": "567890123",
+  "dataNascimento": "1992-11-11",
+  "email": "eduardo.ferreira@example.com",
+  "telefone": "+5511965432109",
+  "endereco": {
+    "estado": "PR",
+    "cidade": "Curitiba",
+    "bairro": "Centro",
+    "logradouro": "Rua E",
+    "numero": "50",
+    "cep": "80010-010"
+  },
+  "plano": {
+    "id": 2
+  }
+}
