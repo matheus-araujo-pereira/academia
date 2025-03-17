@@ -2,6 +2,7 @@ package br.com.gestao.academia.endereco.controlador;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/enderecos")
+@CrossOrigin(origins = "*") // Permite requisições de qualquer origem
 public class EnderecoControlador {
 
     private final EnderecoRepositorio repositorio;
