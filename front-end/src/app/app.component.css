@@ -30,3 +30,13 @@ footer {
   z-index: 1000;
   font-size: 15px;
 }
+
+.content {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px; /* largura do menu */
+  padding: 20px;
+}

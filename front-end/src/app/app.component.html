@@ -1,11 +1,17 @@
 <header>
   <h1>Gestão de Academia</h1>
-  <!-- Possível menu de navegação -->
 </header>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+<div class="content">
+  <!-- Exibe o menu lateral se showMenu for true -->
+  <app-menu *ngIf="showMenu"></app-menu>
+  <main
+    class="main-content"
+    [ngStyle]="{ 'margin-left': showMenu ? '250px' : '0' }"
+  >
+    <router-outlet></router-outlet>
+  </main>
+</div>
 
 <footer>
   <p>&copy; 2025 Gestão de Academia</p>

@@ -5,7 +5,6 @@
   align-items: center;
   height: 100vh; /* Usa toda a altura da viewport */
   font-family: "Roboto", sans-serif;
-  background-color: #f9f9f9; /* Fundo claro para contraste */
 }
 
 .login-container {
