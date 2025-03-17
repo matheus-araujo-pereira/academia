@@ -1,0 +1,33 @@
+<div class="atendente-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Atendente</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por nome"
+        [(ngModel)]="searchNome"
+      />
+      <input type="text" placeholder="Buscar por CPF" [(ngModel)]="searchCpf" />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of atendentes">
+        <td>{{ a.nome }}</td>
+        <td>{{ a.cpf }}</td>
+        <td>
+          <button (click)="editAtendente(a.id)">Editar</button>
+          <button (click)="deleteAtendente(a.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
