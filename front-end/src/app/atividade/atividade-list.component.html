@@ -1,0 +1,17 @@
+<div class="atividade-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Atividade</button>
+  </div>
+  <div class="card-container">
+    <div class="card" *ngFor="let a of atividades">
+      <h3>{{ a.nome }}</h3>
+      <p class="descricao">{{ a.descricao }}</p>
+      <p class="time">
+        <strong>Início:</strong> {{ a.horaInicio }} - <strong>Fim:</strong>
+        {{ a.horaFim }}
+      </p>
+      <p class="dias"><strong>Dias:</strong> {{ a.diasSemana }}</p>
+      <button class="inscrever" (click)="inscrever(a.id)">Inscrever</button>
+    </div>
+  </div>
+</div>
