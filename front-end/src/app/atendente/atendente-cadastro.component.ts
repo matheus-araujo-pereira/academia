@@ -36,7 +36,17 @@ export class AtendenteCadastroComponent implements OnInit {
       dataNascimento: [''],
       email: [''],
       telefone: [''],
-      // Se houver dados de endereço, inclua-os aqui
+      endereco: this.fb.group({
+        estado: ['', Validators.required],
+        cidade: ['', Validators.required],
+        bairro: ['', Validators.required],
+        logradouro: ['', Validators.required],
+        numero: ['', Validators.required],
+        cep: [
+          '',
+          [Validators.required, Validators.pattern('^[0-9]{5}-?[0-9]{3}$')],
+        ],
+      }),
     });
   }
 
@@ -47,6 +57,7 @@ export class AtendenteCadastroComponent implements OnInit {
         this.isEdit = true;
         this.id = Number(idParam);
         this.service.getById(this.id).subscribe((data) => {
+          // Certifique-se de que o objeto retornado possui a propriedade "endereco"
           this.atendenteForm.patchValue(data);
         });
       }
