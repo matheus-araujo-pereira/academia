@@ -3,6 +3,7 @@ package br.com.gestao.academia.atendente.controlador;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,34 +32,36 @@ public class AtendenteControlador {
     }
 
     @GetMapping
-    public List<Atendente> findAll() {
-        return repo.findAll();
+    public ResponseEntity<List<Atendente>> findAll() {
+        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public List<Atendente> search(@RequestParam(required = false) String nome,
+    public ResponseEntity<List<Atendente>> search(@RequestParam(required = false) String nome,
             @RequestParam(required = false) String cpf) {
         if ((nome == null || nome.isEmpty()) && (cpf == null || cpf.isEmpty())) {
-            return repo.findAll();
+            return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
         }
-        return repo.findByNomeContainingIgnoreCaseOrCpfContainingIgnoreCase(
+        return new ResponseEntity<>(repo.findByNomeContainingIgnoreCaseOrCpfContainingIgnoreCase(
                 nome == null ? "" : nome,
-                cpf == null ? "" : cpf);
+                cpf == null ? "" : cpf), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Atendente getById(@PathVariable Long id) {
-        return repo.findById(id)
+    public ResponseEntity<Atendente> getById(@PathVariable Long id) {
+        Atendente atendente = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Atendente não encontrado"));
+        return new ResponseEntity<>(atendente, HttpStatus.OK);
     }
 
     @PostMapping
-    public Atendente create(@Valid @RequestBody Atendente atendente) {
-        return repo.save(atendente);
+    public ResponseEntity<Atendente> create(@Valid @RequestBody Atendente atendente) {
+        Atendente novo = repo.save(atendente);
+        return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Atendente update(@PathVariable Long id, @Valid @RequestBody Atendente atendente) {
+    public ResponseEntity<Atendente> update(@PathVariable Long id, @Valid @RequestBody Atendente atendente) {
         Atendente existing = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Atendente não encontrado"));
         existing.setNome(atendente.getNome());
@@ -70,11 +73,13 @@ public class AtendenteControlador {
         existing.setEmail(atendente.getEmail());
         existing.setTelefone(atendente.getTelefone());
         existing.setEndereco(atendente.getEndereco());
-        return repo.save(existing);
+        Atendente atualizado = repo.save(existing);
+        return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
