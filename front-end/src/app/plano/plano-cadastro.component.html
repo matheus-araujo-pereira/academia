@@ -1,0 +1,23 @@
+<div class="plano-cadastro">
+  <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Plano</h2>
+  <form [formGroup]="planoForm" (ngSubmit)="salvar()">
+    <div>
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div>
+      <label for="valor">Valor</label>
+      <input id="valor" formControlName="valor" type="number" step="0.01" />
+    </div>
+    <div>
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" formControlName="descricao"></textarea>
+    </div>
+    <div class="actions">
+      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
+      <button type="submit" class="salvar">
+        {{ isEdit ? "Salvar" : "Cadastrar" }}
+      </button>
+    </div>
+  </form>
+</div>

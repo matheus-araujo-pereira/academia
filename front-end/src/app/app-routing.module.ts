@@ -12,6 +12,8 @@ import { AtividadeListComponent } from './atividade/atividade-list.component';
 import { AtividadeCadastroComponent } from './atividade/atividade-cadastro.component';
 import { ProfessorCadastroComponent } from './professor/professor-cadastro.component';
 import { ProfessorListComponent } from './professor/professor-list.component';
+import { PlanoCadastroComponent } from './plano/plano-cadastro.component';
+import { PlanoListComponent } from './plano/plano-list.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -38,6 +40,14 @@ export const routes: Routes = [
       { path: '', component: AtividadeListComponent },
       { path: 'cadastro', component: AtividadeCadastroComponent },
       { path: 'editar/:id', component: AtividadeCadastroComponent },
+    ],
+  },
+  {
+    path: 'planos',
+    children: [
+      { path: '', component: PlanoListComponent },
+      { path: 'cadastro', component: PlanoCadastroComponent },
+      { path: 'editar/:id', component: PlanoCadastroComponent },
     ],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

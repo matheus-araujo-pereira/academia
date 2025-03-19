@@ -1,0 +1,33 @@
+<div class="plano-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Plano</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por nome"
+        [(ngModel)]="searchNome"
+        name="searchNome"
+      />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of planos">
+        <td>{{ p.nome }}</td>
+        <td>{{ p.valor | currency }}</td>
+        <td>
+          <button class="editar" (click)="editPlano(p.id)">Editar</button>
+          <button class="excluir" (click)="deletePlano(p.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,29 +32,70 @@ public class PlanoControlador {
     }
 
     @GetMapping
-    public List<Plano> findAll() {
-        return repo.findAll();
+    public ResponseEntity<List<Plano>> findAll() {
+        try {
+            List<Plano> planos = repo.findAll();
+            return new ResponseEntity<>(planos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Plano>> search(@RequestParam(required = false) String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return findAll();
+        }
+        List<Plano> planos = repo.findByNomeContainingIgnoreCase(nome.trim());
+        return new ResponseEntity<>(planos, HttpStatus.OK);
     }
 
     @PostMapping
-    public Plano save(@Valid @RequestBody Plano plano) {
-        return repo.save(plano);
+    public ResponseEntity<?> create(@Valid @RequestBody Plano plano) {
+        try {
+            Plano novo = repo.save(plano);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Plano cadastrado com sucesso! ID: " + novo.getId());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Erro ao cadastrar plano: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public Plano update(@PathVariable Long id, @Valid @RequestBody Plano plano) {
-        Plano existing = repo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
-        existing.setNome(plano.getNome());
-        existing.setValor(plano.getValor());
-        existing.setDescricao(plano.getDescricao());
-        existing.setAdministrador(plano.getAdministrador());
-        return repo.save(existing);
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Plano plano) {
+        try {
+            Plano existing = repo.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
+            existing.setNome(plano.getNome());
+            existing.setValor(plano.getValor());
+            existing.setDescricao(plano.getDescricao());
+            existing.setAdministrador(plano.getAdministrador());
+            repo.save(existing);
+            return ResponseEntity.ok("Plano atualizado com sucesso!");
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Erro ao atualizar plano: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        repo.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            repo.deleteById(id);
+            return ResponseEntity.ok("Plano excluído com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Erro ao excluir plano: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Plano> getById(@PathVariable Long id) {
+        Plano plano = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
+        return ResponseEntity.ok(plano);
     }
 }
