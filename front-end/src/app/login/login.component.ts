@@ -1,3 +1,6 @@
+/**
+ * Componente Angular que gerencia o formulário de login e exibe mensagens de sucesso ou erro.
+ */
 import { Component } from '@angular/core';
 import {
   FormBuilder,

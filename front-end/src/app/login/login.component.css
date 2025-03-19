@@ -1,3 +1,4 @@
+/* Estilos para o formulário de login, incluindo layout, cores e espaçamento. */
 /* Centraliza o conteúdo vertical e horizontalmente e utiliza a fonte Roboto */
 :host {
   display: flex;

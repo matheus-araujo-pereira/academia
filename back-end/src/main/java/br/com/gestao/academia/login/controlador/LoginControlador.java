@@ -22,6 +22,10 @@ import br.com.gestao.academia.professor.modelo.Professor;
 import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import jakarta.validation.Valid;
 
+/**
+ * Controlador REST que gerencia as requisições de login e retorna o tipo de
+ * usuário.
+ */
 @CrossOrigin(origins = "*") // Permite requisições de qualquer origem
 @RestController
 @RequestMapping("/api")

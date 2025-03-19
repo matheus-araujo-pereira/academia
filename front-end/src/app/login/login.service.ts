@@ -1,3 +1,6 @@
+/**
+ * Serviço responsável por enviar as credenciais de login ao back-end e receber a resposta.
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
