@@ -1,3 +1,7 @@
+/**
+ * Entidade que representa o professor.
+ * Contém informações pessoais e de contato, além do endereço.
+ */
 package br.com.gestao.academia.professor.modelo;
 
 import java.time.LocalDate;
