@@ -1,0 +1,50 @@
+.cliente-cadastro {
+  padding: 20px;
+}
+.cliente-cadastro h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.cliente-cadastro form div {
+  margin-bottom: 15px;
+}
+.cliente-cadastro label {
+  display: block;
+  margin-bottom: 5px;
+}
+.cliente-cadastro input,
+.cliente-cadastro select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.voltar {
+  background-color: blue;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.salvar {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+fieldset {
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  padding: 10px;
+}
+legend {
+  font-weight: bold;
+  padding: 0 5px;
+}

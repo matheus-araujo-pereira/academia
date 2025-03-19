@@ -1,0 +1,39 @@
+<div class="cliente-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Cliente</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por nome"
+        [(ngModel)]="searchNome"
+        name="searchNome"
+      />
+      <input
+        type="text"
+        placeholder="Buscar por CPF"
+        [(ngModel)]="searchCpf"
+        name="searchCpf"
+      />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{ c.nome }}</td>
+        <td>{{ c.cpf }}</td>
+        <td>
+          <button class="editar" (click)="editCliente(c.id)">Editar</button>
+          <button class="excluir" (click)="deleteCliente(c.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
