@@ -26,5 +26,27 @@ public class AdministradorControlador {
     public Administrador save(@Valid @RequestBody Administrador admin) {
         return repo.save(admin);
     }
-    // ...
+
+    @GetMapping("/{id}")
+    public Administrador findById(@PathVariable Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Administrador não encontrado para o ID: " + id));
+    }
+
+    @PutMapping("/{id}")
+    public Administrador update(@PathVariable Long id, @Valid @RequestBody Administrador admin) {
+        Administrador admExistente = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Administrador não encontrado para atualização."));
+        admExistente.setNome(admin.getNome());
+        admExistente.setLogin(admin.getLogin());
+        admExistente.setSenha(admin.getSenha());
+        return repo.save(admExistente);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        Administrador adm = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Administrador não encontrado para exclusão."));
+        repo.delete(adm);
+    }
 }

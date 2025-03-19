@@ -23,14 +23,14 @@ public class Administrador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nome é obrigatório")
+    @NotBlank(message = "Informe o nome do administrador.")
     private String nome;
 
-    @NotBlank(message = "Login é obrigatório")
+    @NotBlank(message = "Informe o login do administrador.")
     private String login;
 
-    @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "Informe a senha do administrador.")
+    @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres.")
     private String senha;
 
     @Pattern(regexp = "^[0-9]{11}$", message = "CPF deve ter 11 dígitos")
