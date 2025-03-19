@@ -8,8 +8,6 @@ import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 import { AtendenteListComponent } from './atendente/atendente-list.component';
 import { AtendenteCadastroComponent } from './atendente/atendente-cadastro.component';
-import { AtividadeListComponent } from './atividade/atividade-list.component';
-import { AtividadeCadastroComponent } from './atividade/atividade-cadastro.component';
 import { ProfessorCadastroComponent } from './professor/professor-cadastro.component';
 import { ProfessorListComponent } from './professor/professor-list.component';
 import { PlanoCadastroComponent } from './plano/plano-cadastro.component';
@@ -34,14 +32,6 @@ export const routes: Routes = [
       { path: '', component: ProfessorListComponent },
       { path: 'cadastro', component: ProfessorCadastroComponent },
       { path: 'editar/:id', component: ProfessorCadastroComponent },
-    ],
-  },
-  {
-    path: 'atividades',
-    children: [
-      { path: '', component: AtividadeListComponent },
-      { path: 'cadastro', component: AtividadeCadastroComponent },
-      { path: 'editar/:id', component: AtividadeCadastroComponent },
     ],
   },
   {
