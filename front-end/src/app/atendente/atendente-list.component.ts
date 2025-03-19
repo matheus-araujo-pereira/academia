@@ -4,6 +4,10 @@ import { AtendenteService, Atendente } from './atendente.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+/**
+ * Componente responsável por exibir a lista de atendentes,
+ * incluindo busca, edição e exclusão.
+ */
 @Component({
   selector: 'app-atendente-list',
   standalone: true,
@@ -22,31 +26,57 @@ export class AtendenteListComponent implements OnInit {
     this.loadAtendentes();
   }
 
+  /**
+   * Carrega a lista de atendentes do serviço, filtrando se necessário.
+   */
   loadAtendentes(): void {
     this.service.search(this.searchNome, this.searchCpf).subscribe({
-      next: (data) => (this.atendentes = data),
+      next: (data) => {
+        console.log('Retornou:', data);
+        this.atendentes = data;
+      },
       error: (err) => console.error(err),
     });
   }
 
+  /**
+   * Exclui um atendente pelo ID, solicitando confirmação antes.
+   */
   deleteAtendente(id: number): void {
     if (confirm('Deseja excluir esse atendente?')) {
       this.service.delete(id).subscribe({
-        next: () => this.loadAtendentes(),
-        error: (err) => console.error(err),
+        next: () => {
+          alert('Atendente excluído com sucesso!');
+          this.loadAtendentes();
+        },
+        error: (err) => {
+          alert('Erro ao excluir: ' + err?.error?.message);
+        },
       });
     }
   }
 
+  /**
+   * Redireciona para tela de edição de um atendente específico.
+   */
   editAtendente(id: number): void {
     this.router.navigate(['/atendentes/editar', id]);
   }
 
+  /**
+   * Redireciona para a tela de cadastro de um novo atendente.
+   */
   cadastrar(): void {
     this.router.navigate(['/atendentes/cadastro']);
   }
 
+  /**
+   * Realiza a busca de acordo com os filtros searchNome e searchCpf.
+   */
   search(): void {
+    this.searchNome = this.searchNome.trim();
+    this.searchCpf = this.searchCpf.trim();
+    console.log('Buscando com:', this.searchNome, this.searchCpf);
     this.loadAtendentes();
   }
 }

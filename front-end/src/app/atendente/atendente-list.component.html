@@ -6,8 +6,14 @@
         type="text"
         placeholder="Buscar por nome"
         [(ngModel)]="searchNome"
+        name="searchNome"
       />
-      <input type="text" placeholder="Buscar por CPF" [(ngModel)]="searchCpf" />
+      <input
+        type="text"
+        placeholder="Buscar por CPF"
+        [(ngModel)]="searchCpf"
+        name="searchCpf"
+      />
       <button (click)="search()">Buscar</button>
     </div>
   </div>
@@ -24,8 +30,10 @@
         <td>{{ a.nome }}</td>
         <td>{{ a.cpf }}</td>
         <td>
-          <button (click)="editAtendente(a.id)">Editar</button>
-          <button (click)="deleteAtendente(a.id)">Excluir</button>
+          <button class="editar" (click)="editAtendente(a.id)">Editar</button>
+          <button class="excluir" (click)="deleteAtendente(a.id)">
+            Excluir
+          </button>
         </td>
       </tr>
     </tbody>

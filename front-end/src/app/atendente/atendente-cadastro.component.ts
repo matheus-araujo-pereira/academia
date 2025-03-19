@@ -9,6 +9,10 @@ import {
 import { AtendenteService } from './atendente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/**
+ * Componente de cadastro/edição de Atendente. Gerencia o formulário
+ * e a interação com o serviço de Atendente.
+ */
 @Component({
   selector: 'app-atendente-cadastro',
   standalone: true,
@@ -50,6 +54,9 @@ export class AtendenteCadastroComponent implements OnInit {
     });
   }
 
+  /**
+   * Inicializa o formulário e verifica se é edição.
+   */
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
@@ -64,21 +71,37 @@ export class AtendenteCadastroComponent implements OnInit {
     });
   }
 
+  /**
+   * Volta para a lista de atendentes.
+   */
   voltar(): void {
     this.router.navigate(['/atendentes']);
   }
 
+  /**
+   * Cria ou atualiza o atendente, exibindo alertas de sucesso ou erro.
+   */
   salvar(): void {
     if (this.atendenteForm.valid) {
       if (this.isEdit && this.id) {
         this.service.update(this.id, this.atendenteForm.value).subscribe({
-          next: () => this.router.navigate(['/atendentes']),
-          error: (err) => console.error(err),
+          next: () => {
+            alert('Atendente atualizado com sucesso!');
+            this.router.navigate(['/atendentes']);
+          },
+          error: (err) => {
+            alert('Erro ao atualizar: ' + err?.error?.message);
+          },
         });
       } else {
         this.service.create(this.atendenteForm.value).subscribe({
-          next: () => this.router.navigate(['/atendentes']),
-          error: (err) => console.error(err),
+          next: () => {
+            alert('Atendente cadastrado com sucesso!');
+            this.router.navigate(['/atendentes']);
+          },
+          error: (err) => {
+            alert('Erro ao cadastrar: ' + err?.error?.message);
+          },
         });
       }
     }

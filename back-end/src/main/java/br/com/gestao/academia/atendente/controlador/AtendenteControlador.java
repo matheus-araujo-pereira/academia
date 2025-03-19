@@ -20,6 +20,10 @@ import br.com.gestao.academia.atendente.modelo.Atendente;
 import br.com.gestao.academia.atendente.repositorio.AtendenteRepositorio;
 import jakarta.validation.Valid;
 
+/**
+ * Controlador REST responsável pelo CRUD de Atendente, incluindo busca por
+ * nome/cpf.
+ */
 @RestController
 @RequestMapping("/api/atendentes")
 @CrossOrigin(origins = "*") // Para permitir CORS
@@ -36,17 +40,30 @@ public class AtendenteControlador {
         return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
     }
 
+    /**
+     * Retorna todos os atendentes ou filtra por nome/cpf se fornecidos.
+     */
     @GetMapping("/search")
     public ResponseEntity<List<Atendente>> search(@RequestParam(required = false) String nome,
             @RequestParam(required = false) String cpf) {
-        if ((nome == null || nome.isEmpty()) && (cpf == null || cpf.isEmpty())) {
+        String n = (nome == null ? "" : nome.trim());
+        String c = (cpf == null ? "" : cpf.trim());
+
+        if (n.isEmpty() && c.isEmpty()) {
             return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        } else if (!n.isEmpty() && !c.isEmpty()) {
+            return new ResponseEntity<>(repo.findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(n, c),
+                    HttpStatus.OK);
+        } else if (!n.isEmpty()) {
+            return new ResponseEntity<>(repo.findByNomeContainingIgnoreCase(n), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(repo.findByCpfContainingIgnoreCase(c), HttpStatus.OK);
         }
-        return new ResponseEntity<>(repo.findByNomeContainingIgnoreCaseOrCpfContainingIgnoreCase(
-                nome == null ? "" : nome,
-                cpf == null ? "" : cpf), HttpStatus.OK);
     }
 
+    /**
+     * Retorna um atendente específico por ID.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Atendente> getById(@PathVariable Long id) {
         Atendente atendente = repo.findById(id)
@@ -54,12 +71,18 @@ public class AtendenteControlador {
         return new ResponseEntity<>(atendente, HttpStatus.OK);
     }
 
+    /**
+     * Cria um novo atendente.
+     */
     @PostMapping
     public ResponseEntity<Atendente> create(@Valid @RequestBody Atendente atendente) {
         Atendente novo = repo.save(atendente);
         return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
 
+    /**
+     * Atualiza os dados de um atendente pelo ID.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Atendente> update(@PathVariable Long id, @Valid @RequestBody Atendente atendente) {
         Atendente existing = repo.findById(id)
@@ -77,6 +100,9 @@ public class AtendenteControlador {
         return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }
 
+    /**
+     * Exclui um atendente pelo ID.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         repo.deleteById(id);

@@ -24,13 +24,23 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+/**
+ * Entidade que representa um Atendente, contendo informações pessoais,
+ * dados de login e vínculo com um Endereco.
+ */
 @Entity
 @Table(name = "atendente", schema = "academia")
 public class Atendente {
+    /**
+     * Identificador único do atendente.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Nome completo do atendente.
+     */
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
@@ -56,6 +66,9 @@ public class Atendente {
     @Pattern(regexp = "^\\+?\\d{8,15}$", message = "Telefone deve ter entre 8 e 15 dígitos (com ou sem +)")
     private String telefone;
 
+    /**
+     * Estrutura de endereço associada ao atendente.
+     */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     @NotNull(message = "Endereço é obrigatório")
