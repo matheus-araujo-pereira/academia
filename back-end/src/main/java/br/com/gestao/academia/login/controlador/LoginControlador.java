@@ -67,6 +67,6 @@ public class LoginControlador {
             return new LoginResponse("Login realizado com sucesso", "cliente");
         }
 
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas");
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos");
     }
 }

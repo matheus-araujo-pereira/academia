@@ -35,11 +35,14 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value).subscribe({
         next: (resp) => {
-          this.mensagem = resp.mensagem + ' (' + resp.tipoUsuario + ')';
+          this.mensagem = `Login realizado com sucesso! Você é: ${resp.tipoUsuario}`;
+          alert(this.mensagem);
           this.router.navigate(['/menu']);
         },
         error: (err) => {
-          this.mensagem = 'Erro: ' + err.error.message;
+          this.mensagem =
+            'Erro ao realizar login: ' +
+            (err?.error?.message || 'Usuário ou senha inválidos.');
         },
       });
     }
