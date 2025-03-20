@@ -22,10 +22,8 @@ import br.com.gestao.academia.professor.modelo.Professor;
 import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import jakarta.validation.Valid;
 
-/**
- * Controlador REST que gerencia as requisições de login e retorna o tipo de
- * usuário.
- */
+import jakarta.servlet.http.HttpSession;
+
 @CrossOrigin(origins = "*") // Permite requisições de qualquer origem
 @RestController
 @RequestMapping("/api")
@@ -46,28 +44,32 @@ public class LoginControlador {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+    public LoginResponse login(@Valid @RequestBody LoginRequest request, HttpSession session) {
         // Verifica Administrador
         Optional<Administrador> adminOpt = adminRepo.findByLogin(request.getLogin());
         if (adminOpt.isPresent() && adminOpt.get().getSenha().equals(request.getSenha())) {
+            session.setAttribute("userLogin", request.getLogin());
             return new LoginResponse("Login realizado com sucesso", "administrador");
         }
 
         // Verifica Atendente
         Optional<Atendente> atendenteOpt = atendenteRepo.findByLogin(request.getLogin());
         if (atendenteOpt.isPresent() && atendenteOpt.get().getSenha().equals(request.getSenha())) {
+            session.setAttribute("userLogin", request.getLogin());
             return new LoginResponse("Login realizado com sucesso", "atendente");
         }
 
         // Verifica Professor
         Optional<Professor> professorOpt = professorRepo.findByLogin(request.getLogin());
         if (professorOpt.isPresent() && professorOpt.get().getSenha().equals(request.getSenha())) {
+            session.setAttribute("userLogin", request.getLogin());
             return new LoginResponse("Login realizado com sucesso", "professor");
         }
 
         // Verifica Cliente
         Optional<Cliente> clienteOpt = clienteRepo.findByLogin(request.getLogin());
         if (clienteOpt.isPresent() && clienteOpt.get().getSenha().equals(request.getSenha())) {
+            session.setAttribute("userLogin", request.getLogin());
             return new LoginResponse("Login realizado com sucesso", "cliente");
         }
 
