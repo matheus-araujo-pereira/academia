@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.gestao.academia.cliente.modelo.Cliente;
 import br.com.gestao.academia.professor.modelo.Professor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,5 +47,6 @@ public class Treino {
     private Professor professor;
 
     @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // evita recursão durante a serialização
     private List<Exercicio> exercicios;
 }

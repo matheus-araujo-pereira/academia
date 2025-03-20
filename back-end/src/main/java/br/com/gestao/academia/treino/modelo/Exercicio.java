@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data
 @AllArgsConstructor
@@ -38,5 +39,6 @@ public class Exercicio {
 
     @ManyToOne
     @JoinColumn(name = "treino_id")
+    @JsonBackReference // evita recursão na serialização
     private Treino treino;
 }

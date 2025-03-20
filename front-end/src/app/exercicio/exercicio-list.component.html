@@ -1,0 +1,39 @@
+<div class="exercicio-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Exercício</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por nome"
+        [(ngModel)]="searchNome"
+        name="searchNome"
+      />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Carga</th>
+        <th>Repetição</th>
+        <th>Séries</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ex of exercicios">
+        <td>{{ ex.nome }}</td>
+        <td>{{ ex.carga }}</td>
+        <td>{{ ex.repeticao }}</td>
+        <td>{{ ex.series }}</td>
+        <td>
+          <button class="editar" (click)="editExercicio(ex.id)">Editar</button>
+          <button class="excluir" (click)="deleteExercicio(ex.id)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

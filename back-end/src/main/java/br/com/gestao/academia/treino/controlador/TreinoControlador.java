@@ -65,11 +65,21 @@ public class TreinoControlador {
     public ResponseEntity<Treino> update(@PathVariable Long id, @Valid @RequestBody Treino treino) {
         Treino existente = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Treino não encontrado"));
+        // Atualiza os campos simples
         existente.setDescricao(treino.getDescricao());
         existente.setDataCriacao(treino.getDataCriacao());
         existente.setCliente(treino.getCliente());
         existente.setProfessor(treino.getProfessor());
-        existente.setExercicios(treino.getExercicios());
+        // Atualiza a coleção de exercícios de forma segura:
+        if (existente.getExercicios() != null) {
+            existente.getExercicios().clear();
+        }
+        if (treino.getExercicios() != null) {
+            treino.getExercicios().forEach(ex -> {
+                ex.setTreino(existente);
+                existente.getExercicios().add(ex);
+            });
+        }
         Treino atualizado = repo.save(existente);
         return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }

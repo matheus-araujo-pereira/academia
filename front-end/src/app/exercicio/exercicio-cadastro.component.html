@@ -1,0 +1,31 @@
+<div class="exercicio-cadastro">
+  <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Exercício</h2>
+  <form [formGroup]="exercicioForm" (ngSubmit)="salvar()">
+    <div>
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div>
+      <label for="descricao">Descrição</label>
+      <input id="descricao" formControlName="descricao" type="text" />
+    </div>
+    <div>
+      <label for="carga">Carga</label>
+      <input id="carga" formControlName="carga" type="number" />
+    </div>
+    <div>
+      <label for="repeticao">Repetição</label>
+      <input id="repeticao" formControlName="repeticao" type="number" />
+    </div>
+    <div>
+      <label for="series">Séries</label>
+      <input id="series" formControlName="series" type="number" />
+    </div>
+    <div class="actions">
+      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
+      <button type="submit" class="salvar">
+        {{ isEdit ? "Salvar" : "Cadastrar" }}
+      </button>
+    </div>
+  </form>
+</div>

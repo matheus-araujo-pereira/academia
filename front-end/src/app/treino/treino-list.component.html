@@ -1,0 +1,33 @@
+<div class="treino-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Treino</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por descrição"
+        [(ngModel)]="searchDescricao"
+        name="searchDescricao"
+      />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Descrição</th>
+        <th>Data de Criação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of treinos">
+        <td>{{ t.descricao }}</td>
+        <td>{{ t.dataCriacao }}</td>
+        <td>
+          <button class="editar" (click)="editTreino(t.id)">Editar</button>
+          <button class="excluir" (click)="deleteTreino(t.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,63 @@
+<div class="treino-cadastro">
+  <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Treino</h2>
+  <form [formGroup]="treinoForm" (ngSubmit)="salvar()">
+    <div>
+      <label for="descricao">Descrição</label>
+      <input id="descricao" formControlName="descricao" type="text" />
+    </div>
+    <div>
+      <label for="dataCriacao">Data de Criação</label>
+      <input id="dataCriacao" formControlName="dataCriacao" type="date" />
+    </div>
+
+    <fieldset>
+      <legend>Exercícios</legend>
+      <div
+        formArrayName="exercicios"
+        *ngFor="let exercicio of exercicios.controls; let i = index"
+      >
+        <div [formGroupName]="i" class="exercicio-item">
+          <div>
+            <label for="nome-{{ i }}">Nome</label>
+            <input id="nome-{{ i }}" formControlName="nome" type="text" />
+          </div>
+          <div>
+            <label for="descricao-{{ i }}">Descrição</label>
+            <input
+              id="descricao-{{ i }}"
+              formControlName="descricao"
+              type="text"
+            />
+          </div>
+          <div>
+            <label for="carga-{{ i }}">Carga</label>
+            <input id="carga-{{ i }}" formControlName="carga" type="number" />
+          </div>
+          <div>
+            <label for="repeticao-{{ i }}">Repetição</label>
+            <input
+              id="repeticao-{{ i }}"
+              formControlName="repeticao"
+              type="number"
+            />
+          </div>
+          <div>
+            <label for="series-{{ i }}">Séries</label>
+            <input id="series-{{ i }}" formControlName="series" type="number" />
+          </div>
+          <button type="button" (click)="removeExercicio(i)">Remover</button>
+        </div>
+      </div>
+      <button type="button" (click)="addExercicio()">
+        Adicionar Exercício
+      </button>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
+      <button type="submit" class="salvar">
+        {{ isEdit ? "Salvar" : "Cadastrar" }}
+      </button>
+    </div>
+  </form>
+</div>
