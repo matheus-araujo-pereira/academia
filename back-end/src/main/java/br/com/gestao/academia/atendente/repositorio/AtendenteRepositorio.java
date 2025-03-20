@@ -28,4 +28,9 @@ public interface AtendenteRepositorio extends JpaRepository<Atendente, Long> {
     List<Atendente> findByCpfContainingIgnoreCase(String cpf);
 
     List<Atendente> findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(String nome, String cpf);
+
+    /**
+     * Retorna lista de atendentes ordenados pelo nome em ordem ascendente.
+     */
+    List<Atendente> findAllByOrderByNomeAsc();
 }

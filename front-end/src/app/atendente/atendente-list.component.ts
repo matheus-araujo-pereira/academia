@@ -33,7 +33,7 @@ export class AtendenteListComponent implements OnInit {
     this.service.search(this.searchNome, this.searchCpf).subscribe({
       next: (data) => {
         console.log('Retornou:', data);
-        this.atendentes = data;
+        this.atendentes = data.sort((a, b) => a.nome.localeCompare(b.nome));
       },
       error: (err) => console.error(err),
     });

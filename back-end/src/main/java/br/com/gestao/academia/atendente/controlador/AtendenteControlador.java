@@ -37,7 +37,7 @@ public class AtendenteControlador {
 
     @GetMapping
     public ResponseEntity<List<Atendente>> findAll() {
-        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.findAllByOrderByNomeAsc(), HttpStatus.OK);
     }
 
     /**
