@@ -1,0 +1,17 @@
+<div>
+  <h2>{{ isEdit ? "Editar Treino" : "Cadastrar Treino" }}</h2>
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div>
+      <label for="descricao">Descrição:</label>
+      <input id="descricao" formControlName="descricao" type="text" />
+    </div>
+
+    <div>
+      <label for="dataCriacao">Data de Criação:</label>
+      <input id="dataCriacao" formControlName="dataCriacao" type="date" />
+    </div>
+
+    <button type="submit">{{ isEdit ? "Atualizar" : "Salvar" }}</button>
+    <button type="button" (click)="voltar()">Cancelar</button>
+  </form>
+</div>

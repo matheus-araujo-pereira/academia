@@ -14,6 +14,8 @@ import { PlanoCadastroComponent } from './plano/plano-cadastro.component';
 import { PlanoListComponent } from './plano/plano-list.component';
 import { ClienteListComponent } from './cliente/cliente-list.component';
 import { ClienteCadastroComponent } from './cliente/cliente-cadastro.component';
+import { TreinoListComponent } from './treino/treino-list.component';
+import { TreinoCadastroComponent } from './treino/treino-cadastro.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,6 +50,14 @@ export const routes: Routes = [
       { path: '', component: ClienteListComponent },
       { path: 'cadastro', component: ClienteCadastroComponent },
       { path: 'editar/:id', component: ClienteCadastroComponent },
+    ],
+  },
+  {
+    path: 'treinos',
+    children: [
+      { path: '', component: TreinoListComponent },
+      { path: 'cadastro', component: TreinoCadastroComponent },
+      { path: 'editar/:id', component: TreinoCadastroComponent },
     ],
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
