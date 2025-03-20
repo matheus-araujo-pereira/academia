@@ -18,9 +18,11 @@ import { TreinoListComponent } from './treino/treino-list.component';
 import { TreinoCadastroComponent } from './treino/treino-cadastro.component';
 import { AtividadeCadastroComponent } from './atividade/atividade-cadastro.component';
 import { AtividadeListComponent } from './atividade/atividade-list.component';
+import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'dados-pessoais', component: DadosPessoaisComponent },
   { path: 'menu', component: MenuComponent },
   {
     path: 'atendentes',

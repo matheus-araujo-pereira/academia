@@ -40,7 +40,8 @@ export class LoginComponent {
         next: (resp) => {
           this.mensagem = `Login realizado com sucesso! Você é: ${resp.tipoUsuario}`;
           alert(this.mensagem);
-          this.router.navigate(['/menu']);
+          // Alterado: redireciona para /dados-pessoais em vez de /menu
+          this.router.navigate(['/dados-pessoais']);
         },
         error: (err) => {
           this.mensagem =
