@@ -48,7 +48,7 @@ public class Atendente {
     private String login;
 
     @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
+    @Size(min = 4, message = "Senha deve ter pelo menos 4 caracteres")
     private String senha;
 
     @Pattern(regexp = "^[0-9]{11}$", message = "CPF deve ter 11 dígitos")

@@ -33,4 +33,19 @@ public interface AtendenteRepositorio extends JpaRepository<Atendente, Long> {
      * Retorna lista de atendentes ordenados pelo nome em ordem ascendente.
      */
     List<Atendente> findAllByOrderByNomeAsc();
+
+    /**
+     * Verifica se existe um atendente com o CPF fornecido.
+     */
+    boolean existsByCpf(String cpf);
+
+    /**
+     * Verifica se existe um atendente com o RG fornecido.
+     */
+    boolean existsByRg(String rg);
+
+    /**
+     * Verifica se existe um atendente com o login fornecido.
+     */
+    boolean existsByLogin(String login);
 }

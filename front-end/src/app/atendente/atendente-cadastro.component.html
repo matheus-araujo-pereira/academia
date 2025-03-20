@@ -3,36 +3,184 @@
   <form [formGroup]="atendenteForm" (ngSubmit)="salvar()">
     <div>
       <label for="nome">Nome</label>
-      <input id="nome" formControlName="nome" type="text" />
+      <input
+        id="nome"
+        formControlName="nome"
+        type="text"
+        placeholder="Nome Completo do Usuário"
+        onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('nome')?.invalid &&
+          atendenteForm.get('nome')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('nome')?.errors?.['required']"
+          >Nome é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('nome')?.errors?.['pattern']"
+          >Nome inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="login">Login</label>
-      <input id="login" formControlName="login" type="text" />
+      <input
+        id="login"
+        formControlName="login"
+        type="text"
+        placeholder="nome.sobrenome"
+        onkeypress="return /[a-zA-Z.]/i.test(event.key)"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('login')?.invalid &&
+          atendenteForm.get('login')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('login')?.errors?.['required']"
+          >Login é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('login')?.errors?.['pattern']"
+          >Login inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="senha">Senha</label>
-      <input id="senha" formControlName="senha" type="password" />
+      <input
+        id="senha"
+        formControlName="senha"
+        type="password"
+        placeholder="Mínimo 4 caracteres"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('senha')?.invalid &&
+          atendenteForm.get('senha')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('senha')?.errors?.['required']"
+          >Senha é obrigatória.</small
+        >
+        <small *ngIf="atendenteForm.get('senha')?.errors?.['minlength']"
+          >Senha deve ter pelo menos 4 caracteres.</small
+        >
+      </div>
     </div>
     <div>
       <label for="cpf">CPF</label>
-      <input id="cpf" formControlName="cpf" type="text" />
+      <input
+        id="cpf"
+        formControlName="cpf"
+        type="text"
+        placeholder="000.000.000-00"
+        maxlength="14"
+        (input)="formatarCPF()"
+        (blur)="validarCPF()"
+        onkeypress="return /[0-9]/i.test(event.key)"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('cpf')?.invalid && atendenteForm.get('cpf')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('cpf')?.errors?.['required']"
+          >CPF é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('cpf')?.errors?.['pattern']"
+          >CPF inválido.</small
+        >
+      </div>
     </div>
     <!-- Demais campos do atendente -->
     <div>
       <label for="rg">RG</label>
-      <input id="rg" formControlName="rg" type="text" />
+      <input
+        id="rg"
+        formControlName="rg"
+        type="text"
+        placeholder="00.000.000-0"
+        maxlength="12"
+        (input)="formatarRG()"
+        (blur)="validarRG()"
+        onkeypress="return /[0-9]/i.test(event.key)"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('rg')?.invalid && atendenteForm.get('rg')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('rg')?.errors?.['required']"
+          >RG é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('rg')?.errors?.['pattern']"
+          >RG inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="dataNascimento">Data de Nascimento</label>
       <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+      <div
+        *ngIf="
+          atendenteForm.get('dataNascimento')?.invalid &&
+          atendenteForm.get('dataNascimento')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('dataNascimento')?.errors?.['required']"
+          >Data de nascimento é obrigatória.</small
+        >
+      </div>
     </div>
     <div>
       <label for="email">E-mail</label>
-      <input id="email" formControlName="email" type="email" />
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        placeholder="email@ex.com"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('email')?.invalid &&
+          atendenteForm.get('email')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('email')?.errors?.['required']"
+          >E-mail é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('email')?.errors?.['email']"
+          >E-mail inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="telefone">Telefone</label>
-      <input id="telefone" formControlName="telefone" type="text" />
+      <input
+        id="telefone"
+        formControlName="telefone"
+        type="text"
+        placeholder="(00) 00000-0000"
+        maxlength="15"
+        (input)="formatarTelefone()"
+        (blur)="validarTelefone()"
+        onkeypress="return /[0-9]/i.test(event.key)"
+      />
+      <div
+        *ngIf="
+          atendenteForm.get('telefone')?.invalid &&
+          atendenteForm.get('telefone')?.touched
+        "
+      >
+        <small *ngIf="atendenteForm.get('telefone')?.errors?.['required']"
+          >Telefone é obrigatório.</small
+        >
+        <small *ngIf="atendenteForm.get('telefone')?.errors?.['pattern']"
+          >Telefone inválido.</small
+        >
+      </div>
     </div>
 
     <!-- Grupo de Endereço -->
@@ -41,26 +189,102 @@
       <div>
         <label for="estado">Estado</label>
         <input id="estado" formControlName="estado" type="text" />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.estado')?.invalid &&
+            atendenteForm.get('endereco.estado')?.touched
+          "
+        >
+          <small
+            *ngIf="atendenteForm.get('endereco.estado')?.errors?.['required']"
+            >Estado é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="cidade">Cidade</label>
         <input id="cidade" formControlName="cidade" type="text" />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.cidade')?.invalid &&
+            atendenteForm.get('endereco.cidade')?.touched
+          "
+        >
+          <small
+            *ngIf="atendenteForm.get('endereco.cidade')?.errors?.['required']"
+            >Cidade é obrigatória.</small
+          >
+        </div>
       </div>
       <div>
         <label for="bairro">Bairro</label>
         <input id="bairro" formControlName="bairro" type="text" />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.bairro')?.invalid &&
+            atendenteForm.get('endereco.bairro')?.touched
+          "
+        >
+          <small
+            *ngIf="atendenteForm.get('endereco.bairro')?.errors?.['required']"
+            >Bairro é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="logradouro">Logradouro</label>
         <input id="logradouro" formControlName="logradouro" type="text" />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.logradouro')?.invalid &&
+            atendenteForm.get('endereco.logradouro')?.touched
+          "
+        >
+          <small
+            *ngIf="atendenteForm.get('endereco.logradouro')?.errors?.['required']"
+            >Logradouro é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="numero">Número</label>
         <input id="numero" formControlName="numero" type="text" />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.numero')?.invalid &&
+            atendenteForm.get('endereco.numero')?.touched
+          "
+        >
+          <small
+            *ngIf="atendenteForm.get('endereco.numero')?.errors?.['required']"
+            >Número é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="cep">CEP</label>
-        <input id="cep" formControlName="cep" type="text" />
+        <input
+          id="cep"
+          formControlName="cep"
+          type="text"
+          placeholder="00000-000"
+          maxlength="9"
+          (input)="formatarCEP()"
+          onkeypress="return /[0-9]/i.test(event.key)"
+        />
+        <div
+          *ngIf="
+            atendenteForm.get('endereco.cep')?.invalid &&
+            atendenteForm.get('endereco.cep')?.touched
+          "
+        >
+          <small *ngIf="atendenteForm.get('endereco.cep')?.errors?.['required']"
+            >CEP é obrigatório.</small
+          >
+          <small *ngIf="atendenteForm.get('endereco.cep')?.errors?.['pattern']"
+            >CEP inválido.</small
+          >
+        </div>
       </div>
     </fieldset>
 

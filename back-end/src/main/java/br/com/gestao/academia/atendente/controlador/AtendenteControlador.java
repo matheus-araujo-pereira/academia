@@ -76,6 +76,15 @@ public class AtendenteControlador {
      */
     @PostMapping
     public ResponseEntity<Atendente> create(@Valid @RequestBody Atendente atendente) {
+        if (repo.existsByCpf(atendente.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
+        }
+        if (repo.existsByRg(atendente.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (repo.existsByLogin(atendente.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
         Atendente novo = repo.save(atendente);
         return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
@@ -87,6 +96,15 @@ public class AtendenteControlador {
     public ResponseEntity<Atendente> update(@PathVariable Long id, @Valid @RequestBody Atendente atendente) {
         Atendente existing = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Atendente não encontrado"));
+        if (!existing.getCpf().equals(atendente.getCpf()) && repo.existsByCpf(atendente.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
+        }
+        if (!existing.getRg().equals(atendente.getRg()) && repo.existsByRg(atendente.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (!existing.getLogin().equals(atendente.getLogin()) && repo.existsByLogin(atendente.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
         existing.setNome(atendente.getNome());
         existing.setLogin(atendente.getLogin());
         existing.setSenha(atendente.getSenha());
