@@ -1,5 +1,22 @@
 <div class="dados-pessoais">
   <h2>Dados Pessoais</h2>
-  <pre *ngIf="usuario">{{ usuario | json }}</pre>
+  <div *ngIf="usuario">
+    <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+    <p><strong>Login:</strong> {{ usuario.login }}</p>
+    <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+    <p><strong>RG:</strong> {{ usuario.rg }}</p>
+    <p><strong>Data de Nascimento:</strong> {{ usuario.dataNascimento }}</p>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Telefone:</strong> {{ usuario.telefone }}</p>
+    <div *ngIf="usuario.endereco">
+      <h3>Endereço</h3>
+      <p><strong>Estado:</strong> {{ usuario.endereco.estado }}</p>
+      <p><strong>Cidade:</strong> {{ usuario.endereco.cidade }}</p>
+      <p><strong>Bairro:</strong> {{ usuario.endereco.bairro }}</p>
+      <p><strong>Logradouro:</strong> {{ usuario.endereco.logradouro }}</p>
+      <p><strong>Número:</strong> {{ usuario.endereco.numero }}</p>
+      <p><strong>CEP:</strong> {{ usuario.endereco.cep }}</p>
+    </div>
+  </div>
   <p *ngIf="!usuario">Carregando...</p>
 </div>

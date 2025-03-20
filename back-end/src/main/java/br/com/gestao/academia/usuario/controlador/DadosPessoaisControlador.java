@@ -50,7 +50,12 @@ public class DadosPessoaisControlador {
         if (adminOpt.isPresent()) {
             Administrador admin = adminOpt.get();
             dados.put("nome", admin.getNome());
+            dados.put("login", admin.getLogin());
+            dados.put("cpf", admin.getCpf());
+            dados.put("rg", admin.getRg());
+            dados.put("dataNascimento", admin.getDataNascimento());
             dados.put("email", admin.getEmail());
+            dados.put("telefone", admin.getTelefone());
             dados.put("tipoUsuario", "administrador");
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }
@@ -60,7 +65,13 @@ public class DadosPessoaisControlador {
         if (atendenteOpt.isPresent()) {
             Atendente atendente = atendenteOpt.get();
             dados.put("nome", atendente.getNome());
+            dados.put("login", atendente.getLogin());
+            dados.put("cpf", atendente.getCpf());
+            dados.put("rg", atendente.getRg());
+            dados.put("dataNascimento", atendente.getDataNascimento());
             dados.put("email", atendente.getEmail());
+            dados.put("telefone", atendente.getTelefone());
+            dados.put("endereco", atendente.getEndereco());
             dados.put("tipoUsuario", "atendente");
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }
@@ -70,7 +81,13 @@ public class DadosPessoaisControlador {
         if (professorOpt.isPresent()) {
             Professor professor = professorOpt.get();
             dados.put("nome", professor.getNome());
+            dados.put("login", professor.getLogin());
+            dados.put("cpf", professor.getCpf());
+            dados.put("rg", professor.getRg());
+            dados.put("dataNascimento", professor.getDataNascimento());
             dados.put("email", professor.getEmail());
+            dados.put("telefone", professor.getTelefone());
+            dados.put("endereco", professor.getEndereco());
             dados.put("tipoUsuario", "professor");
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }
@@ -80,7 +97,13 @@ public class DadosPessoaisControlador {
         if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
             dados.put("nome", cliente.getNome());
+            dados.put("login", cliente.getLogin());
+            dados.put("cpf", cliente.getCpf());
+            dados.put("rg", cliente.getRg());
+            dados.put("dataNascimento", cliente.getDataNascimento());
             dados.put("email", cliente.getEmail());
+            dados.put("telefone", cliente.getTelefone());
+            dados.put("endereco", cliente.getEndereco());
             dados.put("tipoUsuario", "cliente");
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }

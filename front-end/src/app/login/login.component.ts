@@ -40,7 +40,7 @@ export class LoginComponent {
         next: (resp) => {
           this.mensagem = `Login realizado com sucesso! Você é: ${resp.tipoUsuario}`;
           alert(this.mensagem);
-          // Alterado: redireciona para /dados-pessoais em vez de /menu
+          sessionStorage.setItem('userLogin', this.loginForm.value.login); // Armazena o login no sessionStorage
           this.router.navigate(['/dados-pessoais']);
         },
         error: (err) => {
