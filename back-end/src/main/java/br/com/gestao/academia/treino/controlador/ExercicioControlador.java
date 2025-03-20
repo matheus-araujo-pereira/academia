@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.gestao.academia.treino.modelo.Exercicio;
 import br.com.gestao.academia.treino.repositorio.ExercicioRepositorio;
-import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,53 +24,55 @@ import jakarta.validation.Valid;
 public class ExercicioControlador {
 
     private final ExercicioRepositorio repo;
-    private final ProfessorRepositorio professorRepo;
 
     public ExercicioControlador(
-            ExercicioRepositorio repo,
-            ProfessorRepositorio professorRepo) {
+            ExercicioRepositorio repo) {
         this.repo = repo;
-        this.professorRepo = professorRepo;
     }
 
     @GetMapping
-    public List<Exercicio> findAll() {
-        return repo.findAll();
+    public ResponseEntity<List<Exercicio>> findAll() {
+        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Exercicio>> search(@RequestParam(required = false) String nome) {
+        String n = (nome == null ? "" : nome.trim());
+        if (n.isEmpty()) {
+            return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(repo.findByNomeContainingIgnoreCase(n), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Exercicio> getById(@PathVariable Long id) {
+        Exercicio exercicio = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercício não encontrado"));
+        return new ResponseEntity<>(exercicio, HttpStatus.OK);
     }
 
     @PostMapping
-    public Exercicio save(@RequestParam String login, @Valid @RequestBody Exercicio exercicio) {
-        var professorOpt = professorRepo.findByLogin(login);
-        if (professorOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Apenas professores podem criar exercícios");
-        }
-        return repo.save(exercicio);
+    public ResponseEntity<Exercicio> save(@Valid @RequestBody Exercicio exercicio) {
+        Exercicio novo = repo.save(exercicio);
+        return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Exercicio update(@PathVariable Long id,
-            @RequestParam String login,
-            @Valid @RequestBody Exercicio exercicio) {
-        var professorOpt = professorRepo.findByLogin(login);
-        if (professorOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Apenas professores podem editar exercícios");
-        }
-        Exercicio existing = repo.findById(id)
+    public ResponseEntity<Exercicio> update(@PathVariable Long id, @Valid @RequestBody Exercicio exercicio) {
+        Exercicio existente = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercício não encontrado"));
-        existing.setNome(exercicio.getNome());
-        existing.setDescricao(exercicio.getDescricao());
-        existing.setCarga(exercicio.getCarga());
-        existing.setRepeticao(exercicio.getRepeticao());
-        existing.setSeries(exercicio.getSeries());
-        return repo.save(existing);
+        existente.setNome(exercicio.getNome());
+        existente.setDescricao(exercicio.getDescricao());
+        existente.setCarga(exercicio.getCarga());
+        existente.setRepeticao(exercicio.getRepeticao());
+        existente.setSeries(exercicio.getSeries());
+        Exercicio atualizado = repo.save(existente);
+        return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestParam String login) {
-        var professorOpt = professorRepo.findByLogin(login);
-        if (professorOpt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Apenas professores podem excluir exercícios");
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         repo.deleteById(id);
         return ResponseEntity.noContent().build();
     }
