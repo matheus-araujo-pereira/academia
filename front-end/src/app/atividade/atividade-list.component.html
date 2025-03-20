@@ -1,0 +1,39 @@
+<div class="atividade-list">
+  <div class="header">
+    <button class="cadastrar" (click)="cadastrar()">Cadastrar Atividade</button>
+    <div class="search">
+      <input
+        type="text"
+        placeholder="Buscar por nome"
+        [(ngModel)]="searchNome"
+        name="searchNome"
+      />
+      <button (click)="search()">Buscar</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Horário</th>
+        <th>Dias da Semana</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of atividades">
+        <td>{{ a.nome }}</td>
+        <td>{{ a.descricao }}</td>
+        <td>{{ a.horaInicio }} - {{ a.horaFim }}</td>
+        <td>{{ a.diasSemana }}</td>
+        <td>
+          <button class="editar" (click)="editAtividade(a.id)">Editar</button>
+          <button class="excluir" (click)="deleteAtividade(a.id)">
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

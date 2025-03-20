@@ -1,0 +1,41 @@
+<div class="atividade-cadastro">
+  <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Atividade</h2>
+  <form [formGroup]="atividadeForm" (ngSubmit)="salvar()">
+    <div>
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div>
+      <label for="descricao">Descrição</label>
+      <input id="descricao" formControlName="descricao" type="text" />
+    </div>
+    <div>
+      <label for="horaInicio">Hora Início</label>
+      <input id="horaInicio" formControlName="horaInicio" type="time" />
+    </div>
+    <div>
+      <label for="horaFim">Hora Fim</label>
+      <input id="horaFim" formControlName="horaFim" type="time" />
+    </div>
+    <div>
+      <label for="diasSemana">Dias da Semana</label>
+      <input
+        id="diasSemana"
+        formControlName="diasSemana"
+        type="text"
+        placeholder="Ex: Seg, Qua, Sex"
+      />
+    </div>
+    <div>
+      <label for="professor">Professor</label>
+      <input id="professor" formControlName="professor" type="text" />
+    </div>
+    <!-- Adicione campos adicionais se necessário -->
+    <div class="actions">
+      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
+      <button type="submit" class="salvar">
+        {{ isEdit ? "Salvar" : "Cadastrar" }}
+      </button>
+    </div>
+  </form>
+</div>
