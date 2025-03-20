@@ -29,17 +29,25 @@ public class AtividadeControlador {
     }
 
     @GetMapping
-    public List<Atividade> findAll() {
-        return repo.findAll();
+    public ResponseEntity<List<Atividade>> findAll() {
+        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Atividade> getById(@PathVariable Long id) {
+        Atividade atividade = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Atividade não encontrada"));
+        return new ResponseEntity<>(atividade, HttpStatus.OK);
     }
 
     @PostMapping
-    public Atividade save(@Valid @RequestBody Atividade atividade) {
-        return repo.save(atividade);
+    public ResponseEntity<Atividade> save(@Valid @RequestBody Atividade atividade) {
+        Atividade novo = repo.save(atividade);
+        return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Atividade update(@PathVariable Long id, @Valid @RequestBody Atividade atividade) {
+    public ResponseEntity<Atividade> update(@PathVariable Long id, @Valid @RequestBody Atividade atividade) {
         Atividade existing = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Atividade não encontrada"));
         existing.setNome(atividade.getNome());
@@ -49,7 +57,8 @@ public class AtividadeControlador {
         existing.setDiasSemana(atividade.getDiasSemana());
         existing.setProfessor(atividade.getProfessor());
         existing.setClientes(atividade.getClientes());
-        return repo.save(existing);
+        Atividade atualizado = repo.save(existing);
+        return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
