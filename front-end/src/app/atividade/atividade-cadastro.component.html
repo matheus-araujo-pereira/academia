@@ -3,19 +3,69 @@
   <form [formGroup]="atividadeForm" (ngSubmit)="salvar()">
     <div>
       <label for="nome">Nome</label>
-      <input id="nome" formControlName="nome" type="text" />
+      <input
+        id="nome"
+        formControlName="nome"
+        type="text"
+        placeholder="Nome da Atividade"
+      />
+      <div
+        *ngIf="
+          atividadeForm.get('nome')?.invalid &&
+          atividadeForm.get('nome')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('nome')?.errors?.['required']"
+          >Nome é obrigatório.</small
+        >
+      </div>
     </div>
     <div>
       <label for="descricao">Descrição</label>
-      <input id="descricao" formControlName="descricao" type="text" />
+      <input
+        id="descricao"
+        formControlName="descricao"
+        type="text"
+        placeholder="Descrição da Atividade"
+      />
+      <div
+        *ngIf="
+          atividadeForm.get('descricao')?.invalid &&
+          atividadeForm.get('descricao')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('descricao')?.errors?.['required']"
+          >Descrição é obrigatória.</small
+        >
+      </div>
     </div>
     <div>
       <label for="horaInicio">Hora Início</label>
       <input id="horaInicio" formControlName="horaInicio" type="time" />
+      <div
+        *ngIf="
+          atividadeForm.get('horaInicio')?.invalid &&
+          atividadeForm.get('horaInicio')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('horaInicio')?.errors?.['required']"
+          >Hora de início é obrigatória.</small
+        >
+      </div>
     </div>
     <div>
       <label for="horaFim">Hora Fim</label>
       <input id="horaFim" formControlName="horaFim" type="time" />
+      <div
+        *ngIf="
+          atividadeForm.get('horaFim')?.invalid &&
+          atividadeForm.get('horaFim')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('horaFim')?.errors?.['required']"
+          >Hora de fim é obrigatória.</small
+        >
+      </div>
     </div>
     <div>
       <label for="diasSemana">Dias da Semana</label>
@@ -25,6 +75,16 @@
         type="text"
         placeholder="Ex: Seg, Qua, Sex"
       />
+      <div
+        *ngIf="
+          atividadeForm.get('diasSemana')?.invalid &&
+          atividadeForm.get('diasSemana')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('diasSemana')?.errors?.['required']"
+          >Dias da semana são obrigatórios.</small
+        >
+      </div>
     </div>
     <div>
       <label for="professor">Professor</label>
