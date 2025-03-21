@@ -6,36 +6,205 @@
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Professor</h2>
   <form [formGroup]="professorForm" (ngSubmit)="salvar()">
     <div>
-      <label for="nome">Nome</label>
-      <input id="nome" formControlName="nome" type="text" />
+      <label for="nome">Nome do Professor</label>
+      <input
+        id="nome"
+        formControlName="nome"
+        type="text"
+        placeholder="Informe o nome completo"
+      />
+      <small
+        *ngIf="
+          professorForm.get('nome')?.hasError('required') &&
+          professorForm.get('nome')?.touched
+        "
+      >
+        Por favor, preencha o campo Nome
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('nome')?.hasError('pattern') &&
+          professorForm.get('nome')?.touched
+        "
+      >
+        O Nome só deve conter letras e espaços
+      </small>
     </div>
     <div>
       <label for="login">Login</label>
-      <input id="login" formControlName="login" type="text" />
+      <input
+        id="login"
+        formControlName="login"
+        type="text"
+        placeholder="ex: nome.sobrenome"
+      />
+      <small
+        *ngIf="
+          professorForm.get('login')?.hasError('required') &&
+          professorForm.get('login')?.touched
+        "
+      >
+        Por favor, preencha o campo Login
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('login')?.hasError('pattern') &&
+          professorForm.get('login')?.touched
+        "
+      >
+        O Login precisa seguir o padrão "nome.sobrenome"
+      </small>
     </div>
     <div>
       <label for="senha">Senha</label>
-      <input id="senha" formControlName="senha" type="password" />
+      <input
+        id="senha"
+        formControlName="senha"
+        type="password"
+        placeholder="Informe uma senha"
+      />
+      <small
+        *ngIf="
+          professorForm.get('senha')?.hasError('required') &&
+          professorForm.get('senha')?.touched
+        "
+      >
+        Por favor, preencha o campo Senha
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('senha')?.hasError('minlength') &&
+          professorForm.get('senha')?.touched
+        "
+      >
+        A Senha deve ter pelo menos 4 caracteres
+      </small>
     </div>
     <div>
       <label for="cpf">CPF</label>
-      <input id="cpf" formControlName="cpf" type="text" />
+      <input
+        id="cpf"
+        formControlName="cpf"
+        type="text"
+        maxlength="14"
+        placeholder="Somente números"
+        (input)="formatarCPF()"
+        (blur)="validarCPF()"
+      />
+      <small
+        *ngIf="
+          professorForm.get('cpf')?.hasError('required') &&
+          professorForm.get('cpf')?.touched
+        "
+      >
+        Por favor, preencha o campo CPF
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('cpf')?.hasError('pattern') &&
+          professorForm.get('cpf')?.touched
+        "
+      >
+        O CPF deve ter 11 dígitos numéricos
+      </small>
     </div>
     <div>
       <label for="rg">RG</label>
-      <input id="rg" formControlName="rg" type="text" />
+      <input
+        id="rg"
+        formControlName="rg"
+        type="text"
+        maxlength="12"
+        placeholder="Somente números"
+        (input)="formatarRG()"
+        (blur)="validarRG()"
+      />
+      <small
+        *ngIf="
+          professorForm.get('rg')?.hasError('required') &&
+          professorForm.get('rg')?.touched
+        "
+      >
+        Por favor, preencha o campo RG
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('rg')?.hasError('pattern') &&
+          professorForm.get('rg')?.touched
+        "
+      >
+        O RG deve ter 9 dígitos
+      </small>
     </div>
     <div>
       <label for="dataNascimento">Data de Nascimento</label>
-      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+      <input
+        id="dataNascimento"
+        formControlName="dataNascimento"
+        type="date"
+        placeholder="Selecione a data"
+      />
+      <small
+        *ngIf="
+          professorForm.get('dataNascimento')?.hasError('required') &&
+          professorForm.get('dataNascimento')?.touched
+        "
+      >
+        Por favor, informe a Data de Nascimento
+      </small>
     </div>
     <div>
       <label for="email">E-mail</label>
-      <input id="email" formControlName="email" type="email" />
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        placeholder="ex: email@dominio.com"
+      />
+      <small
+        *ngIf="
+          professorForm.get('email')?.hasError('required') &&
+          professorForm.get('email')?.touched
+        "
+      >
+        Por favor, preencha o campo E-mail
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('email')?.hasError('email') &&
+          professorForm.get('email')?.touched
+        "
+      >
+        Formato de E-mail inválido
+      </small>
     </div>
     <div>
       <label for="telefone">Telefone</label>
-      <input id="telefone" formControlName="telefone" type="text" />
+      <input
+        id="telefone"
+        formControlName="telefone"
+        type="text"
+        maxlength="15"
+        placeholder="Somente números"
+        (input)="formatarTelefone()"
+        (blur)="validarTelefone()"
+      />
+      <small
+        *ngIf="
+          professorForm.get('telefone')?.hasError('required') &&
+          professorForm.get('telefone')?.touched
+        "
+      >
+        Por favor, preencha o campo Telefone
+      </small>
+      <small
+        *ngIf="
+          professorForm.get('telefone')?.hasError('pattern') &&
+          professorForm.get('telefone')?.touched
+        "
+      >
+        O Telefone deve ter 11 dígitos (ex: 11999999999)
+      </small>
     </div>
 
     <!-- Grupo de Endereço -->
@@ -43,27 +212,114 @@
       <legend>Endereço</legend>
       <div>
         <label for="estado">Estado</label>
-        <input id="estado" formControlName="estado" type="text" />
+        <input
+          id="estado"
+          formControlName="estado"
+          type="text"
+          placeholder="UF"
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.estado')?.hasError('required') &&
+            professorForm.get('endereco.estado')?.touched
+          "
+        >
+          Por favor, preencha o Estado
+        </small>
       </div>
       <div>
         <label for="cidade">Cidade</label>
-        <input id="cidade" formControlName="cidade" type="text" />
+        <input
+          id="cidade"
+          formControlName="cidade"
+          type="text"
+          placeholder="Cidade"
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.cidade')?.hasError('required') &&
+            professorForm.get('endereco.cidade')?.touched
+          "
+        >
+          Por favor, preencha a Cidade
+        </small>
       </div>
       <div>
         <label for="bairro">Bairro</label>
-        <input id="bairro" formControlName="bairro" type="text" />
+        <input
+          id="bairro"
+          formControlName="bairro"
+          type="text"
+          placeholder="Bairro"
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.bairro')?.hasError('required') &&
+            professorForm.get('endereco.bairro')?.touched
+          "
+        >
+          Por favor, preencha o Bairro
+        </small>
       </div>
       <div>
         <label for="logradouro">Logradouro</label>
-        <input id="logradouro" formControlName="logradouro" type="text" />
+        <input
+          id="logradouro"
+          formControlName="logradouro"
+          type="text"
+          placeholder="Rua, Avenida, etc."
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.logradouro')?.hasError('required') &&
+            professorForm.get('endereco.logradouro')?.touched
+          "
+        >
+          Por favor, preencha o Logradouro
+        </small>
       </div>
       <div>
         <label for="numero">Número</label>
-        <input id="numero" formControlName="numero" type="text" />
+        <input
+          id="numero"
+          formControlName="numero"
+          type="text"
+          placeholder="Número"
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.numero')?.hasError('required') &&
+            professorForm.get('endereco.numero')?.touched
+          "
+        >
+          Por favor, informe o Número
+        </small>
       </div>
       <div>
         <label for="cep">CEP</label>
-        <input id="cep" formControlName="cep" type="text" />
+        <input
+          id="cep"
+          formControlName="cep"
+          type="text"
+          placeholder="Somente números"
+          (blur)="formatarCEP()"
+        />
+        <small
+          *ngIf="
+            professorForm.get('endereco.cep')?.hasError('required') &&
+            professorForm.get('endereco.cep')?.touched
+          "
+        >
+          Por favor, preencha o CEP
+        </small>
+        <small
+          *ngIf="
+            professorForm.get('endereco.cep')?.hasError('pattern') &&
+            professorForm.get('endereco.cep')?.touched
+          "
+        >
+          O CEP deve ter 8 dígitos (ex: 12345-678)
+        </small>
       </div>
     </fieldset>
 
