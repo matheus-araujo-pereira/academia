@@ -28,9 +28,16 @@ export class PlanoCadastroComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.planoForm = this.fb.group({
-      nome: ['', Validators.required],
+      nome: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[a-zA-Z\\s]+$'),
+          Validators.maxLength(50),
+        ],
+      ],
       valor: ['', [Validators.required, Validators.min(0.01)]],
-      descricao: [''],
+      descricao: ['', Validators.maxLength(255)],
     });
   }
 

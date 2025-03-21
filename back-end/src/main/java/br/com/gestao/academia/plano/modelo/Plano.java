@@ -13,6 +13,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,12 +30,15 @@ public class Plano {
     private Long id;
 
     @NotBlank(message = "Nome é obrigatório")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Nome deve conter apenas letras e espaços")
+    @Size(max = 50, message = "Nome deve ter no máximo 50 caracteres")
     private String nome;
 
     @NotNull(message = "Valor é obrigatório")
     @Positive(message = "Valor deve ser positivo")
     private BigDecimal valor;
 
+    @Size(max = 255, message = "Descrição deve ter no máximo 255 caracteres")
     private String descricao;
 
     @ManyToOne

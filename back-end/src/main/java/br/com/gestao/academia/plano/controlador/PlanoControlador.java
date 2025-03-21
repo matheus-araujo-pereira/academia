@@ -34,7 +34,7 @@ public class PlanoControlador {
     @GetMapping
     public ResponseEntity<List<Plano>> findAll() {
         try {
-            List<Plano> planos = repo.findAll();
+            List<Plano> planos = repo.findAllOrderByValorAsc();
             return new ResponseEntity<>(planos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
