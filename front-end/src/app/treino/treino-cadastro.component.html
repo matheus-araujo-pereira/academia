@@ -30,7 +30,22 @@
         Data de criação é obrigatória.
       </small>
     </div>
-
+    <div>
+      <label for="cliente">Cliente</label>
+      <select id="cliente" formControlName="cliente">
+        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nome }} - {{ cliente.cpf }}
+        </option>
+      </select>
+      <small
+        *ngIf="
+          treinoForm.get('cliente')?.invalid &&
+          treinoForm.get('cliente')?.touched
+        "
+      >
+        Cliente é obrigatório.
+      </small>
+    </div>
     <fieldset>
       <legend>Exercícios</legend>
       <div

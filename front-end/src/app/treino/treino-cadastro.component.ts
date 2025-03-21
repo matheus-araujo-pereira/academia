@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TreinoService, Treino } from './treino.service';
+import { ClienteService, Cliente } from '../cliente/cliente.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -16,22 +17,28 @@ export class TreinoCadastroComponent implements OnInit {
   treinoForm: FormGroup;
   isEdit = false;
   id: number | null = null;
+  clientes: Cliente[] = [];
 
   constructor(
     private fb: FormBuilder,
     private service: TreinoService,
+    private clienteService: ClienteService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     this.treinoForm = this.fb.group({
       descricao: ['', Validators.required],
       dataCriacao: ['', Validators.required],
-      // Caso necessário, utilize controles para cliente e professor
+      cliente: ['', Validators.required],
       exercicios: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
+    this.clienteService.getAll().subscribe((data) => {
+      this.clientes = data;
+    });
+
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       if (idParam) {
@@ -41,8 +48,8 @@ export class TreinoCadastroComponent implements OnInit {
           this.treinoForm.patchValue({
             descricao: data.descricao,
             dataCriacao: data.dataCriacao,
+            cliente: data.cliente?.id,
           });
-          // Preenche os exercícios
           const exerciciosFG = data.exercicios.map((ex) =>
             this.fb.group({
               id: [ex.id],
