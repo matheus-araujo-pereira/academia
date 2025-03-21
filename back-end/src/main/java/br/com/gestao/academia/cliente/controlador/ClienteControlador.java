@@ -40,11 +40,7 @@ public class ClienteControlador {
      */
     @GetMapping
     public ResponseEntity<List<Cliente>> findAll() {
-        try {
-            return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(repo.findAllByOrderByNomeAsc(), HttpStatus.OK);
     }
 
     /**
@@ -83,65 +79,61 @@ public class ClienteControlador {
      * Cria um novo cliente, associando-o a um plano (obrigatório).
      */
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente) {
-        try {
-            Plano plano = planRepo.findById(cliente.getPlano().getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
-            cliente.setPlano(plano);
-            Cliente novo = repo.save(cliente);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Cliente cadastrado com sucesso! ID: " + novo.getId());
-        } catch (ResponseStatusException e) {
-            throw e;
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao cadastrar cliente: " + e.getMessage());
+    public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente) {
+        if (repo.existsByCpf(cliente.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
         }
+        if (repo.existsByRg(cliente.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (repo.existsByLogin(cliente.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
+        Plano plano = planRepo.findById(cliente.getPlano().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
+        cliente.setPlano(plano);
+        Cliente novo = repo.save(cliente);
+        return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
 
     /**
      * Atualiza os dados de um cliente pelo ID.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Cliente cliente) {
-        try {
-            Cliente existing = repo.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
-            existing.setNome(cliente.getNome());
-            existing.setLogin(cliente.getLogin());
-            existing.setSenha(cliente.getSenha());
-            existing.setCpf(cliente.getCpf());
-            existing.setRg(cliente.getRg());
-            existing.setDataNascimento(cliente.getDataNascimento());
-            existing.setEmail(cliente.getEmail());
-            existing.setTelefone(cliente.getTelefone());
-
-            Plano plano = planRepo.findById(cliente.getPlano().getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
-            existing.setPlano(plano);
-
-            existing.setEndereco(cliente.getEndereco());
-            repo.save(existing);
-            return ResponseEntity.ok("Cliente atualizado com sucesso!");
-        } catch (ResponseStatusException e) {
-            throw e;
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao atualizar cliente: " + e.getMessage());
+    public ResponseEntity<Cliente> update(@PathVariable Long id, @Valid @RequestBody Cliente cliente) {
+        Cliente existing = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        if (!existing.getCpf().equals(cliente.getCpf()) && repo.existsByCpf(cliente.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
         }
+        if (!existing.getRg().equals(cliente.getRg()) && repo.existsByRg(cliente.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (!existing.getLogin().equals(cliente.getLogin()) && repo.existsByLogin(cliente.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
+        existing.setNome(cliente.getNome());
+        existing.setLogin(cliente.getLogin());
+        existing.setSenha(cliente.getSenha());
+        existing.setCpf(cliente.getCpf());
+        existing.setRg(cliente.getRg());
+        existing.setDataNascimento(cliente.getDataNascimento());
+        existing.setEmail(cliente.getEmail());
+        existing.setTelefone(cliente.getTelefone());
+        existing.setEndereco(cliente.getEndereco());
+        Plano plano = planRepo.findById(cliente.getPlano().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plano não encontrado"));
+        existing.setPlano(plano);
+        Cliente atualizado = repo.save(existing);
+        return new ResponseEntity<>(atualizado, HttpStatus.OK);
     }
 
     /**
      * Exclui um cliente pelo ID.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        try {
-            repo.deleteById(id);
-            return ResponseEntity.ok("Cliente excluído com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Erro ao excluir cliente: " + e.getMessage());
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

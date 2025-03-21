@@ -17,4 +17,12 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Long> {
     List<Cliente> findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(String nome, String cpf);
 
     List<Cliente> findByNomeContainingIgnoreCaseOrCpfContainingIgnoreCase(String nome, String cpf);
+
+    List<Cliente> findAllByOrderByNomeAsc();
+
+    boolean existsByCpf(String cpf);
+
+    boolean existsByRg(String rg);
+
+    boolean existsByLogin(String login);
 }

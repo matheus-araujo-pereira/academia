@@ -15,6 +15,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -39,7 +40,7 @@ public class Cliente {
     private String login;
 
     @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, message = "Senha deve ter pelo menos 8 caracteres")
+    @Size(min = 4, message = "Senha deve ter pelo menos 4 caracteres")
     private String senha;
 
     @Pattern(regexp = "^[0-9]{11}$", message = "CPF deve ter 11 dígitos")
@@ -59,6 +60,7 @@ public class Cliente {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
+    @NotNull(message = "Endereço é obrigatório")
     private Endereco endereco;
 
     @ManyToOne
