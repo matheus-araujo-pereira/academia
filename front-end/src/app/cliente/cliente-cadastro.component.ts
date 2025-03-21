@@ -31,21 +31,24 @@ export class ClienteCadastroComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.clienteForm = this.fb.group({
-      nome: ['', Validators.required],
-      login: ['', Validators.required],
-      senha: ['', Validators.required],
-      cpf: ['', Validators.required],
-      rg: [''],
-      dataNascimento: [''],
-      email: [''],
-      telefone: [''],
+      nome: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      login: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-z]+\.[a-z]+$/)],
+      ],
+      senha: ['', [Validators.required, Validators.minLength(4)]],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      rg: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      dataNascimento: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      telefone: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       endereco: this.fb.group({
         estado: ['', Validators.required],
         cidade: ['', Validators.required],
         bairro: ['', Validators.required],
         logradouro: ['', Validators.required],
         numero: ['', Validators.required],
-        cep: ['', Validators.required],
+        cep: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
       }),
       plano: this.fb.group({
         id: [null, Validators.required],
@@ -79,28 +82,105 @@ export class ClienteCadastroComponent implements OnInit {
   }
 
   salvar(): void {
+    // Remover máscaras antes de validar
+    const cpf = this.clienteForm.get('cpf')?.value.replace(/\D/g, '');
+    const rg = this.clienteForm.get('rg')?.value.replace(/\D/g, '');
+    const telefone = this.clienteForm.get('telefone')?.value.replace(/\D/g, '');
+    const cep = this.clienteForm.get('endereco.cep')?.value.replace(/\D/g, '');
+
+    this.clienteForm.patchValue({
+      cpf: cpf,
+      rg: rg,
+      telefone: telefone,
+      endereco: {
+        ...this.clienteForm.get('endereco')?.value,
+        cep: cep,
+      },
+    });
+
     if (this.clienteForm.valid) {
+      const cliente = this.clienteForm.value;
+
       if (this.isEdit && this.id) {
-        this.service.update(this.id, this.clienteForm.value).subscribe({
-          next: (msg) => {
-            alert(msg);
+        this.service.update(this.id, cliente).subscribe({
+          next: () => {
+            alert('Cliente atualizado com sucesso!');
             this.router.navigate(['/clientes']);
           },
           error: (err) => {
-            alert('Erro ao atualizar: ' + err.error);
+            console.error('Erro ao atualizar:', err);
+            alert('Erro ao atualizar: ' + err?.error?.message);
           },
         });
       } else {
-        this.service.create(this.clienteForm.value).subscribe({
-          next: (msg) => {
-            alert(msg);
+        this.service.create(cliente).subscribe({
+          next: () => {
+            alert('Cliente cadastrado com sucesso!');
             this.router.navigate(['/clientes']);
           },
           error: (err) => {
-            alert('Erro ao cadastrar: ' + err.error);
+            console.error('Erro ao cadastrar:', err);
+            alert('Erro ao cadastrar: ' + err?.error?.message);
           },
         });
       }
+    } else {
+      console.warn('Formulário inválido:', this.clienteForm);
+      alert('Por favor, preencha todos os campos obrigatórios corretamente.');
     }
+  }
+
+  validarCPF(): void {
+    const cpf = this.clienteForm.get('cpf')?.value.replace(/\D/g, '');
+    if (cpf.length === 11) {
+      this.clienteForm.get('cpf')?.setErrors(null);
+    }
+  }
+
+  validarRG(): void {
+    const rg = this.clienteForm.get('rg')?.value.replace(/\D/g, '');
+    if (rg.length === 9) {
+      this.clienteForm.get('rg')?.setErrors(null);
+    }
+  }
+
+  validarTelefone(): void {
+    const telefone = this.clienteForm.get('telefone')?.value.replace(/\D/g, '');
+    if (telefone.length === 11) {
+      this.clienteForm.get('telefone')?.setErrors(null);
+    }
+  }
+
+  formatarCPF(): void {
+    let cpf = this.clienteForm.get('cpf')?.value;
+    cpf = cpf.replace(/\D/g, '');
+    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+    cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    this.clienteForm.get('cpf')?.setValue(cpf, { emitEvent: false });
+  }
+
+  formatarRG(): void {
+    let rg = this.clienteForm.get('rg')?.value;
+    rg = rg.replace(/\D/g, '');
+    rg = rg.replace(/(\d{2})(\d)/, '$1.$2');
+    rg = rg.replace(/(\d{3})(\d)/, '$1.$2');
+    rg = rg.replace(/(\d{3})(\d{1})$/, '$1-$2');
+    this.clienteForm.get('rg')?.setValue(rg, { emitEvent: false });
+  }
+
+  formatarTelefone(): void {
+    let telefone = this.clienteForm.get('telefone')?.value;
+    telefone = telefone.replace(/\D/g, '');
+    telefone = telefone.replace(/(\d{2})(\d)/, '($1) $2');
+    telefone = telefone.replace(/(\d{5})(\d{4})$/, '$1-$2');
+    this.clienteForm.get('telefone')?.setValue(telefone, { emitEvent: false });
+  }
+
+  formatarCEP(): void {
+    let cep = this.clienteForm.get('endereco.cep')?.value;
+    cep = cep.replace(/\D/g, '');
+    cep = cep.replace(/(\d{5})(\d{3})$/, '$1-$2');
+    this.clienteForm.get('endereco.cep')?.setValue(cep, { emitEvent: false });
   }
 }
