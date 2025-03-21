@@ -3,11 +3,32 @@
   <form [formGroup]="treinoForm" (ngSubmit)="salvar()">
     <div>
       <label for="descricao">Descrição</label>
-      <input id="descricao" formControlName="descricao" type="text" />
+      <input
+        id="descricao"
+        formControlName="descricao"
+        type="text"
+        placeholder="Digite a descrição"
+      />
+      <small
+        *ngIf="
+          treinoForm.get('descricao')?.invalid &&
+          treinoForm.get('descricao')?.touched
+        "
+      >
+        Descrição é obrigatória.
+      </small>
     </div>
     <div>
       <label for="dataCriacao">Data de Criação</label>
       <input id="dataCriacao" formControlName="dataCriacao" type="date" />
+      <small
+        *ngIf="
+          treinoForm.get('dataCriacao')?.invalid &&
+          treinoForm.get('dataCriacao')?.touched
+        "
+      >
+        Data de criação é obrigatória.
+      </small>
     </div>
 
     <fieldset>
@@ -19,7 +40,19 @@
         <div [formGroupName]="i" class="exercicio-item">
           <div>
             <label for="nome-{{ i }}">Nome</label>
-            <input id="nome-{{ i }}" formControlName="nome" type="text" />
+            <input
+              id="nome-{{ i }}"
+              formControlName="nome"
+              type="text"
+              placeholder="Nome do exercício"
+            />
+            <small
+              *ngIf="
+                exercicio.get('nome')?.invalid && exercicio.get('nome')?.touched
+              "
+            >
+              Nome é obrigatório.
+            </small>
           </div>
           <div>
             <label for="descricao-{{ i }}">Descrição</label>
@@ -27,11 +60,17 @@
               id="descricao-{{ i }}"
               formControlName="descricao"
               type="text"
+              placeholder="Descrição do exercício"
             />
           </div>
           <div>
             <label for="carga-{{ i }}">Carga</label>
-            <input id="carga-{{ i }}" formControlName="carga" type="number" />
+            <input
+              id="carga-{{ i }}"
+              formControlName="carga"
+              type="number"
+              placeholder="Carga em kg"
+            />
           </div>
           <div>
             <label for="repeticao-{{ i }}">Repetição</label>
@@ -39,11 +78,17 @@
               id="repeticao-{{ i }}"
               formControlName="repeticao"
               type="number"
+              placeholder="Número de repetições"
             />
           </div>
           <div>
             <label for="series-{{ i }}">Séries</label>
-            <input id="series-{{ i }}" formControlName="series" type="number" />
+            <input
+              id="series-{{ i }}"
+              formControlName="series"
+              type="number"
+              placeholder="Número de séries"
+            />
           </div>
           <button type="button" (click)="removeExercicio(i)">Remover</button>
         </div>

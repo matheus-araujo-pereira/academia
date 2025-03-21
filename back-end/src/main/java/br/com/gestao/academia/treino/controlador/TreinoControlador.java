@@ -35,7 +35,7 @@ public class TreinoControlador {
 
     @GetMapping
     public ResponseEntity<List<Treino>> findAll() {
-        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.findAllByOrderByDataCriacaoAsc(), HttpStatus.OK);
     }
 
     @GetMapping("/search")

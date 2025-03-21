@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ExercicioRepositorio extends JpaRepository<Exercicio, Long> {
     List<Exercicio> findByNomeContainingIgnoreCase(String nome);
+
+    List<Exercicio> findAllByOrderByIdAsc();
 }

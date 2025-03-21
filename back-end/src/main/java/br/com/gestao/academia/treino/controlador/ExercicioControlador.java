@@ -34,7 +34,7 @@ public class ExercicioControlador {
 
     @GetMapping
     public ResponseEntity<List<Exercicio>> findAll() {
-        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.findAllByOrderByIdAsc(), HttpStatus.OK);
     }
 
     @GetMapping("/search")
