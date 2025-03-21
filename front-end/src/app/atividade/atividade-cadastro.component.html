@@ -28,7 +28,22 @@
     </div>
     <div>
       <label for="professor">Professor</label>
-      <input id="professor" formControlName="professor" type="text" />
+      <select id="professor" formControlName="professor">
+        <option [ngValue]="null">Selecione um Professor</option>
+        <option *ngFor="let professor of professores" [value]="professor.id">
+          {{ professor.nome }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          atividadeForm.get('professor')?.invalid &&
+          atividadeForm.get('professor')?.touched
+        "
+      >
+        <small *ngIf="atividadeForm.get('professor')?.errors?.['required']"
+          >Professor é obrigatório.</small
+        >
+      </div>
     </div>
     <!-- Adicione campos adicionais se necessário -->
     <div class="actions">

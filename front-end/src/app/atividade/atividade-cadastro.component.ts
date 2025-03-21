@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AtividadeService } from './atividade.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ProfessorService } from '../professor/professor.service';
 
 @Component({
   selector: 'app-atividade-cadastro',
@@ -20,38 +21,46 @@ export class AtividadeCadastroComponent implements OnInit {
   atividadeForm: FormGroup;
   isEdit = false;
   id: number | null = null;
+  professores: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private service: AtividadeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private professorService: ProfessorService
   ) {
     this.atividadeForm = this.fb.group({
-      nome: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
       descricao: [''],
       horaInicio: ['', Validators.required],
       horaFim: ['', Validators.required],
       diasSemana: ['', Validators.required],
-      professor: [''], // adaptar se necessário
-      // Você pode adicionar também um controle para clientes, se necessário.
+      professor: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {
+    this.fetchProfessores();
     this.route.paramMap.subscribe((params) => {
       const idParam = params.get('id');
       if (idParam) {
         this.isEdit = true;
         this.id = Number(idParam);
         this.service.getById(this.id).subscribe((data) => {
-          // Extraímos o id do professor se existir
           if (data.professor && data.professor.id) {
             data.professor = data.professor.id;
           }
           this.atividadeForm.patchValue(data);
         });
       }
+    });
+  }
+
+  fetchProfessores(): void {
+    this.professorService.getAll().subscribe({
+      next: (data) => (this.professores = data),
+      error: (err) => console.error(err),
     });
   }
 
@@ -62,10 +71,9 @@ export class AtividadeCadastroComponent implements OnInit {
   salvar(): void {
     if (this.atividadeForm.valid) {
       const formValue = this.atividadeForm.value;
-      // Converter o valor do professor para um objeto com o id
       const atividadeToSend = {
         ...formValue,
-        professor: { id: Number(formValue.professor) },
+        professor: { id: formValue.professor },
       };
       if (this.isEdit && this.id) {
         this.service.update(this.id, atividadeToSend).subscribe({

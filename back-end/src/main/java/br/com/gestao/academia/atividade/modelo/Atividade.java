@@ -42,12 +42,12 @@ public class Atividade {
     @NotNull(message = "Hora de fim é obrigatória")
     private LocalTime horaFim;
 
-    // Pode ser armazenado como uma lista de dias separados por vírgula, por
-    // exemplo.
+    @NotBlank(message = "Dias da semana são obrigatórios")
     private String diasSemana;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
+    @NotNull(message = "Professor é obrigatório")
     private Professor professor;
 
     @ManyToMany
