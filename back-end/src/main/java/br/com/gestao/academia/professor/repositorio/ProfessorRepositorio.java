@@ -18,4 +18,12 @@ public interface ProfessorRepositorio extends JpaRepository<Professor, Long> {
     List<Professor> findByCpfContainingIgnoreCase(String cpf);
 
     List<Professor> findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(String nome, String cpf);
+
+    List<Professor> findAllByOrderByNomeAsc();
+
+    boolean existsByCpf(String cpf);
+
+    boolean existsByRg(String rg);
+
+    boolean existsByLogin(String login);
 }

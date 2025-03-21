@@ -42,7 +42,7 @@ public class ProfessorControlador {
      */
     @GetMapping
     public ResponseEntity<List<Professor>> findAll() {
-        return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.findAllByOrderByNomeAsc(), HttpStatus.OK);
     }
 
     /**
@@ -81,6 +81,15 @@ public class ProfessorControlador {
      */
     @PostMapping
     public ResponseEntity<Professor> save(@Valid @RequestBody Professor professor) {
+        if (repo.existsByCpf(professor.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
+        }
+        if (repo.existsByRg(professor.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (repo.existsByLogin(professor.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
         Professor novo = repo.save(professor);
         return new ResponseEntity<>(novo, HttpStatus.CREATED);
     }
@@ -92,6 +101,15 @@ public class ProfessorControlador {
     public ResponseEntity<Professor> update(@PathVariable Long id, @Valid @RequestBody Professor professor) {
         Professor existing = repo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Professor não encontrado"));
+        if (!existing.getCpf().equals(professor.getCpf()) && repo.existsByCpf(professor.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF já está em uso");
+        }
+        if (!existing.getRg().equals(professor.getRg()) && repo.existsByRg(professor.getRg())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "RG já está em uso");
+        }
+        if (!existing.getLogin().equals(professor.getLogin()) && repo.existsByLogin(professor.getLogin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Login já está em uso");
+        }
         existing.setNome(professor.getNome());
         existing.setLogin(professor.getLogin());
         existing.setSenha(professor.getSenha());
