@@ -6,29 +6,27 @@
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Professor</h2>
   <form [formGroup]="professorForm" (ngSubmit)="salvar()">
     <div>
-      <label for="nome">Nome do Professor</label>
+      <label for="nome">Nome</label>
       <input
         id="nome"
         formControlName="nome"
         type="text"
-        placeholder="Informe o nome completo"
+        placeholder="Nome Completo do Usuário"
+        onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('nome')?.hasError('required') &&
+          professorForm.get('nome')?.invalid &&
           professorForm.get('nome')?.touched
         "
       >
-        Por favor, preencha o campo Nome
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('nome')?.hasError('pattern') &&
-          professorForm.get('nome')?.touched
-        "
-      >
-        O Nome só deve conter letras e espaços
-      </small>
+        <small *ngIf="professorForm.get('nome')?.errors?.['required']"
+          >Nome é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('nome')?.errors?.['pattern']"
+          >Nome inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="login">Login</label>
@@ -36,24 +34,22 @@
         id="login"
         formControlName="login"
         type="text"
-        placeholder="ex: nome.sobrenome"
+        placeholder="nome.sobrenome"
+        onkeypress="return /[a-zA-Z.]/i.test(event.key)"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('login')?.hasError('required') &&
+          professorForm.get('login')?.invalid &&
           professorForm.get('login')?.touched
         "
       >
-        Por favor, preencha o campo Login
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('login')?.hasError('pattern') &&
-          professorForm.get('login')?.touched
-        "
-      >
-        O Login precisa seguir o padrão "nome.sobrenome"
-      </small>
+        <small *ngIf="professorForm.get('login')?.errors?.['required']"
+          >Login é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('login')?.errors?.['pattern']"
+          >Login inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="senha">Senha</label>
@@ -61,24 +57,21 @@
         id="senha"
         formControlName="senha"
         type="password"
-        placeholder="Informe uma senha"
+        placeholder="Mínimo 4 caracteres"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('senha')?.hasError('required') &&
+          professorForm.get('senha')?.invalid &&
           professorForm.get('senha')?.touched
         "
       >
-        Por favor, preencha o campo Senha
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('senha')?.hasError('minlength') &&
-          professorForm.get('senha')?.touched
-        "
-      >
-        A Senha deve ter pelo menos 4 caracteres
-      </small>
+        <small *ngIf="professorForm.get('senha')?.errors?.['required']"
+          >Senha é obrigatória.</small
+        >
+        <small *ngIf="professorForm.get('senha')?.errors?.['minlength']"
+          >Senha deve ter pelo menos 4 caracteres.</small
+        >
+      </div>
     </div>
     <div>
       <label for="cpf">CPF</label>
@@ -86,72 +79,64 @@
         id="cpf"
         formControlName="cpf"
         type="text"
+        placeholder="000.000.000-00"
         maxlength="14"
-        placeholder="Somente números"
         (input)="formatarCPF()"
         (blur)="validarCPF()"
+        onkeypress="return /[0-9]/i.test(event.key)"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('cpf')?.hasError('required') &&
-          professorForm.get('cpf')?.touched
+          professorForm.get('cpf')?.invalid && professorForm.get('cpf')?.touched
         "
       >
-        Por favor, preencha o campo CPF
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('cpf')?.hasError('pattern') &&
-          professorForm.get('cpf')?.touched
-        "
-      >
-        O CPF deve ter 11 dígitos numéricos
-      </small>
+        <small *ngIf="professorForm.get('cpf')?.errors?.['required']"
+          >CPF é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('cpf')?.errors?.['pattern']"
+          >CPF inválido.</small
+        >
+      </div>
     </div>
+    <!-- Demais campos do professor -->
     <div>
       <label for="rg">RG</label>
       <input
         id="rg"
         formControlName="rg"
         type="text"
+        placeholder="00.000.000-0"
         maxlength="12"
-        placeholder="Somente números"
         (input)="formatarRG()"
         (blur)="validarRG()"
+        onkeypress="return /[0-9]/i.test(event.key)"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('rg')?.hasError('required') &&
-          professorForm.get('rg')?.touched
+          professorForm.get('rg')?.invalid && professorForm.get('rg')?.touched
         "
       >
-        Por favor, preencha o campo RG
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('rg')?.hasError('pattern') &&
-          professorForm.get('rg')?.touched
-        "
-      >
-        O RG deve ter 9 dígitos
-      </small>
+        <small *ngIf="professorForm.get('rg')?.errors?.['required']"
+          >RG é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('rg')?.errors?.['pattern']"
+          >RG inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="dataNascimento">Data de Nascimento</label>
-      <input
-        id="dataNascimento"
-        formControlName="dataNascimento"
-        type="date"
-        placeholder="Selecione a data"
-      />
-      <small
+      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+      <div
         *ngIf="
-          professorForm.get('dataNascimento')?.hasError('required') &&
+          professorForm.get('dataNascimento')?.invalid &&
           professorForm.get('dataNascimento')?.touched
         "
       >
-        Por favor, informe a Data de Nascimento
-      </small>
+        <small *ngIf="professorForm.get('dataNascimento')?.errors?.['required']"
+          >Data de nascimento é obrigatória.</small
+        >
+      </div>
     </div>
     <div>
       <label for="email">E-mail</label>
@@ -159,24 +144,21 @@
         id="email"
         formControlName="email"
         type="email"
-        placeholder="ex: email@dominio.com"
+        placeholder="email@ex.com"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('email')?.hasError('required') &&
+          professorForm.get('email')?.invalid &&
           professorForm.get('email')?.touched
         "
       >
-        Por favor, preencha o campo E-mail
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('email')?.hasError('email') &&
-          professorForm.get('email')?.touched
-        "
-      >
-        Formato de E-mail inválido
-      </small>
+        <small *ngIf="professorForm.get('email')?.errors?.['required']"
+          >E-mail é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('email')?.errors?.['email']"
+          >E-mail inválido.</small
+        >
+      </div>
     </div>
     <div>
       <label for="telefone">Telefone</label>
@@ -184,27 +166,25 @@
         id="telefone"
         formControlName="telefone"
         type="text"
+        placeholder="(00) 00000-0000"
         maxlength="15"
-        placeholder="Somente números"
         (input)="formatarTelefone()"
         (blur)="validarTelefone()"
+        onkeypress="return /[0-9]/i.test(event.key)"
       />
-      <small
+      <div
         *ngIf="
-          professorForm.get('telefone')?.hasError('required') &&
+          professorForm.get('telefone')?.invalid &&
           professorForm.get('telefone')?.touched
         "
       >
-        Por favor, preencha o campo Telefone
-      </small>
-      <small
-        *ngIf="
-          professorForm.get('telefone')?.hasError('pattern') &&
-          professorForm.get('telefone')?.touched
-        "
-      >
-        O Telefone deve ter 11 dígitos (ex: 11999999999)
-      </small>
+        <small *ngIf="professorForm.get('telefone')?.errors?.['required']"
+          >Telefone é obrigatório.</small
+        >
+        <small *ngIf="professorForm.get('telefone')?.errors?.['pattern']"
+          >Telefone inválido.</small
+        >
+      </div>
     </div>
 
     <!-- Grupo de Endereço -->
@@ -212,88 +192,78 @@
       <legend>Endereço</legend>
       <div>
         <label for="estado">Estado</label>
-        <input
-          id="estado"
-          formControlName="estado"
-          type="text"
-          placeholder="UF"
-        />
-        <small
+        <input id="estado" formControlName="estado" type="text" />
+        <div
           *ngIf="
-            professorForm.get('endereco.estado')?.hasError('required') &&
+            professorForm.get('endereco.estado')?.invalid &&
             professorForm.get('endereco.estado')?.touched
           "
         >
-          Por favor, preencha o Estado
-        </small>
+          <small
+            *ngIf="professorForm.get('endereco.estado')?.errors?.['required']"
+            >Estado é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="cidade">Cidade</label>
-        <input
-          id="cidade"
-          formControlName="cidade"
-          type="text"
-          placeholder="Cidade"
-        />
-        <small
+        <input id="cidade" formControlName="cidade" type="text" />
+        <div
           *ngIf="
-            professorForm.get('endereco.cidade')?.hasError('required') &&
+            professorForm.get('endereco.cidade')?.invalid &&
             professorForm.get('endereco.cidade')?.touched
           "
         >
-          Por favor, preencha a Cidade
-        </small>
+          <small
+            *ngIf="professorForm.get('endereco.cidade')?.errors?.['required']"
+            >Cidade é obrigatória.</small
+          >
+        </div>
       </div>
       <div>
         <label for="bairro">Bairro</label>
-        <input
-          id="bairro"
-          formControlName="bairro"
-          type="text"
-          placeholder="Bairro"
-        />
-        <small
+        <input id="bairro" formControlName="bairro" type="text" />
+        <div
           *ngIf="
-            professorForm.get('endereco.bairro')?.hasError('required') &&
+            professorForm.get('endereco.bairro')?.invalid &&
             professorForm.get('endereco.bairro')?.touched
           "
         >
-          Por favor, preencha o Bairro
-        </small>
+          <small
+            *ngIf="professorForm.get('endereco.bairro')?.errors?.['required']"
+            >Bairro é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="logradouro">Logradouro</label>
-        <input
-          id="logradouro"
-          formControlName="logradouro"
-          type="text"
-          placeholder="Rua, Avenida, etc."
-        />
-        <small
+        <input id="logradouro" formControlName="logradouro" type="text" />
+        <div
           *ngIf="
-            professorForm.get('endereco.logradouro')?.hasError('required') &&
+            professorForm.get('endereco.logradouro')?.invalid &&
             professorForm.get('endereco.logradouro')?.touched
           "
         >
-          Por favor, preencha o Logradouro
-        </small>
+          <small
+            *ngIf="professorForm.get('endereco.logradouro')?.errors?.['required']"
+            >Logradouro é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="numero">Número</label>
-        <input
-          id="numero"
-          formControlName="numero"
-          type="text"
-          placeholder="Número"
-        />
-        <small
+        <input id="numero" formControlName="numero" type="text" />
+        <div
           *ngIf="
-            professorForm.get('endereco.numero')?.hasError('required') &&
+            professorForm.get('endereco.numero')?.invalid &&
             professorForm.get('endereco.numero')?.touched
           "
         >
-          Por favor, informe o Número
-        </small>
+          <small
+            *ngIf="professorForm.get('endereco.numero')?.errors?.['required']"
+            >Número é obrigatório.</small
+          >
+        </div>
       </div>
       <div>
         <label for="cep">CEP</label>
@@ -301,25 +271,24 @@
           id="cep"
           formControlName="cep"
           type="text"
-          placeholder="Somente números"
-          (blur)="formatarCEP()"
+          placeholder="00000-000"
+          maxlength="9"
+          (input)="formatarCEP()"
+          onkeypress="return /[0-9]/i.test(event.key)"
         />
-        <small
+        <div
           *ngIf="
-            professorForm.get('endereco.cep')?.hasError('required') &&
+            professorForm.get('endereco.cep')?.invalid &&
             professorForm.get('endereco.cep')?.touched
           "
         >
-          Por favor, preencha o CEP
-        </small>
-        <small
-          *ngIf="
-            professorForm.get('endereco.cep')?.hasError('pattern') &&
-            professorForm.get('endereco.cep')?.touched
-          "
-        >
-          O CEP deve ter 8 dígitos (ex: 12345-678)
-        </small>
+          <small *ngIf="professorForm.get('endereco.cep')?.errors?.['required']"
+            >CEP é obrigatório.</small
+          >
+          <small *ngIf="professorForm.get('endereco.cep')?.errors?.['pattern']"
+            >CEP inválido.</small
+          >
+        </div>
       </div>
     </fieldset>
 
