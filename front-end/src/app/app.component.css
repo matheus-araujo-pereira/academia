@@ -89,7 +89,7 @@
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -147,9 +147,10 @@
   }
   .logout {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1100;
-    margin: 0;
+    width: calc(100% - 40px); /* Espaçamento lateral */
   }
 }

@@ -59,25 +59,25 @@
 
   <!-- Botão de sair fora do side menu (mobile) + Botão para Treinos -->
   <div
-    class="logout d-flex flex-column gap-2"
+    class="logout d-flex justify-content-around"
     *ngIf="isMobile && !router.url.includes('/login')"
   >
-    <button class="btn btn-danger" (click)="deslogar()">
+    <button class="btn btn-danger m-2" (click)="deslogar()">
       <i class="fa fa-sign-out"></i> Sair
     </button>
     <button
-      class="btn btn-sucess"
+      class="btn btn-sucess m-2"
       *ngIf="router.url.includes('/dados-pessoais')"
       (click)="scrollToAtividades()"
     >
       <i class="fa fa-user-plus"></i> Atividades
     </button>
     <button
-      class="btn btn-primary"
+      class="btn btn-primary m-2"
       *ngIf="router.url.includes('/dados-pessoais')"
       (click)="scrollToTreinos()"
     >
-      <i class="fa fa-user-circle-o" aria-hidden="true"></i> Meus Treinos
+      <i class="fa fa-user-circle-o" aria-hidden="true"></i> Treinos
     </button>
   </div>
 
