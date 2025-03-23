@@ -57,8 +57,18 @@
     </div>
   </div>
 
-  <!-- Botão de sair fora do side menu -->
-  <div class="logout p-3" *ngIf="isMobile && !router.url.includes('/login')">
+  <!-- Botão de sair fora do side menu (mobile) + Botão para Treinos -->
+  <div
+    class="logout d-flex flex-column gap-2 mt-3"
+    *ngIf="isMobile && !router.url.includes('/login')"
+  >
+    <button
+      class="btn btn-primary mb-1"
+      *ngIf="router.url.includes('/dados-pessoais')"
+      (click)="scrollToTreinos()"
+    >
+      Ir para Treinos
+    </button>
     <button class="btn btn-danger" (click)="deslogar()">
       <i class="fa fa-sign-out"></i> Sair
     </button>

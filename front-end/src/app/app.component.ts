@@ -43,4 +43,9 @@ export class AppComponent {
   deslogar(): void {
     this.router.navigate(['/login']);
   }
+
+  scrollToTreinos(): void {
+    const treinosSection = document.getElementById('treinosSection');
+    treinosSection?.scrollIntoView({ behavior: 'smooth' });
+  }
 }
