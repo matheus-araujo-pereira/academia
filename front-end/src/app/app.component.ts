@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; // Certifique-se de importar o RouterModule
 
 @Component({
   selector: 'app-root',
   standalone: true, // componente standalone
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, RouterModule], // Adicione RouterModule aqui
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

@@ -1,38 +1,59 @@
 <div class="content">
   <div
-    class="side-menu"
+    class="side-menu bg-primary text-white d-flex flex-column"
     [ngClass]="{ 'mobile-menu-open': isMobileMenuOpen }"
     *ngIf="showMenu"
   >
-    <ul>
-      <li>
-        <a routerLink="/atendentes"><i class="fa fa-users"></i> Atendentes</a>
+    <div class="menu-header p-3">
+      <h4 class="m-0">Menu</h4>
+      <button
+        class="btn btn-outline-light d-md-none"
+        (click)="toggleMobileMenu()"
+      >
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/atendentes"
+          ><i class="fa fa-users"></i> Atendentes</a
+        >
       </li>
-      <li>
-        <a routerLink="/atividades"
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/atividades"
           ><i class="fa fa-calendar"></i> Atividades</a
         >
       </li>
-      <li>
-        <a routerLink="/clientes"><i class="fa fa-user"></i> Clientes</a>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/clientes"
+          ><i class="fa fa-user"></i> Clientes</a
+        >
       </li>
-      <li>
-        <a routerLink="/dados-pessoais"
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/dados-pessoais"
           ><i class="fa fa-address-card"></i> Dados Pessoais</a
         >
       </li>
-      <li>
-        <a routerLink="/planos"><i class="fa fa-file"></i> Planos</a>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/planos"
+          ><i class="fa fa-file"></i> Planos</a
+        >
       </li>
-      <li>
-        <a routerLink="/professores"><i class="fa fa-users"></i> Professores</a>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/professores"
+          ><i class="fa fa-users"></i> Professores</a
+        >
       </li>
-      <li>
-        <a routerLink="/treinos"><i class="fa fa-futbol-o"></i> Treinos</a>
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/treinos"
+          ><i class="fa fa-futbol-o"></i> Treinos</a
+        >
       </li>
     </ul>
-    <div class="logout">
-      <button (click)="deslogar()"><i class="fa fa-sign-out"></i> Sair</button>
+    <div class="logout mt-auto p-3">
+      <button class="btn btn-danger w-100" (click)="deslogar()">
+        <i class="fa fa-sign-out"></i> Sair
+      </button>
     </div>
   </div>
   <main
@@ -40,7 +61,7 @@
     [ngStyle]="{ 'margin-left': showMenu ? '250px' : '0' }"
   >
     <button
-      class="mobile-menu-button"
+      class="mobile-menu-button btn btn-primary d-md-none"
       (click)="toggleMobileMenu()"
       *ngIf="showMenu"
     >
