@@ -1,51 +1,40 @@
-/* Estilos para o formulário de login, incluindo layout, cores e espaçamento. */
-/* Centraliza o conteúdo vertical e horizontalmente e utiliza a fonte Roboto */
 :host {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Usa toda a altura da viewport */
-  font-family: "Roboto", sans-serif;
+  height: 100vh;
 }
 
 .login-container {
   width: 100%;
   max-width: 400px;
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border: none;
+  background: none;
+  box-shadow: none;
 }
 
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+mat-card {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 1rem;
 }
 
-.login-container form div {
+mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
-.login-container form label {
-  display: block;
-  margin-bottom: 0.5rem;
+mat-card-content,
+mat-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-.login-container form input {
+mat-form-field,
+button[mat-raised-button] {
   width: 100%;
-  padding: 0.75rem;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-}
-
-.login-container form button {
-  width: 100%;
-  padding: 0.75rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
 }
