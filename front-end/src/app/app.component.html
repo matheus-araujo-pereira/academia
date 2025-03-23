@@ -50,10 +50,7 @@
         >
       </li>
     </ul>
-    <div
-      class="logout mt-auto p-3"
-      *ngIf="router.url.includes('/dados-pessoais')"
-    >
+    <div class="logout mt-auto p-3" *ngIf="!router.url.includes('/login')">
       <button class="btn btn-danger w-100" (click)="deslogar()">
         <i class="fa fa-sign-out"></i> Sair
       </button>
@@ -61,10 +58,7 @@
   </div>
 
   <!-- Botão de sair fora do side menu -->
-  <div
-    class="logout p-3"
-    *ngIf="isMobile && router.url.includes('/dados-pessoais')"
-  >
+  <div class="logout p-3" *ngIf="isMobile && !router.url.includes('/login')">
     <button class="btn btn-danger" (click)="deslogar()">
       <i class="fa fa-sign-out"></i> Sair
     </button>
