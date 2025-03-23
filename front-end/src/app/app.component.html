@@ -1,44 +1,10 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer mode="side" [opened]="showMenu">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/atendentes"
-        ><mat-icon>people</mat-icon> Atendentes</a
-      >
-      <a mat-list-item routerLink="/atividades"
-        ><mat-icon>event</mat-icon> Atividades</a
-      >
-      <a mat-list-item routerLink="/clientes"
-        ><mat-icon>person</mat-icon> Clientes</a
-      >
-      <a mat-list-item routerLink="/dados-pessoais"
-        ><mat-icon>badge</mat-icon> Dados Pessoais</a
-      >
-      <a mat-list-item routerLink="/planos"
-        ><mat-icon>description</mat-icon> Planos</a
-      >
-      <a mat-list-item routerLink="/professores"
-        ><mat-icon>people</mat-icon> Professores</a
-      >
-      <a mat-list-item routerLink="/treinos"
-        ><mat-icon>sports_soccer</mat-icon> Treinos</a
-      >
-    </mat-nav-list>
-    <div class="logout">
-      <button mat-raised-button color="warn" (click)="deslogar()">
-        <mat-icon>logout</mat-icon> Sair
-      </button>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar>
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Gestão de Academia</span>
-    </mat-toolbar>
-    <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="content">
+  <!-- Exibe o menu lateral se showMenu for true -->
+  <app-menu *ngIf="showMenu"></app-menu>
+  <main
+    class="main-content"
+    [ngStyle]="{ 'margin-left': showMenu ? '250px' : '0' }"
+  >
+    <router-outlet></router-outlet>
+  </main>
+</div>
