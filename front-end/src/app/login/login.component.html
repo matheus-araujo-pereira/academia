@@ -1,16 +1,36 @@
 <!-- Template para o componente de login, com campos de entrada e área para exibição de mensagem. -->
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="login">Login</label>
-      <input id="login" formControlName="login" type="text" />
-    </div>
-    <div>
-      <label for="senha">Senha</label>
-      <input id="senha" formControlName="senha" type="password" />
-    </div>
-    <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
-  </form>
-  <div *ngIf="mensagem">{{ mensagem }}</div>
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%">
+    <h2 class="card-title text-center mb-4">Gestão de Academia</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="login" class="form-label">Login</label>
+        <input
+          id="login"
+          formControlName="login"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input
+          id="senha"
+          formControlName="senha"
+          type="password"
+          class="form-control"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="loginForm.invalid"
+      >
+        Entrar
+      </button>
+    </form>
+    <div *ngIf="mensagem" class="alert alert-info mt-3">{{ mensagem }}</div>
+  </div>
 </div>
