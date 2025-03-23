@@ -2,26 +2,30 @@
   Template para a listagem de professores.
   Contém a área de busca e a tabela de resultados.
 -->
-<div class="professor-list">
-  <div class="header">
-    <button class="cadastrar" (click)="cadastrar()">Cadastrar Professor</button>
-    <div class="search">
+<div class="professor-list container">
+  <div class="header mb-3">
+    <button class="btn btn-success cadastrar" (click)="cadastrar()">
+      Cadastrar Professor
+    </button>
+    <div class="search d-flex">
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por nome"
         [(ngModel)]="searchNome"
         name="searchNome"
       />
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por CPF"
         [(ngModel)]="searchCpf"
         name="searchCpf"
       />
-      <button (click)="search()">Buscar</button>
+      <button class="btn btn-primary" (click)="search()">Buscar</button>
     </div>
   </div>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Nome</th>
@@ -33,9 +37,14 @@
       <tr *ngFor="let p of professors">
         <td>{{ p.nome }}</td>
         <td>{{ p.cpf }}</td>
-        <td>
-          <button class="editar" (click)="editProfessor(p.id)">Editar</button>
-          <button class="excluir" (click)="deleteProfessor(p.id)">
+        <td class="actions">
+          <button class="btn btn-warning editar" (click)="editProfessor(p.id)">
+            Editar
+          </button>
+          <button
+            class="btn btn-danger excluir"
+            (click)="deleteProfessor(p.id)"
+          >
             Excluir
           </button>
         </td>
