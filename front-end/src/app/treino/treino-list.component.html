@@ -4,12 +4,20 @@
       Cadastrar Treino
     </button>
     <div class="search d-flex">
+      <!-- Novo input para busca por nome do cliente -->
       <input
         type="text"
         class="form-control me-2"
         placeholder="Buscar por descrição"
         [(ngModel)]="searchDescricao"
         name="searchDescricao"
+      />
+      <input
+        type="text"
+        class="form-control me-2"
+        placeholder="Buscar por nome do cliente"
+        [(ngModel)]="searchCliente"
+        name="searchCliente"
       />
       <button class="btn btn-primary" (click)="search()">Buscar</button>
     </div>

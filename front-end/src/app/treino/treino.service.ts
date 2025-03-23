@@ -36,9 +36,9 @@ export class TreinoService {
     return this.http.get<Treino[]>(this.apiUrl);
   }
 
-  search(descricao: string): Observable<Treino[]> {
+  search(descricao: string, cliente: string): Observable<Treino[]> {
     return this.http.get<Treino[]>(
-      `${this.apiUrl}/search?descricao=${descricao}`
+      `${this.apiUrl}/search?descricao=${descricao}&cliente=${cliente}`
     );
   }
 

@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class TreinoListComponent implements OnInit {
   treinos: Treino[] = [];
   searchDescricao = '';
+  searchCliente = ''; // Nova propriedade
 
   constructor(private service: TreinoService, private router: Router) {}
 
@@ -23,8 +24,9 @@ export class TreinoListComponent implements OnInit {
 
   loadTreinos(): void {
     const descricao = this.searchDescricao.trim();
-    if (descricao) {
-      this.service.search(descricao).subscribe({
+    const cliente = this.searchCliente.trim();
+    if (descricao || cliente) {
+      this.service.search(descricao, cliente).subscribe({
         next: (data) => (this.treinos = data),
         error: (err) => console.error(err),
       });

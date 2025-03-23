@@ -42,13 +42,20 @@ public class TreinoControlador {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Treino>> search(@RequestParam(required = false) String descricao) {
-        String d = (descricao == null ? "" : descricao.trim());
-        List<Treino> treinos;
-        if (d.isEmpty()) {
-            treinos = repo.findAll();
-        } else {
-            treinos = repo.findByDescricaoContainingIgnoreCase(d);
+    public ResponseEntity<List<Treino>> search(
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String cliente) {
+        String desc = (descricao == null ? "" : descricao.trim());
+        String cli = (cliente == null ? "" : cliente.trim());
+        List<Treino> treinos = repo.findAll();
+        // Filtra por descrição, se informado
+        if (!desc.isEmpty()) {
+            treinos.removeIf(t -> !t.getDescricao().toLowerCase().contains(desc.toLowerCase()));
+        }
+        // Filtra por nome do cliente, se informado
+        if (!cli.isEmpty()) {
+            treinos.removeIf(t -> t.getCliente() == null ||
+                    !t.getCliente().getNome().toLowerCase().contains(cli.toLowerCase()));
         }
         // Ordena os treinos pelo nome do cliente (ordem alfabética)
         treinos.sort((a, b) -> a.getCliente().getNome().compareToIgnoreCase(b.getCliente().getNome()));
