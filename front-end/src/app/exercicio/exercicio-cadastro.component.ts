@@ -8,12 +8,13 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExercicioService } from './exercicio.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-exercicio-cadastro',
   templateUrl: './exercicio-cadastro.component.html',
   styleUrls: ['./exercicio-cadastro.component.css'],
-  imports: [FormsModule, ReactiveFormsModule], // Adicione esta linha
+  imports: [CommonModule, FormsModule, ReactiveFormsModule], // Adicione esta linha
 })
 export class ExercicioCadastroComponent implements OnInit {
   exercicioForm: FormGroup;

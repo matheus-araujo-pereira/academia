@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercicio, ExercicioService } from './exercicio.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-exercicio-list',
+  standalone: true,
   templateUrl: './exercicio-list.component.html',
   styleUrls: ['./exercicio-list.component.css'],
-  imports: [FormsModule, ReactiveFormsModule], // Adicione esta linha
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ExercicioListComponent implements OnInit {
   exercicios: Exercicio[] = [];
