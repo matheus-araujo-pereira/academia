@@ -1,12 +1,13 @@
-<div class="atividade-cadastro">
+<div class="atividade-cadastro container">
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Atividade</h2>
   <form [formGroup]="atividadeForm" (ngSubmit)="salvar()">
-    <div>
-      <label for="nome">Nome</label>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
       <input
         id="nome"
         formControlName="nome"
         type="text"
+        class="form-control"
         placeholder="Nome da Atividade"
       />
       <div
@@ -14,18 +15,20 @@
           atividadeForm.get('nome')?.invalid &&
           atividadeForm.get('nome')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('nome')?.errors?.['required']"
           >Nome é obrigatório.</small
         >
       </div>
     </div>
-    <div>
-      <label for="descricao">Descrição</label>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
       <input
         id="descricao"
         formControlName="descricao"
         type="text"
+        class="form-control"
         placeholder="Descrição da Atividade"
       />
       <div
@@ -33,46 +36,60 @@
           atividadeForm.get('descricao')?.invalid &&
           atividadeForm.get('descricao')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('descricao')?.errors?.['required']"
           >Descrição é obrigatória.</small
         >
       </div>
     </div>
-    <div>
-      <label for="horaInicio">Hora Início</label>
-      <input id="horaInicio" formControlName="horaInicio" type="time" />
+    <div class="mb-3">
+      <label for="horaInicio" class="form-label">Hora Início</label>
+      <input
+        id="horaInicio"
+        formControlName="horaInicio"
+        type="time"
+        class="form-control"
+      />
       <div
         *ngIf="
           atividadeForm.get('horaInicio')?.invalid &&
           atividadeForm.get('horaInicio')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('horaInicio')?.errors?.['required']"
           >Hora de início é obrigatória.</small
         >
       </div>
     </div>
-    <div>
-      <label for="horaFim">Hora Fim</label>
-      <input id="horaFim" formControlName="horaFim" type="time" />
+    <div class="mb-3">
+      <label for="horaFim" class="form-label">Hora Fim</label>
+      <input
+        id="horaFim"
+        formControlName="horaFim"
+        type="time"
+        class="form-control"
+      />
       <div
         *ngIf="
           atividadeForm.get('horaFim')?.invalid &&
           atividadeForm.get('horaFim')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('horaFim')?.errors?.['required']"
           >Hora de fim é obrigatória.</small
         >
       </div>
     </div>
-    <div>
-      <label for="diasSemana">Dias da Semana</label>
+    <div class="mb-3">
+      <label for="diasSemana" class="form-label">Dias da Semana</label>
       <input
         id="diasSemana"
         formControlName="diasSemana"
         type="text"
+        class="form-control"
         placeholder="Ex: Seg, Qua, Sex"
       />
       <div
@@ -80,15 +97,16 @@
           atividadeForm.get('diasSemana')?.invalid &&
           atividadeForm.get('diasSemana')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('diasSemana')?.errors?.['required']"
           >Dias da semana são obrigatórios.</small
         >
       </div>
     </div>
-    <div>
-      <label for="professor">Professor</label>
-      <select id="professor" formControlName="professor">
+    <div class="mb-3">
+      <label for="professor" class="form-label">Professor</label>
+      <select id="professor" formControlName="professor" class="form-select">
         <option [ngValue]="null">Selecione um Professor</option>
         <option *ngFor="let professor of professores" [value]="professor.id">
           {{ professor.nome }}
@@ -99,6 +117,7 @@
           atividadeForm.get('professor')?.invalid &&
           atividadeForm.get('professor')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atividadeForm.get('professor')?.errors?.['required']"
           >Professor é obrigatório.</small
@@ -107,8 +126,10 @@
     </div>
     <!-- Adicione campos adicionais se necessário -->
     <div class="actions">
-      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
-      <button type="submit" class="salvar">
+      <button type="button" class="btn btn-secondary voltar" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary salvar">
         {{ isEdit ? "Salvar" : "Cadastrar" }}
       </button>
     </div>
