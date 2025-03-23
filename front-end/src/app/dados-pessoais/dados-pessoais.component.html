@@ -2,40 +2,54 @@
   <h2 class="mb-4">Dados Pessoais</h2>
   <div *ngIf="usuario" class="card mb-4">
     <div class="card-body">
-      <h5 class="card-title">Informações Pessoais</h5>
       <div class="row">
         <div class="col-md-6">
-          <p class="card-text"><strong>Nome:</strong> {{ usuario.nome }}</p>
-          <p class="card-text"><strong>Login:</strong> {{ usuario.login }}</p>
-          <p class="card-text"><strong>CPF:</strong> {{ usuario.cpf }}</p>
-          <p class="card-text"><strong>RG:</strong> {{ usuario.rg }}</p>
           <p class="card-text">
-            <strong>Data de Nascimento:</strong> {{ usuario.dataNascimento }}
+            <strong>Nome:</strong> {{ usuario.nome || "Sem dados" }}
           </p>
-          <p class="card-text"><strong>Email:</strong> {{ usuario.email }}</p>
           <p class="card-text">
-            <strong>Telefone:</strong> {{ usuario.telefone }}
+            <strong>Login:</strong> {{ usuario.login || "Sem dados" }}
+          </p>
+          <p class="card-text">
+            <strong>CPF:</strong> {{ usuario.cpf || "Sem dados" }}
+          </p>
+          <p class="card-text">
+            <strong>RG:</strong> {{ usuario.rg || "Sem dados" }}
+          </p>
+          <p class="card-text">
+            <strong>Data de Nascimento:</strong>
+            {{ usuario.dataNascimento || "Sem dados" }}
+          </p>
+          <p class="card-text">
+            <strong>Email:</strong> {{ usuario.email || "Sem dados" }}
+          </p>
+          <p class="card-text">
+            <strong>Telefone:</strong> {{ usuario.telefone || "Sem dados" }}
           </p>
         </div>
         <div class="col-md-6">
-          <h5 class="card-title">Endereço</h5>
           <p class="card-text">
-            <strong>Estado:</strong> {{ usuario.endereco.estado }}
+            <strong>Estado:</strong>
+            {{ usuario.endereco?.estado || "Sem dados" }}
           </p>
           <p class="card-text">
-            <strong>Cidade:</strong> {{ usuario.endereco.cidade }}
+            <strong>Cidade:</strong>
+            {{ usuario.endereco?.cidade || "Sem dados" }}
           </p>
           <p class="card-text">
-            <strong>Bairro:</strong> {{ usuario.endereco.bairro }}
+            <strong>Bairro:</strong>
+            {{ usuario.endereco?.bairro || "Sem dados" }}
           </p>
           <p class="card-text">
-            <strong>Logradouro:</strong> {{ usuario.endereco.logradouro }}
+            <strong>Logradouro:</strong>
+            {{ usuario.endereco?.logradouro || "Sem dados" }}
           </p>
           <p class="card-text">
-            <strong>Número:</strong> {{ usuario.endereco.numero }}
+            <strong>Número:</strong>
+            {{ usuario.endereco?.numero || "Sem dados" }}
           </p>
           <p class="card-text">
-            <strong>CEP:</strong> {{ usuario.endereco.cep }}
+            <strong>CEP:</strong> {{ usuario.endereco?.cep || "Sem dados" }}
           </p>
         </div>
       </div>
@@ -45,17 +59,25 @@
     <h5 class="mb-4">Treinos</h5>
     <div *ngFor="let treino of usuario.treinos" class="card mb-4">
       <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted">{{ treino.descricao }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ treino.descricao || "Sem dados" }}
+        </h6>
         <p class="card-text">
           <strong>Data de Criação:</strong>
-          {{ treino.dataCriacao | date : "dd/MM/yyyy" }}
+          {{
+            treino.dataCriacao
+              ? (treino.dataCriacao | date : "dd/MM/yyyy")
+              : "Sem dados"
+          }}
         </p>
         <div *ngIf="treino.exercicios?.length">
           <h6 class="card-subtitle mb-2 text-muted">Exercícios</h6>
           <ul class="list-group list-group-flush">
             <li *ngFor="let ex of treino.exercicios" class="list-group-item">
-              {{ ex.nome }} - Carga: {{ ex.carga }} - Séries: {{ ex.series }} -
-              Repetições: {{ ex.repeticao }}
+              {{ ex.nome || "Sem dados" }} - Carga:
+              {{ ex.carga || "Sem dados" }} - Séries:
+              {{ ex.series || "Sem dados" }} - Repetições:
+              {{ ex.repeticao || "Sem dados" }}
             </li>
           </ul>
         </div>
