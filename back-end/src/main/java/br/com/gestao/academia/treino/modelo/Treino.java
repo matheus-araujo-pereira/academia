@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.gestao.academia.cliente.modelo.Cliente;
 import br.com.gestao.academia.professor.modelo.Professor;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class Treino {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonDeserialize(using = br.com.gestao.academia.cliente.deserializer.ClienteDeserializer.class)
     private Cliente cliente;
 
     @ManyToOne
