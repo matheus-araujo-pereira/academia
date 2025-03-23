@@ -1,17 +1,20 @@
-<div class="treino-list">
-  <div class="header">
-    <button class="cadastrar" (click)="cadastrar()">Cadastrar Treino</button>
-    <div class="search">
+<div class="treino-list container">
+  <div class="header mb-3">
+    <button class="btn btn-success cadastrar" (click)="cadastrar()">
+      Cadastrar Treino
+    </button>
+    <div class="search d-flex">
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por descrição"
         [(ngModel)]="searchDescricao"
         name="searchDescricao"
       />
-      <button (click)="search()">Buscar</button>
+      <button class="btn btn-primary" (click)="search()">Buscar</button>
     </div>
   </div>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Descrição</th>
@@ -25,9 +28,13 @@
         <td>{{ t.descricao }}</td>
         <td>{{ t.cliente?.nome }} - {{ t.cliente?.cpf }}</td>
         <td>{{ t.dataCriacao }}</td>
-        <td>
-          <button class="editar" (click)="editTreino(t.id)">Editar</button>
-          <button class="excluir" (click)="deleteTreino(t.id)">Excluir</button>
+        <td class="actions">
+          <button class="btn btn-warning editar" (click)="editTreino(t.id)">
+            Editar
+          </button>
+          <button class="btn btn-danger excluir" (click)="deleteTreino(t.id)">
+            Excluir
+          </button>
         </td>
       </tr>
     </tbody>

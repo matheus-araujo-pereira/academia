@@ -1,17 +1,20 @@
-<div class="exercicio-list">
-  <div class="header">
-    <button class="cadastrar" (click)="cadastrar()">Cadastrar Exercício</button>
-    <div class="search">
+<div class="exercicio-list container">
+  <div class="header mb-3">
+    <button class="btn btn-success cadastrar" (click)="cadastrar()">
+      Cadastrar Exercício
+    </button>
+    <div class="search d-flex">
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por nome"
         [(ngModel)]="searchNome"
         name="searchNome"
       />
-      <button (click)="search()">Buscar</button>
+      <button class="btn btn-primary" (click)="search()">Buscar</button>
     </div>
   </div>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Nome</th>
@@ -27,9 +30,14 @@
         <td>{{ ex.carga }}</td>
         <td>{{ ex.repeticao }}</td>
         <td>{{ ex.series }}</td>
-        <td>
-          <button class="editar" (click)="editExercicio(ex.id)">Editar</button>
-          <button class="excluir" (click)="deleteExercicio(ex.id)">
+        <td class="actions">
+          <button class="btn btn-warning editar" (click)="editExercicio(ex.id)">
+            Editar
+          </button>
+          <button
+            class="btn btn-danger excluir"
+            (click)="deleteExercicio(ex.id)"
+          >
             Excluir
           </button>
         </td>

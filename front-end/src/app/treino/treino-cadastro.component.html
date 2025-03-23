@@ -1,12 +1,13 @@
-<div class="treino-cadastro">
+<div class="treino-cadastro container">
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Treino</h2>
   <form [formGroup]="treinoForm" (ngSubmit)="salvar()">
-    <div>
-      <label for="descricao">Descrição</label>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
       <input
         id="descricao"
         formControlName="descricao"
         type="text"
+        class="form-control"
         placeholder="Digite a descrição"
       />
       <small
@@ -14,25 +15,32 @@
           treinoForm.get('descricao')?.invalid &&
           treinoForm.get('descricao')?.touched
         "
+        class="text-danger"
       >
         Descrição é obrigatória.
       </small>
     </div>
-    <div>
-      <label for="dataCriacao">Data de Criação</label>
-      <input id="dataCriacao" formControlName="dataCriacao" type="date" />
+    <div class="mb-3">
+      <label for="dataCriacao" class="form-label">Data de Criação</label>
+      <input
+        id="dataCriacao"
+        formControlName="dataCriacao"
+        type="date"
+        class="form-control"
+      />
       <small
         *ngIf="
           treinoForm.get('dataCriacao')?.invalid &&
           treinoForm.get('dataCriacao')?.touched
         "
+        class="text-danger"
       >
         Data de criação é obrigatória.
       </small>
     </div>
-    <div>
-      <label for="cliente">Cliente</label>
-      <select id="cliente" formControlName="cliente">
+    <div class="mb-3">
+      <label for="cliente" class="form-label">Cliente</label>
+      <select id="cliente" formControlName="cliente" class="form-select">
         <option *ngFor="let cliente of clientes" [value]="cliente.id">
           {{ cliente.nome }} - {{ cliente.cpf }}
         </option>
@@ -42,6 +50,7 @@
           treinoForm.get('cliente')?.invalid &&
           treinoForm.get('cliente')?.touched
         "
+        class="text-danger"
       >
         Cliente é obrigatório.
       </small>
@@ -53,69 +62,83 @@
         *ngFor="let exercicio of exercicios.controls; let i = index"
       >
         <div [formGroupName]="i" class="exercicio-item">
-          <div>
-            <label for="nome-{{ i }}">Nome</label>
+          <div class="mb-3">
+            <label for="nome-{{ i }}" class="form-label">Nome</label>
             <input
               id="nome-{{ i }}"
               formControlName="nome"
               type="text"
+              class="form-control"
               placeholder="Nome do exercício"
             />
             <small
               *ngIf="
                 exercicio.get('nome')?.invalid && exercicio.get('nome')?.touched
               "
+              class="text-danger"
             >
               Nome é obrigatório.
             </small>
           </div>
-          <div>
-            <label for="descricao-{{ i }}">Descrição</label>
+          <div class="mb-3">
+            <label for="descricao-{{ i }}" class="form-label">Descrição</label>
             <input
               id="descricao-{{ i }}"
               formControlName="descricao"
               type="text"
+              class="form-control"
               placeholder="Descrição do exercício"
             />
           </div>
-          <div>
-            <label for="carga-{{ i }}">Carga</label>
+          <div class="mb-3">
+            <label for="carga-{{ i }}" class="form-label">Carga</label>
             <input
               id="carga-{{ i }}"
               formControlName="carga"
               type="number"
+              class="form-control"
               placeholder="Carga em kg"
             />
           </div>
-          <div>
-            <label for="repeticao-{{ i }}">Repetição</label>
+          <div class="mb-3">
+            <label for="repeticao-{{ i }}" class="form-label">Repetição</label>
             <input
               id="repeticao-{{ i }}"
               formControlName="repeticao"
               type="number"
+              class="form-control"
               placeholder="Número de repetições"
             />
           </div>
-          <div>
-            <label for="series-{{ i }}">Séries</label>
+          <div class="mb-3">
+            <label for="series-{{ i }}" class="form-label">Séries</label>
             <input
               id="series-{{ i }}"
               formControlName="series"
               type="number"
+              class="form-control"
               placeholder="Número de séries"
             />
           </div>
-          <button type="button" (click)="removeExercicio(i)">Remover</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="removeExercicio(i)"
+          >
+            Remover
+          </button>
         </div>
       </div>
-      <button type="button" (click)="addExercicio()">
+      <button type="button" class="btn btn-secondary" (click)="addExercicio()">
         Adicionar Exercício
       </button>
     </fieldset>
 
     <div class="actions">
-      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
-      <button type="submit" class="salvar">
+      <button type="button" class="btn btn-secondary voltar" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary salvar">
         {{ isEdit ? "Salvar" : "Cadastrar" }}
       </button>
     </div>

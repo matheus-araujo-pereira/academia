@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExercicioService } from './exercicio.service';
 
@@ -7,6 +13,7 @@ import { ExercicioService } from './exercicio.service';
   selector: 'app-exercicio-cadastro',
   templateUrl: './exercicio-cadastro.component.html',
   styleUrls: ['./exercicio-cadastro.component.css'],
+  imports: [FormsModule, ReactiveFormsModule], // Adicione esta linha
 })
 export class ExercicioCadastroComponent implements OnInit {
   exercicioForm: FormGroup;

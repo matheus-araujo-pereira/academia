@@ -11,17 +11,6 @@
   margin-bottom: 15px;
 }
 
-.treino-cadastro label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.treino-cadastro input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
 fieldset {
   margin-top: 20px;
   padding: 10px;
@@ -49,6 +38,10 @@ fieldset {
   cursor: pointer;
 }
 
+.voltar:hover {
+  background-color: darkblue;
+}
+
 .salvar {
   background-color: green;
   color: white;
@@ -56,4 +49,21 @@ fieldset {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.salvar:hover {
+  background-color: darkgreen;
+}
+
+/* Estilos para visualização mobile */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+  }
+
+  .voltar,
+  .salvar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

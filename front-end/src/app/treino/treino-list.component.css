@@ -1,12 +1,14 @@
 .treino-list {
   padding: 20px;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .cadastrar {
   background-color: green;
   color: white;
@@ -14,27 +16,37 @@
   padding: 10px 20px;
   cursor: pointer;
 }
+
+.cadastrar:hover {
+  background-color: darkgreen;
+}
+
 .search input {
   margin-right: 10px;
   padding: 5px;
 }
+
 .search button {
   padding: 5px 10px;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
+
 table,
 th,
 td {
   border: 1px solid #ccc;
 }
+
 th,
 td {
   padding: 10px;
   text-align: left;
 }
+
 .editar {
   background-color: yellow;
   color: black;
@@ -42,10 +54,59 @@ td {
   padding: 5px 10px;
   cursor: pointer;
 }
+
+.editar:hover {
+  background-color: gold;
+}
+
 .excluir {
   background-color: red;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.excluir:hover {
+  background-color: darkred;
+}
+
+/* Estilos para visualização mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .search {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search input {
+    margin-bottom: 10px;
+  }
+
+  .search button {
+    width: 100%;
+  }
+}
+
+/* Ajuste de espaçamento para os campos de busca e botões de ação */
+.search input,
+.search button {
+  margin-bottom: 10px;
+}
+
+.actions button {
+  margin-right: 10px;
+}
+
+/* Adicione margem entre os botões de ação */
+.actions button {
+  margin-right: 10px;
+}
+
+.actions button:last-child {
+  margin-right: 0;
 }

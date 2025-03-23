@@ -1,12 +1,13 @@
-<div class="exercicio-cadastro">
+<div class="exercicio-cadastro container">
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Exercício</h2>
   <form [formGroup]="exercicioForm" (ngSubmit)="salvar()">
-    <div>
-      <label for="nome">Nome</label>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
       <input
         id="nome"
         formControlName="nome"
         type="text"
+        class="form-control"
         placeholder="Digite o nome do exercício"
       />
       <small
@@ -14,49 +15,56 @@
           exercicioForm.get('nome')?.invalid &&
           exercicioForm.get('nome')?.touched
         "
+        class="text-danger"
       >
         Nome é obrigatório.
       </small>
     </div>
-    <div>
-      <label for="descricao">Descrição</label>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
       <input
         id="descricao"
         formControlName="descricao"
         type="text"
+        class="form-control"
         placeholder="Digite a descrição do exercício"
       />
     </div>
-    <div>
-      <label for="carga">Carga</label>
+    <div class="mb-3">
+      <label for="carga" class="form-label">Carga</label>
       <input
         id="carga"
         formControlName="carga"
         type="number"
+        class="form-control"
         placeholder="Digite a carga em kg"
       />
     </div>
-    <div>
-      <label for="repeticao">Repetição</label>
+    <div class="mb-3">
+      <label for="repeticao" class="form-label">Repetição</label>
       <input
         id="repeticao"
         formControlName="repeticao"
         type="number"
+        class="form-control"
         placeholder="Digite o número de repetições"
       />
     </div>
-    <div>
-      <label for="series">Séries</label>
+    <div class="mb-3">
+      <label for="series" class="form-label">Séries</label>
       <input
         id="series"
         formControlName="series"
         type="number"
+        class="form-control"
         placeholder="Digite o número de séries"
       />
     </div>
     <div class="actions">
-      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
-      <button type="submit" class="salvar">
+      <button type="button" class="btn btn-secondary voltar" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary salvar">
         {{ isEdit ? "Salvar" : "Cadastrar" }}
       </button>
     </div>
