@@ -29,6 +29,6 @@
     overflow-x: hidden;
   }
   .card {
-    border-radius: 0;
+    border-radius: 5px;
   }
 }

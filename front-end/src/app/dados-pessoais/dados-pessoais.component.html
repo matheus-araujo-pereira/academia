@@ -57,6 +57,11 @@
   </div>
   <div *ngIf="atividades?.length">
     <h2 class="mb-4" id="atividadesSection">Atividades</h2>
+    <div class="alert alert-primary" role="alert">
+      Não é necessário realizar inscrição prévia para participar das atividades.
+      Consulte os detalhes na descrição, verifique os horários e compareça
+      conforme sua disponibilidade.
+    </div>
     <div *ngFor="let a of atividades" class="card mb-4">
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">
@@ -77,6 +82,10 @@
   </div>
   <div *ngIf="usuario.treinos?.length">
     <h2 class="mb-4" id="treinosSection">Treinos</h2>
+    <div class="alert alert-primary" role="alert">
+      Caso o seu treino precise de alterações, entre em contato com o seu
+      professor.
+    </div>
     <div *ngFor="let treino of usuario.treinos" class="card mb-4">
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">
