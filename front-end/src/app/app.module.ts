@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 @NgModule({
   // Remova o array "declarations" se todos os seus componentes forem standalone
@@ -13,9 +12,9 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    AppComponent, // como componente standalone, ele é importado
+    // Remova AppComponent daqui
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  // Remova o bootstrap: [AppComponent]
 })
 export class AppModule {}
