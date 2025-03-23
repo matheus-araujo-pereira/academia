@@ -5,7 +5,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { MenuComponent } from './menu/menu.component';
 import { AtendenteListComponent } from './atendente/atendente-list.component';
 import { AtendenteCadastroComponent } from './atendente/atendente-cadastro.component';
 import { ProfessorCadastroComponent } from './professor/professor-cadastro.component';
@@ -23,7 +22,6 @@ import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.componen
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'dados-pessoais', component: DadosPessoaisComponent },
-  { path: 'menu', component: MenuComponent },
   {
     path: 'atendentes',
     children: [

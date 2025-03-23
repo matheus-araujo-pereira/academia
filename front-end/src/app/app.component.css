@@ -1,11 +1,30 @@
-.content {
-  display: flex;
+.sidenav-container {
+  height: 100%;
+}
+
+.mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .main-content {
-  flex: 1;
-  /* Quando o menu estiver ativo, adiciona margin-left; caso contrário, 0 */
-  margin-left: 250px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.logout {
+  padding: 20px;
+}
+
+.logout button {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout button mat-icon {
+  margin-right: 10px;
 }
