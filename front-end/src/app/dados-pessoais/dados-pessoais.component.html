@@ -17,6 +17,24 @@
       <p><strong>Número:</strong> {{ usuario.endereco.numero }}</p>
       <p><strong>CEP:</strong> {{ usuario.endereco.cep }}</p>
     </div>
+    <div *ngIf="usuario.treinos?.length">
+      <h3>Treinos</h3>
+      <div *ngFor="let treino of usuario.treinos" class="treino-card">
+        <p><strong>Descrição:</strong> {{ treino.descricao }}</p>
+        <p>
+          <strong>Data:</strong> {{ treino.dataCriacao | date : "dd/MM/yyyy" }}
+        </p>
+        <div *ngIf="treino.exercicios?.length">
+          <h4>Exercícios</h4>
+          <ul>
+            <li *ngFor="let ex of treino.exercicios">
+              {{ ex.nome }} - Carga: {{ ex.carga }} - Séries: {{ ex.series }} -
+              Repetições: {{ ex.repeticao }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
   <p *ngIf="!usuario">Carregando...</p>
 </div>

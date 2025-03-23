@@ -10,4 +10,8 @@ public interface TreinoRepositorio extends JpaRepository<Treino, Long> {
     List<Treino> findByDescricaoContainingIgnoreCase(String descricao);
 
     List<Treino> findAllByOrderByDataCriacaoAsc();
+
+    List<Treino> findByClienteLogin(String login);
+
+    List<Treino> findByProfessorLogin(String login);
 }

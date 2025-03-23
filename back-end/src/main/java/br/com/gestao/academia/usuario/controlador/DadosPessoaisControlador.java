@@ -20,6 +20,7 @@ import br.com.gestao.academia.cliente.modelo.Cliente;
 import br.com.gestao.academia.cliente.repositorio.ClienteRepositorio;
 import br.com.gestao.academia.professor.modelo.Professor;
 import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
+import br.com.gestao.academia.treino.repositorio.TreinoRepositorio;
 
 @RestController
 @RequestMapping("/api/dados-pessoais")
@@ -30,15 +31,18 @@ public class DadosPessoaisControlador {
     private final AtendenteRepositorio atendenteRepo;
     private final ProfessorRepositorio professorRepo;
     private final ClienteRepositorio clienteRepo;
+    private final TreinoRepositorio treinoRepo;
 
     public DadosPessoaisControlador(AdministradorRepositorio adminRepo,
             AtendenteRepositorio atendenteRepo,
             ProfessorRepositorio professorRepo,
-            ClienteRepositorio clienteRepo) {
+            ClienteRepositorio clienteRepo,
+            TreinoRepositorio treinoRepo) {
         this.adminRepo = adminRepo;
         this.atendenteRepo = atendenteRepo;
         this.professorRepo = professorRepo;
         this.clienteRepo = clienteRepo;
+        this.treinoRepo = treinoRepo;
     }
 
     @GetMapping
@@ -89,6 +93,7 @@ public class DadosPessoaisControlador {
             dados.put("telefone", professor.getTelefone());
             dados.put("endereco", professor.getEndereco());
             dados.put("tipoUsuario", "professor");
+            dados.put("treinos", treinoRepo.findByProfessorLogin(login));
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }
 
@@ -105,6 +110,7 @@ public class DadosPessoaisControlador {
             dados.put("telefone", cliente.getTelefone());
             dados.put("endereco", cliente.getEndereco());
             dados.put("tipoUsuario", "cliente");
+            dados.put("treinos", treinoRepo.findByClienteLogin(login));
             return new ResponseEntity<>(dados, HttpStatus.OK);
         }
 
