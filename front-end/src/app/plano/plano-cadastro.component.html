@@ -1,17 +1,19 @@
-<div class="plano-cadastro">
+<div class="plano-cadastro container">
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Plano</h2>
   <form [formGroup]="planoForm" (ngSubmit)="salvar()">
-    <div>
-      <label for="nome">Nome</label>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
       <input
         id="nome"
         formControlName="nome"
         type="text"
+        class="form-control"
         placeholder="Digite o nome"
         maxlength="50"
       />
       <div
         *ngIf="planoForm.get('nome')?.invalid && planoForm.get('nome')?.touched"
+        class="text-danger"
       >
         <small *ngIf="planoForm.get('nome')?.errors?.['required']"
           >Nome é obrigatório.</small
@@ -24,12 +26,13 @@
         >
       </div>
     </div>
-    <div>
-      <label for="valor">Valor</label>
+    <div class="mb-3">
+      <label for="valor" class="form-label">Valor</label>
       <input
         id="valor"
         formControlName="valor"
         type="number"
+        class="form-control"
         step="0.01"
         placeholder="Digite o valor"
       />
@@ -37,6 +40,7 @@
         *ngIf="
           planoForm.get('valor')?.invalid && planoForm.get('valor')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="planoForm.get('valor')?.errors?.['required']"
           >Valor é obrigatório.</small
@@ -46,11 +50,12 @@
         >
       </div>
     </div>
-    <div>
-      <label for="descricao">Descrição</label>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição</label>
       <textarea
         id="descricao"
         formControlName="descricao"
+        class="form-control"
         placeholder="Digite a descrição"
         maxlength="255"
       ></textarea>
@@ -59,6 +64,7 @@
           planoForm.get('descricao')?.invalid &&
           planoForm.get('descricao')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="planoForm.get('descricao')?.errors?.['maxlength']"
           >Descrição deve ter no máximo 255 caracteres.</small
@@ -66,8 +72,10 @@
       </div>
     </div>
     <div class="actions">
-      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
-      <button type="submit" class="salvar">
+      <button type="button" class="btn btn-secondary voltar" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary salvar">
         {{ isEdit ? "Salvar" : "Cadastrar" }}
       </button>
     </div>
