@@ -50,9 +50,8 @@ export class ClienteCadastroComponent implements OnInit {
         numero: ['', Validators.required],
         cep: ['', [Validators.required, Validators.pattern(/^\d{5}-?\d{3}$/)]],
       }),
-      plano: this.fb.group({
-        id: [null, Validators.required],
-      }),
+      // Alterado: usa FormControl simples para "plano"
+      plano: [null, Validators.required],
     });
   }
 
@@ -64,7 +63,12 @@ export class ClienteCadastroComponent implements OnInit {
         this.isEdit = true;
         this.id = Number(idParam);
         this.service.getById(this.id).subscribe((cliente) => {
-          this.clienteForm.patchValue(cliente);
+          this.clienteForm.patchValue({
+            // ...existing code...
+            ...cliente,
+            // Ajuste: atribui o id do plano diretamente
+            plano: cliente.plano?.id || null,
+          });
         });
       }
     });
@@ -100,6 +104,8 @@ export class ClienteCadastroComponent implements OnInit {
 
     if (this.clienteForm.valid) {
       const cliente = this.clienteForm.value;
+      // Converte o valor do plano em objeto para enviar ao back-end
+      cliente.plano = { id: cliente.plano };
 
       if (this.isEdit && this.id) {
         this.service.update(this.id, cliente).subscribe({
