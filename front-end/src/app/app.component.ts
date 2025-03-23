@@ -15,13 +15,23 @@ import { RouterModule } from '@angular/router'; // Certifique-se de importar o R
 export class AppComponent {
   showMenu = false;
   isMobileMenuOpen = false;
+  isMobile = false;
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
     // Exibe o menu se a rota não for "/login"
+    this.isMobile = window.innerWidth < 768;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.showMenu = !this.router.url.includes('/login');
         this.isMobileMenuOpen = false; // Fecha o menu móvel ao navegar
+        if (event instanceof NavigationEnd && this.isMobile) {
+          if (
+            !event.url.includes('/login') &&
+            !event.url.includes('/dados-pessoais')
+          ) {
+            this.router.navigate(['/dados-pessoais']);
+          }
+        }
       }
     });
   }

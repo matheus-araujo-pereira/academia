@@ -2,7 +2,7 @@
   <div
     class="side-menu bg-primary text-white d-flex flex-column"
     [ngClass]="{ 'mobile-menu-open': isMobileMenuOpen }"
-    *ngIf="showMenu"
+    *ngIf="showMenu && !isMobile"
   >
     <div class="menu-header p-3">
       <h4 class="m-0">Menu</h4>
@@ -50,12 +50,26 @@
         >
       </li>
     </ul>
-    <div class="logout mt-auto p-3">
+    <div
+      class="logout mt-auto p-3"
+      *ngIf="router.url.includes('/dados-pessoais')"
+    >
       <button class="btn btn-danger w-100" (click)="deslogar()">
         <i class="fa fa-sign-out"></i> Sair
       </button>
     </div>
   </div>
+
+  <!-- Botão de sair fora do side menu -->
+  <div
+    class="logout p-3"
+    *ngIf="isMobile && router.url.includes('/dados-pessoais')"
+  >
+    <button class="btn btn-danger" (click)="deslogar()">
+      <i class="fa fa-sign-out"></i> Sair
+    </button>
+  </div>
+
   <main
     class="main-content"
     [ngStyle]="{ 'margin-left': showMenu ? '250px' : '0' }"
@@ -63,7 +77,7 @@
     <button
       class="mobile-menu-button btn btn-primary d-md-none"
       (click)="toggleMobileMenu()"
-      *ngIf="showMenu"
+      *ngIf="showMenu && !isMobile"
     >
       <i class="fa fa-bars"></i>
     </button>

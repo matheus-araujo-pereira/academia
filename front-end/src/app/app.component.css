@@ -114,14 +114,23 @@
 @media (max-width: 768px) {
   .side-menu {
     transform: translateX(-100%);
+    display: none !important;
   }
   .side-menu.mobile-menu-open {
     transform: translateX(0);
   }
   .main-content {
     margin-left: 0;
+    margin-left: 0 !important;
   }
   .mobile-menu-button {
     display: block;
+  }
+  .logout {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1100;
+    margin: 0;
   }
 }
