@@ -15,6 +15,7 @@
     <thead>
       <tr>
         <th>Descrição</th>
+        <th>Nome do Cliente</th>
         <th>Data de Criação</th>
         <th>Ações</th>
       </tr>
@@ -22,6 +23,7 @@
     <tbody>
       <tr *ngFor="let t of treinos">
         <td>{{ t.descricao }}</td>
+        <td>{{ t.cliente?.nome }} - {{ t.cliente?.cpf }}</td>
         <td>{{ t.dataCriacao }}</td>
         <td>
           <button class="editar" (click)="editTreino(t.id)">Editar</button>
