@@ -55,8 +55,29 @@
       </div>
     </div>
   </div>
+  <h2 class="mb-4">Atividades</h2>
+  <div *ngIf="atividades?.length">
+    <h2 class="mb-4" id="atividadesSection">Atividades</h2>
+    <div *ngFor="let a of atividades" class="card mb-4">
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ a.nome || "Sem dados" }}
+        </h6>
+        <p class="card-text">
+          Professor: {{ a.professor?.nome || "Sem dados" }}
+        </p>
+        <p class="card-text">
+          Dias da Semana: {{ a.diasSemana || "Sem dados" }}
+        </p>
+        <p class="card-text">
+          Horário: {{ a.horaInicio || "Sem dados" }} -
+          {{ a.horaFim || "Sem dados" }}
+        </p>
+      </div>
+    </div>
+  </div>
   <div *ngIf="usuario.treinos?.length">
-    <h5 class="mb-4" id="treinosSection">Treinos</h5>
+    <h2 class="mb-4" id="treinosSection">Treinos</h2>
     <div *ngFor="let treino of usuario.treinos" class="card mb-4">
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">
