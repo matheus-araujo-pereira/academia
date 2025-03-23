@@ -35,17 +35,24 @@ public class TreinoControlador {
 
     @GetMapping
     public ResponseEntity<List<Treino>> findAll() {
-        return new ResponseEntity<>(repo.findAllByOrderByDataCriacaoAsc(), HttpStatus.OK);
+        List<Treino> treinos = repo.findAll();
+        // Ordena os treinos pelo nome do cliente (ordem alfabética)
+        treinos.sort((a, b) -> a.getCliente().getNome().compareToIgnoreCase(b.getCliente().getNome()));
+        return new ResponseEntity<>(treinos, HttpStatus.OK);
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<Treino>> search(@RequestParam(required = false) String descricao) {
         String d = (descricao == null ? "" : descricao.trim());
+        List<Treino> treinos;
         if (d.isEmpty()) {
-            return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+            treinos = repo.findAll();
         } else {
-            return new ResponseEntity<>(repo.findByDescricaoContainingIgnoreCase(d), HttpStatus.OK);
+            treinos = repo.findByDescricaoContainingIgnoreCase(d);
         }
+        // Ordena os treinos pelo nome do cliente (ordem alfabética)
+        treinos.sort((a, b) -> a.getCliente().getNome().compareToIgnoreCase(b.getCliente().getNome()));
+        return new ResponseEntity<>(treinos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
