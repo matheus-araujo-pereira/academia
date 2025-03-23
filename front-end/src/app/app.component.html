@@ -66,11 +66,18 @@
       <i class="fa fa-sign-out"></i> Sair
     </button>
     <button
+      class="btn btn-sucess"
+      *ngIf="router.url.includes('/dados-pessoais')"
+      (click)="scrollToAtividades()"
+    >
+      <i class="fa fa-user-plus"></i> Atividades
+    </button>
+    <button
       class="btn btn-primary"
       *ngIf="router.url.includes('/dados-pessoais')"
       (click)="scrollToTreinos()"
     >
-      Ir para Treinos
+      <i class="fa fa-user-circle-o" aria-hidden="true"></i> Meus Treinos
     </button>
   </div>
 

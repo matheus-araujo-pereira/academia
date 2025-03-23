@@ -44,6 +44,11 @@ export class AppComponent {
     this.router.navigate(['/login']);
   }
 
+  scrollToAtividades(): void {
+    const atividadesSection = document.getElementById('atividadesSection');
+    atividadesSection?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   scrollToTreinos(): void {
     const treinosSection = document.getElementById('treinosSection');
     treinosSection?.scrollIntoView({ behavior: 'smooth' });

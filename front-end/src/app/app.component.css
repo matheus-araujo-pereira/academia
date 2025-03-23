@@ -89,7 +89,8 @@
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -98,6 +99,10 @@
 
 .logout .btn-danger {
   background-color: red;
+}
+
+.logout .btn-sucess {
+  background-color: #00c814;
 }
 
 .logout .btn-primary {
