@@ -54,16 +54,19 @@ public class ProfessorControlador {
         String n = (nome == null ? "" : nome.trim());
         String c = (cpf == null ? "" : cpf.trim());
 
+        List<Professor> result;
         if (n.isEmpty() && c.isEmpty()) {
-            return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
+            result = repo.findAll();
         } else if (!n.isEmpty() && !c.isEmpty()) {
-            return new ResponseEntity<>(repo.findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(n, c),
-                    HttpStatus.OK);
+            result = repo.findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(n, c);
         } else if (!n.isEmpty()) {
-            return new ResponseEntity<>(repo.findByNomeContainingIgnoreCase(n), HttpStatus.OK);
+            result = repo.findByNomeContainingIgnoreCase(n);
         } else {
-            return new ResponseEntity<>(repo.findByCpfContainingIgnoreCase(c), HttpStatus.OK);
+            result = repo.findByCpfContainingIgnoreCase(c);
         }
+        // Ordena a lista de professores por nome (ordem alfabética)
+        result.sort((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
