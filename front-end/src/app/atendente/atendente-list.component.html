@@ -1,23 +1,27 @@
-<div class="atendente-list">
-  <div class="header">
-    <button class="cadastrar" (click)="cadastrar()">Cadastrar Atendente</button>
-    <div class="search">
+<div class="atendente-list container">
+  <div class="header mb-3">
+    <button class="btn btn-success cadastrar" (click)="cadastrar()">
+      Cadastrar Atendente
+    </button>
+    <div class="search d-flex">
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por nome"
         [(ngModel)]="searchNome"
         name="searchNome"
       />
       <input
         type="text"
+        class="form-control me-2"
         placeholder="Buscar por CPF"
         [(ngModel)]="searchCpf"
         name="searchCpf"
       />
-      <button (click)="search()">Buscar</button>
+      <button class="btn btn-primary" (click)="search()">Buscar</button>
     </div>
   </div>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Nome</th>
@@ -29,9 +33,14 @@
       <tr *ngFor="let a of atendentes">
         <td>{{ a.nome }}</td>
         <td>{{ a.cpf }}</td>
-        <td>
-          <button class="editar" (click)="editAtendente(a.id)">Editar</button>
-          <button class="excluir" (click)="deleteAtendente(a.id)">
+        <td class="actions">
+          <button class="btn btn-warning editar" (click)="editAtendente(a.id)">
+            Editar
+          </button>
+          <button
+            class="btn btn-danger excluir"
+            (click)="deleteAtendente(a.id)"
+          >
             Excluir
           </button>
         </td>

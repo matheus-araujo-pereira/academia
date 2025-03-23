@@ -11,17 +11,6 @@
   margin-bottom: 15px;
 }
 
-.atendente-cadastro label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.atendente-cadastro input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
 .actions {
   display: flex;
   justify-content: space-between;
@@ -37,6 +26,10 @@
   cursor: pointer;
 }
 
+.voltar:hover {
+  background-color: darkblue;
+}
+
 .salvar {
   background-color: green;
   color: white;
@@ -44,6 +37,10 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.salvar:hover {
+  background-color: darkgreen;
 }
 
 /* Adicione ao final do arquivo atendente-cadastro.component.css */
@@ -55,4 +52,17 @@ fieldset {
 legend {
   font-weight: bold;
   padding: 0 5px;
+}
+
+/* Estilos para visualização mobile */
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+  }
+
+  .voltar,
+  .salvar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

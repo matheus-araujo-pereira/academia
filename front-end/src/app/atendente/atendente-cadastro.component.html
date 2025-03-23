@@ -1,12 +1,13 @@
-<div class="atendente-cadastro">
+<div class="atendente-cadastro container">
   <h2>{{ isEdit ? "Editar" : "Cadastrar" }} Atendente</h2>
   <form [formGroup]="atendenteForm" (ngSubmit)="salvar()">
-    <div>
-      <label for="nome">Nome</label>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
       <input
         id="nome"
         formControlName="nome"
         type="text"
+        class="form-control"
         placeholder="Nome Completo do Usuário"
         onkeypress="return /[a-zA-Z\s]/i.test(event.key)"
       />
@@ -15,6 +16,7 @@
           atendenteForm.get('nome')?.invalid &&
           atendenteForm.get('nome')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('nome')?.errors?.['required']"
           >Nome é obrigatório.</small
@@ -24,12 +26,13 @@
         >
       </div>
     </div>
-    <div>
-      <label for="login">Login</label>
+    <div class="mb-3">
+      <label for="login" class="form-label">Login</label>
       <input
         id="login"
         formControlName="login"
         type="text"
+        class="form-control"
         placeholder="nome.sobrenome"
         onkeypress="return /[a-zA-Z.]/i.test(event.key)"
       />
@@ -38,6 +41,7 @@
           atendenteForm.get('login')?.invalid &&
           atendenteForm.get('login')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('login')?.errors?.['required']"
           >Login é obrigatório.</small
@@ -47,12 +51,13 @@
         >
       </div>
     </div>
-    <div>
-      <label for="senha">Senha</label>
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
       <input
         id="senha"
         formControlName="senha"
         type="password"
+        class="form-control"
         placeholder="Mínimo 4 caracteres"
       />
       <div
@@ -60,6 +65,7 @@
           atendenteForm.get('senha')?.invalid &&
           atendenteForm.get('senha')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('senha')?.errors?.['required']"
           >Senha é obrigatória.</small
@@ -69,12 +75,13 @@
         >
       </div>
     </div>
-    <div>
-      <label for="cpf">CPF</label>
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
       <input
         id="cpf"
         formControlName="cpf"
         type="text"
+        class="form-control"
         placeholder="000.000.000-00"
         maxlength="14"
         (input)="formatarCPF()"
@@ -85,6 +92,7 @@
         *ngIf="
           atendenteForm.get('cpf')?.invalid && atendenteForm.get('cpf')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('cpf')?.errors?.['required']"
           >CPF é obrigatório.</small
@@ -95,12 +103,13 @@
       </div>
     </div>
     <!-- Demais campos do atendente -->
-    <div>
-      <label for="rg">RG</label>
+    <div class="mb-3">
+      <label for="rg" class="form-label">RG</label>
       <input
         id="rg"
         formControlName="rg"
         type="text"
+        class="form-control"
         placeholder="00.000.000-0"
         maxlength="12"
         (input)="formatarRG()"
@@ -111,6 +120,7 @@
         *ngIf="
           atendenteForm.get('rg')?.invalid && atendenteForm.get('rg')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('rg')?.errors?.['required']"
           >RG é obrigatório.</small
@@ -120,26 +130,33 @@
         >
       </div>
     </div>
-    <div>
-      <label for="dataNascimento">Data de Nascimento</label>
-      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+    <div class="mb-3">
+      <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+      <input
+        id="dataNascimento"
+        formControlName="dataNascimento"
+        type="date"
+        class="form-control"
+      />
       <div
         *ngIf="
           atendenteForm.get('dataNascimento')?.invalid &&
           atendenteForm.get('dataNascimento')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('dataNascimento')?.errors?.['required']"
           >Data de nascimento é obrigatória.</small
         >
       </div>
     </div>
-    <div>
-      <label for="email">E-mail</label>
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mail</label>
       <input
         id="email"
         formControlName="email"
         type="email"
+        class="form-control"
         placeholder="email@ex.com"
       />
       <div
@@ -147,6 +164,7 @@
           atendenteForm.get('email')?.invalid &&
           atendenteForm.get('email')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('email')?.errors?.['required']"
           >E-mail é obrigatório.</small
@@ -156,12 +174,13 @@
         >
       </div>
     </div>
-    <div>
-      <label for="telefone">Telefone</label>
+    <div class="mb-3">
+      <label for="telefone" class="form-label">Telefone</label>
       <input
         id="telefone"
         formControlName="telefone"
         type="text"
+        class="form-control"
         placeholder="(00) 00000-0000"
         maxlength="15"
         (input)="formatarTelefone()"
@@ -173,6 +192,7 @@
           atendenteForm.get('telefone')?.invalid &&
           atendenteForm.get('telefone')?.touched
         "
+        class="text-danger"
       >
         <small *ngIf="atendenteForm.get('telefone')?.errors?.['required']"
           >Telefone é obrigatório.</small
@@ -184,16 +204,22 @@
     </div>
 
     <!-- Grupo de Endereço -->
-    <fieldset formGroupName="endereco">
+    <fieldset formGroupName="endereco" class="mb-3">
       <legend>Endereço</legend>
-      <div>
-        <label for="estado">Estado</label>
-        <input id="estado" formControlName="estado" type="text" />
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <input
+          id="estado"
+          formControlName="estado"
+          type="text"
+          class="form-control"
+        />
         <div
           *ngIf="
             atendenteForm.get('endereco.estado')?.invalid &&
             atendenteForm.get('endereco.estado')?.touched
           "
+          class="text-danger"
         >
           <small
             *ngIf="atendenteForm.get('endereco.estado')?.errors?.['required']"
@@ -201,14 +227,20 @@
           >
         </div>
       </div>
-      <div>
-        <label for="cidade">Cidade</label>
-        <input id="cidade" formControlName="cidade" type="text" />
+      <div class="mb-3">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input
+          id="cidade"
+          formControlName="cidade"
+          type="text"
+          class="form-control"
+        />
         <div
           *ngIf="
             atendenteForm.get('endereco.cidade')?.invalid &&
             atendenteForm.get('endereco.cidade')?.touched
           "
+          class="text-danger"
         >
           <small
             *ngIf="atendenteForm.get('endereco.cidade')?.errors?.['required']"
@@ -216,14 +248,20 @@
           >
         </div>
       </div>
-      <div>
-        <label for="bairro">Bairro</label>
-        <input id="bairro" formControlName="bairro" type="text" />
+      <div class="mb-3">
+        <label for="bairro" class="form-label">Bairro</label>
+        <input
+          id="bairro"
+          formControlName="bairro"
+          type="text"
+          class="form-control"
+        />
         <div
           *ngIf="
             atendenteForm.get('endereco.bairro')?.invalid &&
             atendenteForm.get('endereco.bairro')?.touched
           "
+          class="text-danger"
         >
           <small
             *ngIf="atendenteForm.get('endereco.bairro')?.errors?.['required']"
@@ -231,14 +269,20 @@
           >
         </div>
       </div>
-      <div>
-        <label for="logradouro">Logradouro</label>
-        <input id="logradouro" formControlName="logradouro" type="text" />
+      <div class="mb-3">
+        <label for="logradouro" class="form-label">Logradouro</label>
+        <input
+          id="logradouro"
+          formControlName="logradouro"
+          type="text"
+          class="form-control"
+        />
         <div
           *ngIf="
             atendenteForm.get('endereco.logradouro')?.invalid &&
             atendenteForm.get('endereco.logradouro')?.touched
           "
+          class="text-danger"
         >
           <small
             *ngIf="atendenteForm.get('endereco.logradouro')?.errors?.['required']"
@@ -246,14 +290,20 @@
           >
         </div>
       </div>
-      <div>
-        <label for="numero">Número</label>
-        <input id="numero" formControlName="numero" type="text" />
+      <div class="mb-3">
+        <label for="numero" class="form-label">Número</label>
+        <input
+          id="numero"
+          formControlName="numero"
+          type="text"
+          class="form-control"
+        />
         <div
           *ngIf="
             atendenteForm.get('endereco.numero')?.invalid &&
             atendenteForm.get('endereco.numero')?.touched
           "
+          class="text-danger"
         >
           <small
             *ngIf="atendenteForm.get('endereco.numero')?.errors?.['required']"
@@ -261,12 +311,13 @@
           >
         </div>
       </div>
-      <div>
-        <label for="cep">CEP</label>
+      <div class="mb-3">
+        <label for="cep" class="form-label">CEP</label>
         <input
           id="cep"
           formControlName="cep"
           type="text"
+          class="form-control"
           placeholder="00000-000"
           maxlength="9"
           (input)="formatarCEP()"
@@ -277,6 +328,7 @@
             atendenteForm.get('endereco.cep')?.invalid &&
             atendenteForm.get('endereco.cep')?.touched
           "
+          class="text-danger"
         >
           <small *ngIf="atendenteForm.get('endereco.cep')?.errors?.['required']"
             >CEP é obrigatório.</small
@@ -289,8 +341,10 @@
     </fieldset>
 
     <div class="actions">
-      <button type="button" class="voltar" (click)="voltar()">Voltar</button>
-      <button type="submit" class="salvar">
+      <button type="button" class="btn btn-secondary voltar" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="submit" class="btn btn-primary salvar">
         {{ isEdit ? "Salvar" : "Cadastrar" }}
       </button>
     </div>
