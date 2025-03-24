@@ -532,4 +532,18 @@ class ClienteControladorTest {
     assertNotNull(clientes);
     assertEquals("Carlos", clientes.get(0).getNome());
   }
+
+  @Test
+  public void update_clienteNaoEncontrado_deveLancarExcecao() {
+    Long idInexistente = 999L;
+    Cliente cliente = new Cliente();
+    // ...atribuição de propriedades mínimas se necessário...
+    when(clienteRepo.findById(idInexistente)).thenReturn(Optional.empty());
+
+    ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> {
+      controlador.update(idInexistente, cliente);
+    });
+    assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    assertEquals("Cliente não encontrado", ex.getReason());
+  }
 }
