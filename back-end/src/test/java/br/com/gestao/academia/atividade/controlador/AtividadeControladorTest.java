@@ -88,6 +88,17 @@ class AtividadeControladorTest {
   }
 
   @Test
+  void deveLancarExcecaoAoAtualizarAtividadeNaoEncontrada() {
+    Atividade atividade = new Atividade();
+    when(atividadeRepo.findById(1L)).thenReturn(Optional.empty());
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.update(1L, atividade));
+    assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    assertEquals("Atividade não encontrada", exception.getReason());
+  }
+
+  @Test
   void deveExcluirAtividade() {
     doNothing().when(atividadeRepo).deleteById(1L);
 
