@@ -85,4 +85,42 @@ class AdministradorControladorTest {
     controlador.delete(1L);
     verify(adminRepo, times(1)).delete(admin);
   }
+
+  @Test
+  void deveAtualizarAdministradorComMudancas() {
+    Administrador adminOriginal = new Administrador();
+    adminOriginal.setNome("Nome Antigo");
+    adminOriginal.setLogin("loginAntigo");
+    adminOriginal.setSenha("senhaAntiga");
+
+    Administrador adminAtualizado = new Administrador();
+    adminAtualizado.setNome("Nome Novo");
+    adminAtualizado.setLogin("loginNovo");
+    adminAtualizado.setSenha("senhaNova");
+
+    when(adminRepo.findById(1L)).thenReturn(Optional.of(adminOriginal));
+    when(adminRepo.save(any(Administrador.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+    Administrador resultado = controlador.update(1L, adminAtualizado);
+    assertEquals("Nome Novo", resultado.getNome());
+    assertEquals("loginNovo", resultado.getLogin());
+    assertEquals("senhaNova", resultado.getSenha());
+  }
+
+  @Test
+  void deveLancarExcecaoAoAtualizarAdministradorNaoExistente() {
+    Administrador admin = new Administrador();
+    when(adminRepo.findById(1L)).thenReturn(Optional.empty());
+
+    Exception exception = assertThrows(RuntimeException.class, () -> controlador.update(1L, admin));
+    assertEquals("Administrador não encontrado para atualização.", exception.getMessage());
+  }
+
+  @Test
+  void deveLancarExcecaoAoExcluirAdministradorNaoExistente() {
+    when(adminRepo.findById(1L)).thenReturn(Optional.empty());
+
+    Exception exception = assertThrows(RuntimeException.class, () -> controlador.delete(1L));
+    assertEquals("Administrador não encontrado para exclusão.", exception.getMessage());
+  }
 }
