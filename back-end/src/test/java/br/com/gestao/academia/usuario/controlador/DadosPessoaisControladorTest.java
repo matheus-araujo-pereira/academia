@@ -1,10 +1,12 @@
 package br.com.gestao.academia.usuario.controlador;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
-import java.util.Optional;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,14 +15,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+
 import br.com.gestao.academia.administrador.modelo.Administrador;
 import br.com.gestao.academia.administrador.repositorio.AdministradorRepositorio;
 import br.com.gestao.academia.atendente.modelo.Atendente;
 import br.com.gestao.academia.atendente.repositorio.AtendenteRepositorio;
-import br.com.gestao.academia.professor.modelo.Professor;
-import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import br.com.gestao.academia.cliente.modelo.Cliente;
 import br.com.gestao.academia.cliente.repositorio.ClienteRepositorio;
+import br.com.gestao.academia.professor.modelo.Professor;
+import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import br.com.gestao.academia.treino.repositorio.TreinoRepositorio;
 
 @ExtendWith(MockitoExtension.class)

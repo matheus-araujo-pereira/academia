@@ -1,7 +1,8 @@
 package br.com.gestao.academia.login.controlador;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
@@ -11,16 +12,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import br.com.gestao.academia.administrador.modelo.Administrador;
 import br.com.gestao.academia.administrador.repositorio.AdministradorRepositorio;
 import br.com.gestao.academia.atendente.modelo.Atendente;
 import br.com.gestao.academia.atendente.repositorio.AtendenteRepositorio;
-import br.com.gestao.academia.professor.modelo.Professor;
-import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import br.com.gestao.academia.cliente.modelo.Cliente;
 import br.com.gestao.academia.cliente.repositorio.ClienteRepositorio;
 import br.com.gestao.academia.login.dto.LoginRequest;
 import br.com.gestao.academia.login.dto.LoginResponse;
+import br.com.gestao.academia.professor.modelo.Professor;
+import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
 import jakarta.servlet.http.HttpSession;
 
 @ExtendWith(MockitoExtension.class)

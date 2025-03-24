@@ -1,9 +1,9 @@
 package br.com.gestao.academia;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(OutputCaptureExtension.class)
 class AcademiaApplicationTests {
