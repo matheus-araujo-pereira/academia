@@ -20,9 +20,8 @@ import br.com.gestao.academia.login.dto.LoginRequest;
 import br.com.gestao.academia.login.dto.LoginResponse;
 import br.com.gestao.academia.professor.modelo.Professor;
 import br.com.gestao.academia.professor.repositorio.ProfessorRepositorio;
-import jakarta.validation.Valid;
-
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*") // Permite requisições de qualquer origem
 @RestController
