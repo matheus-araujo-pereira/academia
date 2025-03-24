@@ -107,4 +107,102 @@ class ExercicioControladorTest {
     assertEquals(HttpStatus.NO_CONTENT, resposta.getStatusCode());
     verify(exercicioRepo, times(1)).deleteById(1L);
   }
+
+  @Test
+  void testAtualizarExercicioAtualizandoCampos() {
+    Exercicio existente = new Exercicio();
+    existente.setNome("Original");
+    existente.setDescricao("Desc Original");
+    existente.setCarga(50.0);
+    existente.setRepeticao(10);
+    existente.setSeries(3);
+
+    Exercicio novo = new Exercicio();
+    novo.setNome("Atualizado");
+    novo.setDescricao("Desc Atualizada");
+    novo.setCarga(75.0);
+    novo.setRepeticao(12);
+    novo.setSeries(4);
+
+    when(exercicioRepo.findById(1L)).thenReturn(Optional.of(existente));
+    when(exercicioRepo.save(any(Exercicio.class))).thenReturn(novo);
+
+    ResponseEntity<Exercicio> resposta = controlador.update(1L, novo);
+    Exercicio atualizado = resposta.getBody();
+    assertNotNull(atualizado); // Adicionado para evitar NPE
+    assertEquals("Atualizado", atualizado.getNome());
+    assertEquals("Desc Atualizada", atualizado.getDescricao());
+    assertEquals(75.0, atualizado.getCarga());
+    assertEquals(12, atualizado.getRepeticao());
+    assertEquals(4, atualizado.getSeries());
+  }
+
+  @Test
+  void testAtualizarExercicioLambda() {
+    Exercicio existente = new Exercicio();
+    existente.setNome("Original");
+    existente.setDescricao("Desc Original");
+    existente.setCarga(50.0);
+    existente.setRepeticao(10);
+    existente.setSeries(3);
+
+    Exercicio novo = new Exercicio();
+    novo.setNome("Novo Nome");
+    novo.setDescricao("Nova Descrição");
+    novo.setCarga(100.0);
+    novo.setRepeticao(15);
+    novo.setSeries(5);
+
+    when(exercicioRepo.findById(2L)).thenReturn(Optional.of(existente));
+    when(exercicioRepo.save(any(Exercicio.class))).thenReturn(novo);
+
+    ResponseEntity<Exercicio> resposta = controlador.update(2L, novo);
+    Exercicio atualizado = resposta.getBody();
+    assertNotNull(atualizado); // Garante que a resposta não é nula
+    assertEquals("Novo Nome", atualizado.getNome());
+    assertEquals("Nova Descrição", atualizado.getDescricao());
+    assertEquals(100.0, atualizado.getCarga());
+    assertEquals(15, atualizado.getRepeticao());
+    assertEquals(5, atualizado.getSeries());
+  }
+
+  @Test
+  void testUpdateExercicioNaoEncontrado() {
+    // Prepara um exercício para atualização
+    Exercicio exercicioAtualizar = new Exercicio();
+    // Quando o id não existir, findById retorna vazio
+    when(exercicioRepo.findById(99L)).thenReturn(Optional.empty());
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+      controlador.update(99L, exercicioAtualizar);
+    });
+    assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    assertEquals("Exercício não encontrado", exception.getReason());
+  }
+
+  @Test
+  void testSearchExercicioNomeVazio() {
+    // Para nome nulo ou string vazia, deve chamar findAll()
+    List<Exercicio> lista = Arrays.asList(new Exercicio(), new Exercicio());
+    when(exercicioRepo.findAll()).thenReturn(lista);
+
+    ResponseEntity<List<Exercicio>> respostaNull = controlador.search(null);
+    assertEquals(HttpStatus.OK, respostaNull.getStatusCode());
+    assertEquals(lista, respostaNull.getBody());
+
+    ResponseEntity<List<Exercicio>> respostaVazia = controlador.search("  ");
+    assertEquals(HttpStatus.OK, respostaVazia.getStatusCode());
+    assertEquals(lista, respostaVazia.getBody());
+  }
+
+  @Test
+  void testSearchExercicioNomeNaoVazio() {
+    // Quando um nome não vazio for fornecido, deve chamar
+    // findByNomeContainingIgnoreCase
+    List<Exercicio> lista = Arrays.asList(new Exercicio(), new Exercicio());
+    when(exercicioRepo.findByNomeContainingIgnoreCase("treino")).thenReturn(lista);
+
+    ResponseEntity<List<Exercicio>> resposta = controlador.search("treino");
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    assertEquals(lista, resposta.getBody());
+  }
 }

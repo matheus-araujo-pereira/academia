@@ -1,6 +1,7 @@
 package br.com.gestao.academia.treino.controlador;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class TreinoControlador {
             @RequestParam(required = false) String cliente) {
         String desc = (descricao == null ? "" : descricao.trim());
         String cli = (cliente == null ? "" : cliente.trim());
-        List<Treino> treinos = repo.findAll();
+        List<Treino> treinos = new ArrayList<>(repo.findAll()); // Alterado para ArrayList
         // Filtra por descrição, se informado
         if (!desc.isEmpty()) {
             treinos.removeIf(t -> !t.getDescricao().toLowerCase().contains(desc.toLowerCase()));
@@ -87,6 +88,8 @@ public class TreinoControlador {
         // Atualiza a coleção de exercícios de forma segura:
         if (existente.getExercicios() != null) {
             existente.getExercicios().clear();
+        } else {
+            existente.setExercicios(new ArrayList<>());
         }
         if (treino.getExercicios() != null) {
             treino.getExercicios().forEach(ex -> {
