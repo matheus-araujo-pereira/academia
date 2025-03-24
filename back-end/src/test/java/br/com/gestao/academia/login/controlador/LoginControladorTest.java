@@ -105,4 +105,100 @@ class LoginControladorTest {
     request.setSenha("senha");
     assertThrows(Exception.class, () -> controlador.login(request, session));
   }
+
+  @Test
+  void deveRetornarErroQuandoAdministradorNaoEncontrado() {
+    when(adminRepo.findByLogin("adminLogin")).thenReturn(Optional.empty());
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("adminLogin");
+    request.setSenha("senhaAdmin");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoSenhaAdministradorIncorreta() {
+    Administrador admin = new Administrador();
+    admin.setSenha("senhaErrada");
+    when(adminRepo.findByLogin("adminLogin")).thenReturn(Optional.of(admin));
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("adminLogin");
+    request.setSenha("senhaAdmin");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoAtendenteNaoEncontrado() {
+    when(atendenteRepo.findByLogin("attLogin")).thenReturn(Optional.empty());
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("attLogin");
+    request.setSenha("senhaAtendente");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoSenhaAtendenteIncorreta() {
+    Atendente atendente = new Atendente();
+    atendente.setSenha("senhaErrada");
+    when(atendenteRepo.findByLogin("attLogin")).thenReturn(Optional.of(atendente));
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("attLogin");
+    request.setSenha("senhaAtendente");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoProfessorNaoEncontrado() {
+    when(professorRepo.findByLogin("profLogin")).thenReturn(Optional.empty());
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("profLogin");
+    request.setSenha("senhaProfessor");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoSenhaProfessorIncorreta() {
+    Professor prof = new Professor();
+    prof.setSenha("senhaErrada");
+    when(professorRepo.findByLogin("profLogin")).thenReturn(Optional.of(prof));
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("profLogin");
+    request.setSenha("senhaProfessor");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoClienteNaoEncontrado() {
+    when(clienteRepo.findByLogin("cliLogin")).thenReturn(Optional.empty());
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("cliLogin");
+    request.setSenha("senhaCliente");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
+
+  @Test
+  void deveRetornarErroQuandoSenhaClienteIncorreta() {
+    Cliente cliente = new Cliente();
+    cliente.setSenha("senhaErrada");
+    when(clienteRepo.findByLogin("cliLogin")).thenReturn(Optional.of(cliente));
+
+    LoginRequest request = new LoginRequest();
+    request.setLogin("cliLogin");
+    request.setSenha("senhaCliente");
+
+    assertThrows(Exception.class, () -> controlador.login(request, session));
+  }
 }
