@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,5 +112,215 @@ class AtendenteControladorTest {
     ResponseEntity<Void> resposta = controlador.delete(1L);
     assertEquals(HttpStatus.NO_CONTENT, resposta.getStatusCode());
     verify(atendenteRepo, times(1)).deleteById(1L);
+  }
+
+  @Test
+  void deveLancarExcecaoAoCriarAtendenteComCpfDuplicado() {
+    Atendente atendente = new Atendente();
+    atendente.setCpf("12345678901");
+    atendente.setRg("987654321");
+    atendente.setLogin("login");
+    atendente.setEndereco(endereco);
+    when(atendenteRepo.existsByCpf(atendente.getCpf())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.create(atendente));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("CPF já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveLancarExcecaoAoCriarAtendenteComRgDuplicado() {
+    Atendente atendente = new Atendente();
+    atendente.setCpf("12345678901");
+    atendente.setRg("987654321");
+    atendente.setLogin("login");
+    atendente.setEndereco(endereco);
+    when(atendenteRepo.existsByCpf(atendente.getCpf())).thenReturn(false);
+    when(atendenteRepo.existsByRg(atendente.getRg())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.create(atendente));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("RG já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveLancarExcecaoAoCriarAtendenteComLoginDuplicado() {
+    Atendente atendente = new Atendente();
+    atendente.setCpf("12345678901");
+    atendente.setRg("987654321");
+    atendente.setLogin("login");
+    atendente.setEndereco(endereco);
+    when(atendenteRepo.existsByCpf(atendente.getCpf())).thenReturn(false);
+    when(atendenteRepo.existsByRg(atendente.getRg())).thenReturn(false);
+    when(atendenteRepo.existsByLogin(atendente.getLogin())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.create(atendente));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("Login já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveLancarExcecaoNaAtualizacaoComCpfDuplicado() {
+    Atendente existing = new Atendente();
+    existing.setCpf("11111111111");
+    existing.setRg("111111111");
+    existing.setLogin("loginOld");
+    existing.setEndereco(endereco);
+    when(atendenteRepo.findById(1L)).thenReturn(Optional.of(existing));
+
+    Atendente updated = new Atendente();
+    updated.setCpf("22222222222"); // CPF alterado
+    updated.setRg("111111111"); // inalterado
+    updated.setLogin("loginOld"); // inalterado
+    updated.setEndereco(endereco);
+    when(atendenteRepo.existsByCpf(updated.getCpf())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.update(1L, updated));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("CPF já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveLancarExcecaoNaAtualizacaoComRgDuplicado() {
+    Atendente existing = new Atendente();
+    existing.setCpf("11111111111");
+    existing.setRg("111111111");
+    existing.setLogin("loginOld");
+    existing.setEndereco(endereco);
+    when(atendenteRepo.findById(1L)).thenReturn(Optional.of(existing));
+
+    Atendente updated = new Atendente();
+    updated.setCpf("11111111111"); // inalterado
+    updated.setRg("222222222"); // RG alterado
+    updated.setLogin("loginOld"); // inalterado
+    updated.setEndereco(endereco);
+    when(atendenteRepo.existsByRg(updated.getRg())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.update(1L, updated));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("RG já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveLancarExcecaoNaAtualizacaoComLoginDuplicado() {
+    Atendente existing = new Atendente();
+    existing.setCpf("11111111111");
+    existing.setRg("111111111");
+    existing.setLogin("loginOld");
+    existing.setEndereco(endereco);
+    when(atendenteRepo.findById(1L)).thenReturn(Optional.of(existing));
+
+    Atendente updated = new Atendente();
+    updated.setCpf("11111111111"); // inalterado
+    updated.setRg("111111111"); // inalterado
+    updated.setLogin("newLogin"); // Login alterado
+    updated.setEndereco(endereco);
+    when(atendenteRepo.existsByLogin(updated.getLogin())).thenReturn(true);
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.update(1L, updated));
+    assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    assertEquals("Login já está em uso", exception.getReason());
+  }
+
+  @Test
+  void deveBuscarTodosQuandoNomeECpfVazios() {
+    List<Atendente> lista = Arrays.asList(new Atendente(), new Atendente());
+    when(atendenteRepo.findAll()).thenReturn(lista);
+    ResponseEntity<List<Atendente>> resposta = controlador.search(null, null);
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    assertEquals(lista, resposta.getBody());
+  }
+
+  @Test
+  void deveBuscarPeloNomeECpfQuandoAmbosPreenchidos() {
+    String nome = "João";
+    String cpf = "12345678901";
+    List<Atendente> lista = Collections.singletonList(new Atendente());
+    when(atendenteRepo.findByNomeContainingIgnoreCaseAndCpfContainingIgnoreCase(nome, cpf))
+        .thenReturn(lista);
+    ResponseEntity<List<Atendente>> resposta = controlador.search(nome, cpf);
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    assertEquals(lista, resposta.getBody());
+  }
+
+  @Test
+  void deveBuscarPeloNomeQuandoApenasNomePreenchido() {
+    String nome = "João";
+    List<Atendente> lista = Collections.singletonList(new Atendente());
+    when(atendenteRepo.findByNomeContainingIgnoreCase(nome))
+        .thenReturn(lista);
+    ResponseEntity<List<Atendente>> resposta = controlador.search(nome, null);
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    assertEquals(lista, resposta.getBody());
+  }
+
+  @Test
+  void deveBuscarPeloCpfQuandoApenasCpfPreenchido() {
+    String cpf = "12345678901";
+    List<Atendente> lista = Collections.singletonList(new Atendente());
+    when(atendenteRepo.findByCpfContainingIgnoreCase(cpf))
+        .thenReturn(lista);
+    ResponseEntity<List<Atendente>> resposta = controlador.search(null, cpf);
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    assertEquals(lista, resposta.getBody());
+  }
+
+  @Test
+  void deveAtualizarAtendenteComAlteracoesEmTodosOsCamposSemConflito() {
+    // Cenário em que os três campos são alterados, mas não existe conflito.
+    Atendente existing = new Atendente();
+    existing.setCpf("11111111111");
+    existing.setRg("111111111");
+    existing.setLogin("loginOld");
+    existing.setEndereco(endereco);
+
+    when(atendenteRepo.findById(1L)).thenReturn(Optional.of(existing));
+
+    Atendente updated = new Atendente();
+    updated.setNome("Nome Novo");
+    updated.setLogin("loginNew"); // alterado
+    updated.setSenha("novaSenha");
+    updated.setCpf("22222222222"); // alterado
+    updated.setRg("222222222"); // alterado
+    updated.setDataNascimento(null);
+    updated.setEmail("novo@email.com");
+    updated.setTelefone("+5511999999999");
+    updated.setEndereco(endereco); // inalterado
+
+    // Simula que não existe conflito para os campos alterados
+    when(atendenteRepo.existsByCpf(updated.getCpf())).thenReturn(false);
+    when(atendenteRepo.existsByRg(updated.getRg())).thenReturn(false);
+    when(atendenteRepo.existsByLogin(updated.getLogin())).thenReturn(false);
+    when(atendenteRepo.save(any(Atendente.class))).thenReturn(updated);
+
+    ResponseEntity<Atendente> resposta = controlador.update(1L, updated);
+    assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    Atendente result = resposta.getBody();
+    assertNotNull(result);
+    assertEquals("Nome Novo", result.getNome());
+    assertEquals("loginNew", result.getLogin());
+    assertEquals("22222222222", result.getCpf());
+    assertEquals("222222222", result.getRg());
+  }
+
+  @Test
+  void deveLancarExcecaoQuandoAtualizacaoNaoEncontrado() {
+    Atendente atendente = new Atendente();
+    atendente.setCpf("12345678901");
+    atendente.setRg("123456789");
+    atendente.setLogin("login");
+    atendente.setEndereco(endereco);
+    when(atendenteRepo.findById(1L)).thenReturn(Optional.empty());
+
+    ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        () -> controlador.update(1L, atendente));
+    assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    assertEquals("Atendente não encontrado", exception.getReason());
   }
 }
