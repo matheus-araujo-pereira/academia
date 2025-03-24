@@ -402,7 +402,7 @@ class TreinoControladorTest {
   @Test
   void testSearchPorClienteNomeContem() {
     Cliente cliente2 = new Cliente();
-    cliente2.setNome("Cliente Teste");
+    cliente2.setNome("Outro Cliente");
     Treino treino1 = new Treino();
     treino1.setDescricao("Treino A");
     treino1.setDataCriacao(LocalDate.now());
