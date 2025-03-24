@@ -87,7 +87,6 @@ CREATE TABLE IF NOT EXISTS academia.treino(
     CONSTRAINT fk_treino_professor FOREIGN KEY (professor_id) REFERENCES academia.professor(id)
 );
 
--- Tabela EXERCICIO: vários exercicios compõem um treino
 CREATE TABLE IF NOT EXISTS academia.exercicio(
     id bigserial PRIMARY KEY,
     nome varchar(100) NOT NULL,
@@ -99,7 +98,6 @@ CREATE TABLE IF NOT EXISTS academia.exercicio(
     CONSTRAINT fk_exercicio_treino FOREIGN KEY (treino_id) REFERENCES academia.treino(id)
 );
 
--- Tabela ATIVIDADE: as atividades gerenciadas por um professor
 CREATE TABLE IF NOT EXISTS academia.atividade(
     id bigserial PRIMARY KEY,
     nome varchar(100) NOT NULL,
@@ -109,14 +107,5 @@ CREATE TABLE IF NOT EXISTS academia.atividade(
     dias_semana varchar(100),
     professor_id bigint,
     CONSTRAINT fk_atividade_professor FOREIGN KEY (professor_id) REFERENCES academia.professor(id)
-);
-
--- Tabela de relacionamento entre ATIVIDADE e CLIENTE (muitos-para-muitos)
-CREATE TABLE IF NOT EXISTS academia.atividade_cliente(
-    atividade_id bigint,
-    cliente_id bigint,
-    PRIMARY KEY (atividade_id, cliente_id),
-    CONSTRAINT fk_ativ_cliente_atividade FOREIGN KEY (atividade_id) REFERENCES academia.atividade(id),
-    CONSTRAINT fk_ativ_cliente_cliente FOREIGN KEY (cliente_id) REFERENCES academia.cliente(id)
 );
 
