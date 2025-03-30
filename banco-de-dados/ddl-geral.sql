@@ -2,6 +2,8 @@
 CREATE SCHEMA IF NOT EXISTS academia;
 
 -- DROP das tabelas de baixo para cima (respeitando as dependências):
+DROP TABLE IF EXISTS academia.atividade_cliente CASCADE;
+
 DROP TABLE IF EXISTS academia.atividade CASCADE;
 
 DROP TABLE IF EXISTS academia.exercicio CASCADE;
@@ -136,5 +138,13 @@ CREATE TABLE IF NOT EXISTS academia.atividade(
     dias_semana varchar(100), -- Dias da semana em que ocorre
     professor_id bigint, -- Chave estrangeira para professor
     CONSTRAINT fk_atividade_professor FOREIGN KEY (professor_id) REFERENCES academia.professor(id)
+);
+
+CREATE TABLE IF NOT EXISTS academia.atividade_cliente(
+    atividade_id bigint,
+    cliente_id bigint,
+    PRIMARY KEY (atividade_id, cliente_id),
+    CONSTRAINT fk_ativ_cliente_atividade FOREIGN KEY (atividade_id) REFERENCES academia.atividade(id),
+    CONSTRAINT fk_ativ_cliente_cliente FOREIGN KEY (cliente_id) REFERENCES academia.cliente(id)
 );
 
