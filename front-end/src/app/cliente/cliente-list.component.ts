@@ -42,8 +42,8 @@ export class ClienteListComponent implements OnInit {
   deleteCliente(id: number): void {
     if (confirm('Deseja excluir este cliente?')) {
       this.service.delete(id).subscribe({
-        next: (msg) => {
-          alert(msg);
+        next: () => {
+          alert('Cliente excluído com sucesso!');
           this.loadClientes();
         },
         error: (err) => alert('Erro ao excluir: ' + err.error),
